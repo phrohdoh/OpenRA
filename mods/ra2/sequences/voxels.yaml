@@ -6,7 +6,7 @@ cmin:
 	unload: cmon
 
 smcv:
-	idle: mcv
+	idle: smcv
 
 harv:
 	idle:

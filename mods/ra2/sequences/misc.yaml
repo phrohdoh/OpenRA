@@ -29,9 +29,9 @@ allyrepair:
 
 # TODO: fix/replace them, just placeholders
 rallypoint:
-	flag: smokland
-		Start: 40
-		Length: 50
+	flag: ring
+		Start: 0
+		Length: 12
 		Offset: 5,-3
 		BlendMode: Additive
 	circles: ring
