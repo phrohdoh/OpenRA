@@ -44,6 +44,7 @@ SMCV:
 		Queue: Vehicle
 		BuildPaletteOrder: 110
 		Owner: soviets
+		Prerequisites: ~vehicles.soviets
 		Hotkey: b
 	Valued:
 		Cost: 3000

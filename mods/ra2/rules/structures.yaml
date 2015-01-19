@@ -1,3 +1,7 @@
+#
+#	ALLIED STRUCTURES
+#
+
 GACNST:
 	Inherits: ^Building
 	Building:
@@ -36,6 +40,38 @@ GACNST:
 	Power:
 		Amount: 0
 
+GAPOWR:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 0
+		Prerequisites: gacnst
+		Owner: allies
+		Hotkey: p
+	Selectable:
+		Bounds: 64,64
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Power Plant
+		Description: Provides 200+ base power.
+	ProvidesCustomPrerequisite:
+		Prerequisite: power
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 750
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@GLOW:
+		Sequence: idle-glow
+	Power:
+		Amount: 200
+	ScalePowerWithHealth:
+
 NACNST:
 	Inherits: ^Building
 	Building:
@@ -73,3 +109,57 @@ NACNST:
 	WithBuildingPlacedOverlay:
 	Power:
 		Amount: 0
+
+NAPOWR:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 0
+		Prerequisites: nacnst
+		Hotkey: q
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Soviet Power Plant
+		Description: Provides power for other structures
+	ProvidesCustomPrerequisite:
+		Prerequisite: anypower
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 750
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@LIGHTS:
+		Sequence: idle-lights
+	Power:
+		Amount: 100
+	ScalePowerWithHealth:
+
+ANYPOWER:
+	Tooltip:
+		Name: Power Plant
+		Description: Power Plant
+
+BARRACKS:
+	Tooltip:
+		Name: Infantry Production
+		Description: Infantry Production
+
+FACTORY:
+	Tooltip:
+		Name: Vehicle Production
+		Description: Vehicle Production
+
+RADAR:
+	Tooltip:
+		Name: Radar
+		Description: Radar
+
+TECH:
+	Tooltip:
+		Name: Tech Center
+		Description: Tech Center

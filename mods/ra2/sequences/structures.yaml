@@ -1,3 +1,7 @@
+#
+#	ALLIED STRUCTURES
+#
+
 gacnst:
 	idle: ggcnst
 		Start: 0
@@ -35,6 +39,35 @@ gacnst:
 	icon: xxicon
 		Start: 0
 
+gapowr:
+	idle: ggpowr
+		Start: 0
+		ShadowStart: 3
+		Offset: 0,-30,0
+	damaged-idle: gtpowr
+		Start: 1
+		ShadowStart: 4
+		Offset: 0,-30,0
+	idle-glow: ggpowr_a
+		Start: 0
+		Length: 8
+		ShadowStart: 16
+		Tick: 150
+		Offset: 0,-30,0
+	damaged-idle-glow: ggpowr_a
+		Start: 8
+		Length: 8
+		ShadowStart: 24
+		Tick: 150
+		Offset: 0,-30,0
+	make: gtpowrmk
+		Start: 0
+		Length: 25
+		ShadowStart: 0
+		Offset: 0,-30,0
+	icon: powricon
+		Start: 0
+
 nacnst:
 	idle: nacnst
 		Start: 0
@@ -44,7 +77,7 @@ nacnst:
 		Start: 1
 		ShadowStart: 4
 		Offset: 0,-55,0
-	make: ngcnstmk
+	make: nacnstmk
 		Start: 0
 		Length: 31
 		ShadowStart: 31
@@ -82,4 +115,33 @@ nacnst:
 		Tick: 200
 		Offset: 0,-55,0
 	icon: facticon
+		Start: 0
+
+napowr:
+	idle: ngpowr
+		Start: 0
+		ShadowStart: 3
+	damaged-idle: ngpowr
+		Start: 1
+		ShadowStart: 4
+	critical-idle: ngpowr
+		Start: 2
+		ShadowStart: 5
+	idle-lights: ngpowr_a
+		Start: 0
+		Length: 9
+		Tick: 200
+	damaged-idle-lights: ngpowr_a
+		Start: 9
+		Length: 9
+		Tick: 200
+	critical-idle-lights: ngpowr_a
+		Start: 9
+		Length: 9
+		Tick: 200
+	make: ntpowrmk
+		Start: 0
+		Length: 19
+		ShadowStart: 19
+	icon: npwricon
 		Start: 0
