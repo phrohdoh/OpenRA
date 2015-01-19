@@ -29,9 +29,9 @@ allyrepair:
 
 # TODO: fix/replace them, just placeholders
 rallypoint:
-	flag: smokland
-		Start: 40
-		Length: 50
+	flag: ring
+		Start: 0
+		Length: 12
 		Offset: 5,-3
 		BlendMode: Additive
 	circles: ring
@@ -49,7 +49,7 @@ beacon:
 		BlendMode: Additive
 
 crate-effects:
-	dollar: money
+	dollar:
 		Start: 0
 		Length: *
 	reveal-map: reveal
@@ -67,7 +67,7 @@ crate-effects:
 	stealth: cloak
 		Start: 0
 		Length: *
-	heal: healall
+	heal:
 		Start: 0
 		Length: *
 	nuke: mltimisl
@@ -93,7 +93,7 @@ waypoint: # TODO: backfall to RA asset
 		Length: *
 
 clock:
-	idle: gclock2
+	idle: ambttn
 		Start: 0
 		Length: *
 
