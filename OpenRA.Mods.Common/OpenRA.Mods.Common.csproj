@@ -32,8 +32,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="Eluant">
       <HintPath>..\thirdparty\Eluant.dll</HintPath>
       <Private>False</Private>
@@ -46,6 +50,14 @@
     </Reference>
     <Reference Include="StyleCop">
       <HintPath>..\thirdparty\StyleCop.dll</HintPath>
+    </Reference>
+    <Reference Include="MaxMind.GeoIP2">
+      <HintPath>..\thirdparty\MaxMind.GeoIP2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Nat">
+      <HintPath>..\thirdparty\Mono.Nat.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +121,7 @@
     <Compile Include="Effects\LaserZap.cs" />
     <Compile Include="Effects\Missile.cs" />
     <Compile Include="Effects\NukeLaunch.cs" />
+    <Compile Include="Effects\Parachute.cs" />
     <Compile Include="Effects\PowerdownIndicator.cs" />
     <Compile Include="Effects\RallyPointIndicator.cs" />
     <Compile Include="Effects\Rank.cs" />
@@ -126,6 +139,15 @@
     <Compile Include="Graphics\TextRenderable.cs" />
     <Compile Include="Graphics\VoxelActorPreview.cs" />
     <Compile Include="Graphics\VoxelRenderable.cs" />
+    <Compile Include="Lint\CheckSequences.cs" />
+    <Compile Include="Lint\CheckPlayers.cs" />
+    <Compile Include="Lint\CheckActors.cs" />
+    <Compile Include="Lint\CheckMapCordon.cs" />
+    <Compile Include="Lint\CheckMapRules.cs" />
+    <Compile Include="Lint\CheckActorReferences.cs" />
+    <Compile Include="Lint\CheckSyncAnnotations.cs" />
+    <Compile Include="Lint\CheckTraitPrerequisites.cs" />
+    <Compile Include="Lint\LintBuildablePrerequisites.cs" />
     <Compile Include="LoadScreens\ModChooserLoadScreen.cs" />
     <Compile Include="Orders\BeaconOrderGenerator.cs" />
     <Compile Include="Orders\DeployOrderTargeter.cs" />
@@ -151,6 +173,7 @@
     <Compile Include="Scripting\Global\MapGlobal.cs" />
     <Compile Include="Scripting\Global\MediaGlobal.cs" />
     <Compile Include="Scripting\Global\PlayerGlobal.cs" />
+    <Compile Include="Scripting\Global\ReinforcementsGlobal.cs" />
     <Compile Include="Scripting\Global\TriggerGlobal.cs" />
     <Compile Include="Scripting\Global\UtilsGlobal.cs" />
     <Compile Include="Scripting\Properties\DiplomacyProperties.cs" />
@@ -158,6 +181,18 @@
     <Compile Include="Scripting\Properties\PowerProperties.cs" />
     <Compile Include="Scripting\Properties\ResourceProperties.cs" />
     <Compile Include="Scripting\Properties\UpgradeProperties.cs" />
+    <Compile Include="Scripting\Properties\AirstrikeProperties.cs" />
+    <Compile Include="Scripting\Properties\ProductionProperties.cs" />
+    <Compile Include="Scripting\Properties\MissionObjectiveProperties.cs" />
+    <Compile Include="Scripting\Properties\MobileProperties.cs" />
+    <Compile Include="Scripting\Properties\GeneralProperties.cs" />
+    <Compile Include="Scripting\Properties\CombatProperties.cs" />
+    <Compile Include="Scripting\Properties\PlayerProperties.cs" />
+    <Compile Include="Scripting\Properties\HelicopterProperties.cs" />
+    <Compile Include="Scripting\Properties\PlaneProperties.cs" />
+    <Compile Include="Scripting\Properties\TransformProperties.cs" />
+    <Compile Include="Scripting\Properties\RepairableBuildingProperties.cs" />
+    <Compile Include="Scripting\Properties\GuardProperties.cs" />
     <Compile Include="TraitsInterfaces.cs" />
     <Compile Include="Traits\Air\Aircraft.cs" />
     <Compile Include="Traits\Air\AttackBomber.cs" />
@@ -212,6 +247,19 @@
     <Compile Include="Traits\Cargo.cs" />
     <Compile Include="Traits\CashTrickler.cs" />
     <Compile Include="Traits\Cloak.cs" />
+    <Compile Include="Traits\Crates\Crate.cs" />
+    <Compile Include="Traits\Crates\CrateAction.cs" />
+    <Compile Include="Traits\Crates\DuplicateUnitCrateAction.cs" />
+    <Compile Include="Traits\Crates\ExplodeCrateAction.cs" />
+    <Compile Include="Traits\Crates\GiveCashCrateAction.cs" />
+    <Compile Include="Traits\Crates\GiveMcvCrateAction.cs" />
+    <Compile Include="Traits\Crates\GiveUnitCrateAction.cs" />
+    <Compile Include="Traits\Crates\GrantUpgradeCrateAction.cs" />
+    <Compile Include="Traits\Crates\HealUnitsCrateAction.cs" />
+    <Compile Include="Traits\Crates\HideMapCrateAction.cs" />
+    <Compile Include="Traits\Crates\LevelUpCrateAction.cs" />
+    <Compile Include="Traits\Crates\RevealMapCrateAction.cs" />
+    <Compile Include="Traits\Crates\SupportPowerCrateAction.cs" />
     <Compile Include="Traits\Crushable.cs" />
     <Compile Include="Traits\EmitInfantryOnSell.cs" />
     <Compile Include="Traits\ExternalCapturable.cs" />
@@ -246,6 +294,8 @@
     <Compile Include="Traits\Modifiers\HiddenUnderFog.cs" />
     <Compile Include="Traits\Modifiers\UpgradeOverlay.cs" />
     <Compile Include="Traits\MustBeDestroyed.cs" />
+    <Compile Include="Traits\Parachutable.cs" />
+    <Compile Include="Traits\ParaDrop.cs" />
     <Compile Include="Traits\Passenger.cs" />
     <Compile Include="Traits\PaletteEffects\CloakPaletteEffect.cs" />
     <Compile Include="Traits\PaletteEffects\LightPaletteRotator.cs" />
@@ -254,6 +304,7 @@
     <Compile Include="Traits\PaletteEffects\WaterPaletteRotation.cs" />
     <Compile Include="Traits\Player\ActorGroupProxy.cs" />
     <Compile Include="Traits\Player\AllyRepair.cs" />
+    <Compile Include="Traits\Player\BaseAttackNotifier.cs" />
     <Compile Include="Traits\Player\ClassicProductionQueue.cs" />
     <Compile Include="Traits\Player\ConquestVictoryConditions.cs" />
     <Compile Include="Traits\Player\GlobalUpgradeManager.cs" />
@@ -350,6 +401,7 @@
     <Compile Include="Traits\Valued.cs" />
     <Compile Include="Traits\Wanders.cs" />
     <Compile Include="Traits\World\BridgeLayer.cs" />
+    <Compile Include="Traits\World\CrateSpawner.cs" />
     <Compile Include="Traits\World\CreateMPPlayers.cs" />
     <Compile Include="Traits\World\DomainIndex.cs" />
     <Compile Include="Traits\World\LoadWidgetAtGameStart.cs" />
@@ -374,8 +426,11 @@
     <Compile Include="Traits\World\SpawnMPUnits.cs" />
     <Compile Include="Traits\World\StartGameNotification.cs" />
     <Compile Include="Traits\World\TerrainGeometryOverlay.cs" />
+    <Compile Include="UtilityCommands\ActorStatsExport.cs" />
     <Compile Include="UtilityCommands\ConvertPngToShpCommand.cs" />
     <Compile Include="UtilityCommands\ConvertSpriteToPngCommand.cs" />
+    <Compile Include="UtilityCommands\ExportCharacterSeparatedRules.cs" />
+    <Compile Include="UtilityCommands\Extensions.cs" />
     <Compile Include="UtilityCommands\ExtractFilesCommand.cs" />
     <Compile Include="UtilityCommands\ExtractLanguageStringsCommand.cs" />
     <Compile Include="UtilityCommands\ExtractLuaDocsCommand.cs" />
@@ -406,14 +461,29 @@
     <Compile Include="Widgets\Logic\AssetBrowserLogic.cs" />
     <Compile Include="Widgets\Logic\ButtonTooltipLogic.cs" />
     <Compile Include="Widgets\Logic\ColorPickerLogic.cs" />
+    <Compile Include="Widgets\Logic\ConnectionLogic.cs" />
     <Compile Include="Widgets\Logic\CountryTooltipLogic.cs" />
+    <Compile Include="Widgets\Logic\DirectConnectLogic.cs" />
     <Compile Include="Widgets\Logic\DisconnectWatcherLogic.cs" />
+    <Compile Include="Widgets\Logic\Ingame\IngameChatLogic.cs" />
     <Compile Include="Widgets\Logic\Ingame\IngameRadarDisplayLogic.cs" />
     <Compile Include="Widgets\Logic\Ingame\LoadIngamePlayerOrObserverUILogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\ClientTooltipLogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\KickClientLogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\KickSpectatorsLogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\LobbyLogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\LobbyMapPreviewLogic.cs" />
+    <Compile Include="Widgets\Logic\Lobby\LobbyUtils.cs" />
+    <Compile Include="Widgets\Logic\MapChooserLogic.cs" />
     <Compile Include="Widgets\Logic\ModBrowserLogic.cs" />
     <Compile Include="Widgets\Logic\ProductionTooltipLogic.cs" />
     <Compile Include="Widgets\Logic\SupportPowerTooltipLogic.cs" />
     <Compile Include="Widgets\Logic\SupportPowerBinLogic.cs" />
+    <Compile Include="Widgets\Logic\ReplayBrowserLogic.cs" />
+    <Compile Include="Widgets\Logic\ServerBrowserLogic.cs" />
+    <Compile Include="Widgets\Logic\ServerCreationLogic.cs" />
+    <Compile Include="Widgets\Logic\SettingsLogic.cs" />
+    <Compile Include="Widgets\Logic\TabCompletionLogic.cs" />
     <Compile Include="Widgets\MenuButtonWidget.cs" />
     <Compile Include="Widgets\ObserverSupportPowerIconsWidget.cs" />
     <Compile Include="Widgets\ProductionPaletteWidget.cs" />
@@ -429,7 +499,6 @@
     <Compile Include="SpriteLoaders\TmpRALoader.cs" />
     <Compile Include="SpriteLoaders\TmpTDLoader.cs" />
     <Compile Include="SpriteLoaders\ShpD2Loader.cs" />
-    <Compile Include="Widgets\Logic\SettingsLogic.cs" />
     <Compile Include="Widgets\TerrainTemplatePreviewWidget.cs" />
     <Compile Include="LoadScreens\LogoStripeLoadScreen.cs" />
     <Compile Include="LoadScreens\BlankLoadScreen.cs" />
