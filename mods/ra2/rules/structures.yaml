@@ -4,8 +4,11 @@
 
 GACNST:
 	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
 	Building:
-		Power: 0
 		Footprint: xxxx xxxx xxxx xxxx
 		BuildSounds: facbld1.aud
 		Dimensions: 4,4
@@ -17,6 +20,8 @@ GACNST:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+	Valued:
+		Cost: 2500
 	Production:
 		Produces: Building,Defense
 	Tooltip:
@@ -36,45 +41,8 @@ GACNST:
 		PauseOnLowPower: true
 	WithBuildingPlacedOverlay:
 	ProvidesCustomPrerequisite:
+		Race: allies
 		Prerequisite: structures.allies
-	Power:
-		Amount: 0
-
-NACNST:
-	Inherits: ^Building
-	Building:
-		Footprint: xxxx xxxx xxxx xxxx
-		BuildSounds: facbld1.aud
-		Dimensions: 4,4
-	Selectable:
-		Bounds: 164,128
-	ProvidesCustomPrerequisite:
-		Prerequisite: structures.soviets
-	Health:
-		HP: 1000
-	Armor:
-		Type: Concrete
-	RevealsShroud:
-		Range: 8c0
-	Production:
-		Produces: Building,Defense
-	Tooltip:
-		Name: Soviet Construction Yard
-		Description: Builds base structures.
-	BaseBuilding:
-	Transforms:
-		IntoActor: smcv
-		Offset: 1,1
-		Facing: 96
-	ProductionBar@Building:
-		ProductionType: Building
-	ProductionBar@Defense:
-		ProductionType: Defense
-	WithIdleOverlay@TOP:
-		Sequence: idle-top
-	WithIdleOverlay@SIDE:
-		Sequence: idle-side
-	WithBuildingPlacedOverlay:
 	Power:
 		Amount: 0
 
@@ -82,8 +50,8 @@ GAPOWR:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 0
-		Prerequisites: gacnst
+		BuildPaletteOrder: 10
+		Prerequisites: ~structures.allies
 		Owner: allies
 		Hotkey: p
 	Selectable:
@@ -94,7 +62,7 @@ GAPOWR:
 		Name: Power Plant
 		Description: Provides 200+ base power.
 	ProvidesCustomPrerequisite:
-		Prerequisite: power
+		Prerequisite: anypower
 	Building:
 		Footprint: xx xx
 		Dimensions: 2,2
@@ -110,42 +78,12 @@ GAPOWR:
 		Amount: 200
 	ScalePowerWithHealth:
 
-NAPOWR:
-	Inherits: ^Building
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 0
-		Prerequisites: nacnst
-		Owner: soviets
-		Hotkey: q
-	Valued:
-		Cost: 800
-	Tooltip:
-		Name: Soviet Power Plant
-		Description: Provides power for other structures
-	ProvidesCustomPrerequisite:
-		Prerequisite: power
-	Building:
-		Footprint: xx xx
-		Dimensions: 2,2
-	Health:
-		HP: 750
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		Range: 4c0
-	WithIdleOverlay@LIGHTS:
-		Sequence: idle-lights
-	Power:
-		Amount: 100
-	ScalePowerWithHealth:
-
 GAPILE:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 30
-		Prerequisites: power, gacnst
+		BuildPaletteOrder: 20
+		Prerequisites: anypower, ~structures.allies
 		Owner: allies
 		Hotkey: b
 	Selectable:
@@ -182,51 +120,12 @@ GAPILE:
 	Power:
 		Amount: -10
 
-NAHAND:
-	Inherits: ^Building
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 30
-		Prerequisites: power, nacnst
-		Owner: soviets
-		Hotkey: h
-	Valued:
-		Cost: 300
-	Tooltip:
-		Name: Soviet Barracks
-		Description: Produces infantry
-	ProvidesCustomPrerequisite:
-		Prerequisite: barracks
-	Building:
-		Footprint: xxx xxx
-		Dimensions: 3,2
-	Health:
-		HP: 800
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		Range: 5c0
-	Exit@1:
-		SpawnOffset: -2730,2730,0
-		ExitCell: 0,2
-	Production:
-		Produces: Infantry
-	PrimaryBuilding:
-	ProductionBar:
-	WithIdleOverlay@LIGHTS:
-		Sequence: idle-lights
-	WithProductionOverlay@LIGHT:
-		Sequence: production-light
-	Power:
-		Amount: -20
-	UpgradeManager:
-
 GAREFN:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 20
-		Prerequisites: power, gacnst
+		BuildPaletteOrder: 30
+		Prerequisites: anypower, ~structures.allies
 		Owner: allies
 		Hotkey: r
 	Selectable:
@@ -268,12 +167,130 @@ GAREFN:
 	Power:
 		Amount: -50
 
-NAREFN:
+#
+#	SOVIET STRUCTURES
+#
+
+NACNST:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
+	Building:
+		Footprint: xxxx xxxx xxxx xxxx
+		BuildSounds: facbld1.aud
+		Dimensions: 4,4
+	Selectable:
+		Bounds: 164,128
+	ProvidesCustomPrerequisite:
+		Race: soviets
+		Prerequisite: structures.soviets
+	Health:
+		HP: 1000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		Range: 8c0
+	Valued:
+		Cost: 2500
+	Production:
+		Produces: Building,Defense
+	Tooltip:
+		Name: Soviet Construction Yard
+		Description: Builds base structures.
+	BaseBuilding:
+	Transforms:
+		IntoActor: smcv
+		Offset: 1,1
+		Facing: 96
+	ProductionBar@Building:
+		ProductionType: Building
+	ProductionBar@Defense:
+		ProductionType: Defense
+	WithIdleOverlay@TOP:
+		Sequence: idle-top
+	WithIdleOverlay@SIDE:
+		Sequence: idle-side
+	WithBuildingPlacedOverlay:
+	Power:
+		Amount: 0
+
+NAPOWR:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 10
+		Prerequisites: ~structures.soviets
+		Owner: soviets
+		Hotkey: q
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Soviet Power Plant
+		Description: Provides power for other structures
+	ProvidesCustomPrerequisite:
+		Prerequisite: anypower
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 750
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@LIGHTS:
+		Sequence: idle-lights
+	Power:
+		Amount: 100
+	ScalePowerWithHealth:
+
+NAHAND:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: power, gacnst
+		Prerequisites: anypower, ~structures.soviets
+		Owner: soviets
+		Hotkey: h
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Soviet Barracks
+		Description: Produces infantry
+	ProvidesCustomPrerequisite:
+		Prerequisite: barracks
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 800
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 5c0
+	Exit@1:
+		SpawnOffset: -2730,2730,0
+		ExitCell: 0,2
+	Production:
+		Produces: Infantry
+	PrimaryBuilding:
+	ProductionBar:
+	WithIdleOverlay@LIGHTS:
+		Sequence: idle-lights
+	WithProductionOverlay@LIGHT:
+		Sequence: production-light
+	Power:
+		Amount: -20
+	UpgradeManager:
+
+NAREFN:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 30
+		Prerequisites: anypower, ~structures.soviets
 		Owner: soviets
 		Hotkey: r
 	Selectable:
@@ -314,6 +331,10 @@ NAREFN:
 		Sequence: idle-drill
 	Power:
 		Amount: -50
+
+#
+#	COMMON STUFF
+#
 
 ANYPOWER:
 	Tooltip:
