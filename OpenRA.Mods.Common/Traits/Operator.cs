@@ -1,14 +1,16 @@
-﻿// #region Copyright & License Information
-// /*
-//  * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
-//  * This file is part of OpenRA, which is free software. It is made
-//  * available to you under the terms of the GNU General Public License
-//  * as published by the Free Software Foundation. For more information,
-//  * see COPYING.
-//  */
-// #endregion
+﻿#region Copyright & License Information
+/*
+ * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation. For more information,
+ * see COPYING.
+ */
+#endregion
+
 using System;
 using System.Collections.Generic;
+using OpenRA.Mods.Common.Orders;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -16,98 +18,90 @@ namespace OpenRA.Mods.Common.Traits
 	public class OperatorInfo : ITraitInfo
 	{
 		[Desc("The classification of this operator actor.")]
-		public readonly string Type = null;
+		public readonly string Type = "any";
 
-		[Desc("Cursor to display when targeting an Operated actor that this actor can enter.")]
+		[Desc("Cursor to display when targeting a valid Operated actor.")]
 		public readonly string EnterCursor = "enter";
 
-		[Desc("Cursor to display when targeting an Operated actor that this actor can enter.")]
-		public readonly string EnterRestrictedCursor = "enter";
+		[Desc("Cursor to display when targeting an invalid Operated actor.")]
+		public readonly string EnterRestrictedCursor = "enter-blocked";
 
 		public object Create(ActorInitializer init) { return new Operator(init.Self, this); }
 	}
 
-	public class Operator
+	public class Operator : IIssueOrder, IOrderVoice
 	{
 		public readonly OperatorInfo Info;
+		public Actor Operating { get; private set; }
 
 		public Operator(Actor self, OperatorInfo info)
 		{
 			Info = info;
 		}
-	}
 
-	class OperateOrderTargeter : IOrderTargeter
-	{
-		public OperateOrderTargeter(string order, int priority)
+		public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
 		{
-			OrderID = order;
-			OrderPriority = priority;
+			if (order.OrderID == "Enter")
+				return new Order(order.OrderID, self, queued) { TargetActor = target.Actor };
+
+			return null;
 		}
 
-		bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
+		public IEnumerable<IOrderTargeter> Orders
 		{
-			if (target.IsDead || !target.IsInWorld)
-				return false;
-
-			var allied = self.Owner.IsAlliedWith(target.EffectiveOwner.Owner);
-
-			if (!allied)
-				return false;
-
-			var operated = target.TraitOrDefault<Operated>();
-			if (operated == null || operated.IsBeingOperated)
-				return false;
-
-			if (allied && !operated.Info.AllowFriendlyOperators)
-				return false;
-
-			var oper = self.Trait<Operator>();
-			var canEnter = operated.Info.OperatorTypes.Contains(oper.Info.Type);
-
-			cursor = canEnter ? oper.Info.EnterCursor : oper.Info.EnterRestrictedCursor;
-			return canEnter;
-		}
-
-		bool CanTargetActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
-		{
-			if (!target.IsValid)
-				return false;
-
-			var allied = self.Owner.IsAlliedWith(target.Owner);
-			if (!allied)
-				return false;
-
-			var operated = target.Info.Traits.GetOrDefault<OperatedInfo>();
-			if (operated == null)
-				return false;
-
-			if (allied && !operated.AllowFriendlyOperators)
-				return false;
-
-			var oper = self.Trait<Operator>();
-			var canEnter = operated.OperatorTypes.Contains(oper.Info.Type);
-
-			cursor = canEnter ? oper.Info.EnterCursor : oper.Info.EnterRestrictedCursor;
-			return canEnter;
-		}
-
-		public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, TargetModifiers modifiers, ref string cursor)
-		{
-			switch (target.Type)
+			get
 			{
-				case TargetType.Actor:
-					return CanTargetActor(self, target.Actor, modifiers, ref cursor);
-				case TargetType.FrozenActor:
-					return CanTargetActor(self, target.FrozenActor, modifiers, ref cursor);
-				default:
-					return false;
+				yield return new OperatorOrderTargeter("Enter", 5,
+					target => CanOperate(target) ? Info.EnterCursor : Info.EnterRestrictedCursor);
 			}
 		}
 
-		public string OrderID { get; private set; }
-		public int OrderPriority { get; private set; }
-		public bool OverrideSelection { get { return true; } }
-		public bool IsQueued { get; protected set; }
+		static bool CanOperate(Actor target)
+		{
+			var operated = target.TraitOrDefault<Operated>();
+			if (operated == null)
+				return false;
+
+			return !operated.HasOperator;
+		}
+
+		public string VoicePhraseForOrder(Actor self, Order order)
+		{
+			var target = order.TargetActor;
+			return target != null && CanOperate(target) ? "Enter" : null;
+		}
+	}
+
+	public class OperatorOrderTargeter : UnitOrderTargeter
+	{
+		readonly Func<Actor, string> cursor;
+
+		public OperatorOrderTargeter(string order, int priority, Func<Actor, string> cursor)
+			: base(order, priority, "enter", true, true)
+		{
+			this.cursor = cursor;
+		}
+		public override bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
+		{
+			if (target.IsDead || !target.IsInWorld)
+				return false;
+			
+			var operated = target.TraitOrDefault<Operated>();
+			if (operated == null)
+				return false;
+
+			if (operated.HasOperator)
+				return false;
+
+			IsQueued = modifiers.HasModifier(TargetModifiers.ForceQueue);
+			cursor = this.cursor(target);
+			return true;
+		}
+
+		public override bool CanTargetFrozenActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
+		{
+			var info = target.Info.Traits.GetOrDefault<OperatedInfo>();
+			return info != null && info.CanBeEnteredBy(self);
+		}
 	}
 }

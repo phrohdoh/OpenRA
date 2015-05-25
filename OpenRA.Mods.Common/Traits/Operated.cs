@@ -7,7 +7,9 @@
 //  * see COPYING.
 //  */
 // #endregion
+
 using System;
+using System.Linq;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -16,27 +18,41 @@ namespace OpenRA.Mods.Common.Traits
 	public class OperatedInfo : ITraitInfo
 	{
 		[ActorReference]
-		[Desc("Actor types that can operate this actor.")]
-		public readonly string OperatorTypes = { };
-
-		[Desc("Can friendly players order their Operator actors to enter this actor?")]
-		public readonly bool AllowFriendlyOperators = true;
+		[Desc("`Operator.Type`s that can operate this actor.")]
+		public readonly string[] OperatorTypes = { "any" };
 
 		public object Create(ActorInitializer init) { return new Operated(init.Self, this); }
+
+		public bool CanBeEnteredBy(Actor actor)
+		{
+			if (actor.IsDead || !actor.IsInWorld)
+				return false;
+
+			var oper = actor.Info.Traits.GetOrDefault<OperatorInfo>();
+			return oper != null && OperatorTypes.Contains(oper.Type);
+		}
+	}
+
+	public interface INotifyOperatorChanged
+	{
+		void OnOperatorEntered(Actor self, Actor oper);
+		void OnOperatorRemoved(Actor self, Actor oper);
 	}
 
 	public class Operated
 	{
 		public readonly OperatedInfo Info;
+
+		public Actor Operator { get; private set; }
+
+		public bool HasOperator
+		{
+			get { return Operator != null; }
+		}
 	
 		public Operated(Actor self, OperatedInfo info)
 		{
 			Info = info;
-		}
-
-		public bool IsBeingOperated
-		{
-			get { }
 		}
 	}
 }
