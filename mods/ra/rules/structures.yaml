@@ -89,8 +89,9 @@ GAP:
 
 SPEN:
 	Inherits: ^Building
-	InfiltrateForSupportPower:
-		Proxy: powerproxy.sonarpulse
+	InfiltrateForPlayerUpgrades:
+		Upgrades: spen.infiltrated
+		ApplyToSelf: false
 	Valued:
 		Cost: 800
 	Tooltip:

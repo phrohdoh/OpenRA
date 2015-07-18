@@ -64,6 +64,11 @@ Player:
 		Name: Unrestricted
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.unrestricted
 	GlobalUpgradeManager:
+	UpgradeManager:
+	ProvidesPrerequisite@spen.infiltrated:
+		UpgradeMinEnabledLevel: 1
+		UpgradeTypes: spen.infiltrated
+		Prerequisite: techcenter # placeholder, allows us to build MSLO
 	EnemyWatcher:
 	VeteranProductionIconOverlay:
 		Offset: 2, 2

@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	public class ProvidesPrerequisiteInfo : ITraitInfo
+	public class ProvidesPrerequisiteInfo : UpgradableTraitInfo, ITraitInfo
 	{
 		[Desc("The prerequisite type that this provides. If left empty it defaults to the actor's name.")]
 		public readonly string Prerequisite = null;
@@ -27,10 +27,11 @@ namespace OpenRA.Mods.Common.Traits
 
 		[Desc("Should it recheck everything when it is captured?")]
 		public readonly bool ResetOnOwnerChange = false;
-		public object Create(ActorInitializer init) { return new ProvidesPrerequisite(init, this); }
+
+		public override object Create(ActorInitializer init) { return new ProvidesPrerequisite(init, this); }
 	}
 
-	public class ProvidesPrerequisite : ITechTreePrerequisite, INotifyOwnerChanged
+	public class ProvidesPrerequisite : UpgradableTrait<ProvidesPrerequisiteInfo>, ITechTreePrerequisite, INotifyOwnerChanged
 	{
 		readonly ProvidesPrerequisiteInfo info;
 		readonly string prerequisite;
@@ -38,6 +39,7 @@ namespace OpenRA.Mods.Common.Traits
 		bool enabled = true;
 
 		public ProvidesPrerequisite(ActorInitializer init, ProvidesPrerequisiteInfo info)
+			: base(info)
 		{
 			this.info = info;
 			prerequisite = info.Prerequisite;
@@ -54,7 +56,7 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			get
 			{
-				if (!enabled)
+				if (!enabled || IsTraitDisabled)
 					yield break;
 
 				yield return prerequisite;
@@ -76,6 +78,9 @@ namespace OpenRA.Mods.Common.Traits
 
 			if (info.RequiresPrerequisites.Any() && enabled)
 				enabled = owner.PlayerActor.Trait<TechTree>().HasPrerequisites(info.RequiresPrerequisites);
+
+			if (enabled)
+				enabled = !IsTraitDisabled;
 		}
 	}
 }
