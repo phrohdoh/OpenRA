@@ -2547,6 +2547,18 @@ Actors:
 Smudges:
 
 Rules:
+	World:
+		GlobalLightingPaletteEffect:
+			Red: 0.75
+			Green: 0.85
+			Blue: 1.25
+			Ambient: 0.35
+		AmbientSound:
+			SoundFile: rain.aud
+		FlashPaletteEffect@lightning-strike:
+			Type: lightning-strike
+		LuaScript:
+			Scripts: map.lua
 
 Sequences:
 

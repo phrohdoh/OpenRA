@@ -8,6 +8,7 @@ Folders:
 	.
 	./mods/ra2
 	./mods/ra2/bits
+	./mods/ra2/bits/audio
 	./mods/ra2/bits/cameos
 	./mods/ra2/bits/vehicles
 	./mods/ra2/bits/structures
