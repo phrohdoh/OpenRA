@@ -201,11 +201,15 @@ namespace OpenRA.Mods.TS.UtilityCommands
 
 			FullSize = new int2(iniSize[2], iniSize[3]);
 
-			var map = Map.FromTileset(modData.DefaultRules.TileSets[tileset]);
-			map.Title = basic.GetValue("Name", Path.GetFileNameWithoutExtension(filename));
-			map.Author = "Westwood Studios";
-			map.MapSize = new int2(size);
-			map.Bounds = new Rectangle(iniBounds[0], iniBounds[1], iniBounds[2], 2 * iniBounds[3]);
+			var map = new Map(modData.DefaultRules.TileSets[tileset], size.Width, size.Height)
+			{
+				Title = basic.GetValue("Name", Path.GetFileNameWithoutExtension(filename)),
+				Author = "Westwood Studios"
+			};
+
+			var tl = new PPos(iniBounds[0], iniBounds[1]);
+			var br = new PPos(iniBounds[2], 2 * iniBounds[3]);
+			map.SetBounds(tl, br);
 
 			map.MapResources = Exts.Lazy(() => new CellLayer<ResourceTile>(map.TileShape, size));
 			map.MapTiles = Exts.Lazy(() => new CellLayer<TerrainTile>(map.TileShape, size));
