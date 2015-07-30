@@ -184,7 +184,7 @@ namespace OpenRA.Mods.TS.UtilityCommands
 			var mapPlayers = new MapPlayers(map.Rules, spawnCount);
 			map.PlayerDefinitions = mapPlayers.ToMiniYaml();
 
-			map.Save("mods/ts/maps/" + Path.GetFileNameWithoutExtension(filename) + "/");
+			map.Save("mods/" + modData.Manifest.Mod.Id + "/maps/" + Path.GetFileNameWithoutExtension(filename) + "/");
 		}
 
 		Map GenerateMapHeader(string filename, IniFile file, ModData modData)
