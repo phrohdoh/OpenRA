@@ -247,6 +247,9 @@ Fonts:
 		Font:./mods/common/FreeSansBold.ttf
 		Size:10
 
+Missions:
+	./mods/ts/missions.yaml
+
 SupportsMapsFrom: ts
 
 SpriteFormats: ShpTS, TmpTS, ShpTD
