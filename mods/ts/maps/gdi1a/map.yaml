@@ -820,7 +820,7 @@ Rules:
 		LuaScript:
 			Scripts: map.lua
 		ScriptUpgradesCache:
-			Upgrades: tower.vulcan
+			Upgrades: tower, tower.vulcan
 		-StartGameNotification:
 
 Sequences:
