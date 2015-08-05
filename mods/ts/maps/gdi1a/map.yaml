@@ -716,73 +716,73 @@ Actors:
 	Actor195: trock04
 		Location: 87,16
 		Owner: Neutral
-	Actor196: gawall
+	Actor196: gasand
 		Owner: player
 		Location: 42,12
-	Actor197: gawall
+	Actor197: gasand
 		Owner: player
 		Location: 42,11
-	Actor198: gawall
+	Actor198: gasand
 		Owner: player
 		Location: 42,10
-	Actor199: gawall
+	Actor199: gasand
 		Owner: player
 		Location: 42,9
-	Actor200: gawall
+	Actor200: gasand
 		Owner: player
 		Location: 42,8
-	Actor201: gawall
+	Actor201: gasand
 		Owner: player
 		Location: 42,7
-	Actor202: gawall
+	Actor202: gasand
 		Owner: player
 		Location: 42,5
-	Actor203: gawall
+	Actor203: gasand
 		Owner: player
 		Location: 42,6
-	Actor204: gawall
+	Actor204: gasand
 		Owner: player
 		Location: 42,4
-	Actor205: gawall
+	Actor205: gasand
 		Owner: player
 		Location: 42,3
-	Actor206: gawall
+	Actor206: gasand
 		Owner: player
 		Location: 42,18
-	Actor207: gawall
+	Actor207: gasand
 		Owner: player
 		Location: 42,19
-	Actor208: gawall
+	Actor208: gasand
 		Owner: player
 		Location: 42,20
-	Actor209: gawall
+	Actor209: gasand
 		Owner: player
 		Location: 42,21
-	Actor210: gawall
+	Actor210: gasand
 		Owner: player
 		Location: 42,22
-	Actor211: gawall
+	Actor211: gasand
 		Owner: player
 		Location: 42,23
-	Actor212: gawall
+	Actor212: gasand
 		Owner: player
 		Location: 42,24
-	Actor213: gawall
+	Actor213: gasand
 		Owner: player
 		Location: 42,25
-	Actor214: gawall
+	Actor214: gasand
 		Owner: player
 		Location: 42,26
-	Actor215: gawall
+	Actor215: gasand
 		Owner: player
 		Location: 42,27
-	Actor216: gawall
+	Actor216: gasand
 		Owner: player
 		Location: 41,27
-	Actor217: gawall
+	Actor217: gasand
 		Owner: player
 		Location: 40,27
-	Actor218: gawall
+	Actor218: gasand
 		Owner: player
 		Location: 39,27
 	Actor219: waypoint
