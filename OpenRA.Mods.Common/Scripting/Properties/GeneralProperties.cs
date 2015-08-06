@@ -104,6 +104,9 @@ namespace OpenRA.Mods.Common.Scripting
 			}
 		}
 
+		[Desc("Returns a value indicating whether or not the actor is currently on the terrain.")]
+		public bool IsAtGroundLevel { get { return Self.IsAtGroundLevel(); } }
+
 		[ScriptActorPropertyActivity]
 		[Desc("Instantly moves the actor to the specified cell.")]
 		public void Teleport(CPos cell)
