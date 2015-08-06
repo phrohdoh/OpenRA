@@ -275,7 +275,7 @@ Actors:
 		Owner: Nod
 		Health: 100
 		Facing: 99
-	Actor45: e1
+	fleeing_e1: e1
 		Location: 53,3
 		Owner: player
 		Health: 100
@@ -548,7 +548,7 @@ Actors:
 	Actor139: waypoint
 		Location: 31,9
 		Owner: Neutral
-	Actor140: waypoint
+	para_start: waypoint
 		Location: 16,15
 		Owner: Neutral
 	Actor141: waypoint
@@ -575,13 +575,13 @@ Actors:
 	Actor148: waypoint
 		Location: 64,4
 		Owner: Neutral
-	Actor149: waypoint
+	para_end_1: waypoint
 		Location: 31,7
 		Owner: Neutral
 	Actor150: waypoint
 		Location: 61,25
 		Owner: Neutral
-	Actor151: waypoint
+	para_end_2: waypoint
 		Location: 34,7
 		Owner: Neutral
 	Actor152: waypoint
@@ -831,6 +831,67 @@ Rules:
 		ScriptUpgradesCache:
 			Upgrades: tower, tower.vulcan
 		-StartGameNotification:
+		GlobalLightingPaletteEffect:
+			Ambient: 0.88
+			Green: 0.88
+			Blue: 0.88
+	^Vehicle:
+		Tooltip:
+			GenericVisibility: Enemy
+			ShowOwnerRow: false
+	^Infantry:
+		Tooltip:
+			GenericVisibility: Enemy
+			ShowOwnerRow: false
+	^Building:
+		Tooltip:
+			GenericVisibility: Enemy
+			ShowOwnerRow: false
+	GARADR:
+		Buildable:
+			Prerequisites: ~disabled
+	GATECH:
+		Buildable:
+			Prerequisites: ~disabled
+	GAPLUG:
+		Buildable:
+			Prerequisites: ~disabled
+	GAWEAP:
+		Buildable:
+			Prerequisites: ~disabled
+	GAHPAD:
+		Buildable:
+			Prerequisites: ~disabled
+	GASILO:
+		Buildable:
+			Prerequisites: ~disabled
+	GAWALL:
+		Buildable:
+			Prerequisites: ~disabled
+	GACTWR:
+		Buildable:
+			Prerequisites: ~disabled
+	GAVULC:
+		Buildable:
+			Prerequisites: ~disabled
+	GAROCK:
+		Buildable:
+			Prerequisites: ~disabled
+	GACSAM:
+		Buildable:
+			Prerequisites: ~disabled
+	GAPOWRUP:
+		Buildable:
+			Prerequisites: ~disabled
+	NAPULS:
+		Buildable:
+			Prerequisites: ~disabled
+	GADEPT:
+		Buildable:
+			Prerequisites: ~disabled
+	GAPLUG3:
+		Buildable:
+			Prerequisites: ~disabled
 
 Sequences:
 
