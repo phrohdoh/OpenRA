@@ -249,6 +249,7 @@
     <Compile Include="Graphics\TerrainSpriteLayer.cs" />
     <Compile Include="Map\ProjectedCellRegion.cs" />
     <Compile Include="Map\MapCoordsRegion.cs" />
+    <Compile Include="FileSystem\DrsArchive.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\D2kSoundResources.cs" />
