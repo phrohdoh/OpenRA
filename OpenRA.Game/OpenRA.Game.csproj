@@ -244,6 +244,7 @@
     <Compile Include="Renderer.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="GameSpeed.cs" />
+    <Compile Include="FileSystem\DrsArchive.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\D2kSoundResources.cs" />
