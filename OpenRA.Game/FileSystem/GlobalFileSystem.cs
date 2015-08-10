@@ -107,6 +107,8 @@ namespace OpenRA.FileSystem
 				return new BagFile(filename, order);
 			if (filename.EndsWith(".hdr", StringComparison.InvariantCultureIgnoreCase))
 				return new InstallShieldCABExtractor(filename, order);
+			if (filename.EndsWith(".drs", StringComparison.InvariantCultureIgnoreCase))
+				return new DrsArchive(filename, order);
 
 			return new Folder(filename, order);
 		}
