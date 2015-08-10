@@ -20,6 +20,7 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 		class GenieSlpFrame : ISpriteFrame
 		{
 			const byte DEFAULT_INDEX = 0;
+			const byte PLAYER_INDEX = 1;
 
 			public Size Size { get; private set; }
 			public Size FrameSize { get; private set; }
@@ -93,7 +94,7 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 
 					case 0x06: // Copy & Transform
 						for (uint i = 0, cmdLen = GetTopNibblePlusNext(currByte, stream); i < cmdLen; i++)
-							rowData[rowPosX++] = GetSingleByte(stream);
+							rowData[rowPosX++] = GetRealPlayerColorIndex(GetSingleByte(stream));
 						break;
 
 					case 0x7: // Fill Block
@@ -108,7 +109,7 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 					case 0xa: // Transform Block (player color fill block?)
 						{
 							var cmdLen = GetTopNibbleOrNext(currByte, stream);
-							var fill = GetSingleByte(stream);
+							var fill = GetRealPlayerColorIndex(GetSingleByte(stream));
 							for (var i = 0; i < cmdLen; i++)
 								rowData[rowPosX++] = fill;
 						}
@@ -157,6 +158,8 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 
 				return length == 0 ? GetSingleByte(stream) : (uint)length;
 			}
+
+			static byte GetRealPlayerColorIndex(byte input) { return (byte)(input + PLAYER_INDEX * 16); }
 		}
 
 		class GenieSlpFrameHeader
