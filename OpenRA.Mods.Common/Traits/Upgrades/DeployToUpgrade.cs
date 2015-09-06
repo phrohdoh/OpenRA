@@ -59,6 +59,7 @@ namespace OpenRA.Mods.Common.Traits
 		readonly Lazy<ISpriteBody> body;
 
 		bool isUpgraded;
+		bool isTransitioning;
 
 		public DeployToUpgrade(Actor self, DeployToUpgradeInfo info)
 		{
@@ -92,11 +93,15 @@ namespace OpenRA.Mods.Common.Traits
 			if (!OnValidTerrain())
 				return;
 
+			if (isTransitioning)
+				return;
+
 			if (isUpgraded)
 			{
 				// Play undeploy animation and after that revoke the upgrades
 				self.QueueActivity(false, new CallFunc(() =>
 				{
+					isTransitioning = true;
 					if (!string.IsNullOrEmpty(info.UndeploySound))
 						Sound.Play(info.UndeploySound, self.CenterPosition);
 
@@ -121,11 +126,13 @@ namespace OpenRA.Mods.Common.Traits
 					self.QueueActivity(new Turn(self, info.Facing));
 
 				// Grant the upgrade
-				self.QueueActivity(new CallFunc(GrantUpgrades));
+				//self.QueueActivity(new CallFunc(GrantUpgrades));
 
 				// Play deploy sound and animation
 				self.QueueActivity(new CallFunc(() =>
 				{
+					isTransitioning = true;
+					GrantUpgrades(); // Why were we doing this in its own callfun above?
 					if (!string.IsNullOrEmpty(info.DeploySound))
 						Sound.Play(info.DeploySound, self.CenterPosition);
 
@@ -138,7 +145,8 @@ namespace OpenRA.Mods.Common.Traits
 				}));
 			}
 
-			isUpgraded = !isUpgraded;
+			// to queue or not to queue?
+			self.QueueActivity(new CallFunc(() => { isTransitioning = false; }));
 		}
 
 		bool OnValidTerrain()
@@ -160,12 +168,16 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			foreach (var up in info.Upgrades)
 				manager.GrantUpgrade(self, up, this);
+
+			isUpgraded = true;
 		}
 
 		void RevokeUpgrades()
 		{
 			foreach (var up in info.Upgrades)
 				manager.RevokeUpgrade(self, up, this);
+
+			isUpgraded = false;
 		}
 	}
 }
