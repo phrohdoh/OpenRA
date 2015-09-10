@@ -1,0 +1,21 @@
+^Palettes:
+	PaletteFromFile@mouse:
+		Name: mouse
+		Filename: mousepal.pal
+	PaletteFromJascFile@playertem:
+		Name: player
+		Tileset: TEMPERATE
+		Filename: 50500.bin
+		ShadowIndex: 1
+	PaletteFromCurrentTileset:
+		Name: terrain
+	PaletteFromFile@chrome:
+		Name: chrome
+		Filename: cameo.pal
+		AllowModifiers: false
+		ShadowIndex: 242
+	PlayerColorPalette:
+		BasePalette: player
+		RemapIndex: 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+	MenuPaletteEffect:
+
