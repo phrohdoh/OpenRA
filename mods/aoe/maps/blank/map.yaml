@@ -1,0 +1,56 @@
+MapFormat: 7
+
+RequiresMod: aoe
+
+Title: Blank
+
+Description: Placeholder
+
+Author: Matthias Mailänder
+
+Tileset: TEMPERATE
+
+MapSize: 128,128
+
+Bounds: 16,16,96,96
+
+Visibility: Lobby
+
+Type: Conquest
+
+Videos:
+
+Options:
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+
+Actors:
+
+Smudges:
+
+Rules:
+	World:
+		-StartGameNotification:
+		-SpawnMPUnits:
+		-MPStartLocations:
+		MusicPlaylist:
+			BackgroundMusic: intro
+
+Sequences:
+
+VoxelSequences:
+
+Weapons:
+
+Voices:
+
+Notifications:
+
+Translations:

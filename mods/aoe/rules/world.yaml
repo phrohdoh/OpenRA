@@ -1,0 +1,30 @@
+^BaseWorld:
+	Inherits: ^Palettes
+	AlwaysVisible:
+	ScreenMap:
+	ActorMap:
+	LoadWidgetAtGameStart:
+	Faction@DummyFaction:
+		Name: DummyFaction
+		InternalName: dummyFaction
+	TerrainGeometryOverlay:
+
+World:
+	Inherits: ^BaseWorld
+	ChatCommands:
+	DevCommands:
+	PlayerCommands:
+	HelpCommand:
+	DomainIndex:
+	PathfinderDebugOverlay:
+	PathFinder:
+	ValidateOrder:
+	DebugPauseState:
+	StartGameNotification:
+	ObjectivesPanel:
+		PanelName: SKIRMISH_STATS
+
+EditorWorld:
+	Inherits: ^BaseWorld
+	EditorActorLayer:
+
