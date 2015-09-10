@@ -11,6 +11,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
 using OpenRA.Graphics;
 
 namespace OpenRA.Mods.Common.SpriteLoaders
@@ -33,20 +35,30 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 				Size = FrameSize = new Size(header.Width, header.Height);
 				Offset = float2.Zero;
 
-				stream.Position = header.CommandTableOffset;
+				var skipLeft = new ushort[header.Height];
+				var skipRight = new ushort[header.Height];
+				for (var i = 0; i < header.Height; i++)
+				{
+					skipLeft[i] = stream.ReadUInt16();
+					skipRight[i] = stream.ReadUInt16();
+				}
 
 				var frameData = new List<byte[]>();
 
 				for (var y = 0; y < header.Height; y++)
-					frameData.Add(ReadRowCommands(stream, header));
+				{
+					stream.Position = header.RowCommandOffsets[y];
+					frameData.Add(ReadRowCommands(stream, header, skipLeft[y]));
+				}
 
+				Data = frameData.SelectMany(x => x).ToArray();
 			}
 
-			static byte[] ReadRowCommands(Stream stream, GenieSlpFrameHeader header)
+			static byte[] ReadRowCommands(Stream stream, GenieSlpFrameHeader header, ushort skipLeft)
 			{
 				var rowData = new List<byte>();
 				for (var x = 0; x < header.Width; x++)
-					rowData[x] = DEFAULT_INDEX;
+					rowData.Add(DEFAULT_INDEX);
 
 				if (header.LeftSkip == 0x8000 || header.RightSkip == 0x8000)
 				{
@@ -54,8 +66,8 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 					return rowData.ToArray();
 				}
 
-				var opcode = 0xf;
-				var rowPosX = 0;
+				int opcode;
+				var rowPosX = skipLeft;
 
 				do
 				{
@@ -89,11 +101,11 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 						break;
 
 					case 0x03: // Skip Pixels (long)
-						rowPosX += GetTopNibblePlusNext(currByte);
+						rowPosX += (ushort)GetTopNibblePlusNext(currByte, stream);
 						break;
 
 					case 0x06: // Copy & Transform
-						for (uint i = 0, cmdLen = GetTopNibblePlusNext(currByte, stream); i < cmdLen; i++)
+						for (uint i = 0, cmdLen = GetTopNibbleOrNext(currByte, stream); i < cmdLen; i++)
 							rowData[rowPosX++] = GetRealPlayerColorIndex(GetSingleByte(stream));
 						break;
 
@@ -210,17 +222,17 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 		{
 			var pos = stream.Position;
 			var test = stream.ReadASCII(32);
+			stream.Position = pos;
 
 			// SWGB -> 2.0( / 2.0N
 			// CC   -> 2.0(
 			// AoE  -> 2.0N
-			if (!test.StartsWith("2.0N") || !test.StartsWith("2.0("))
+			if (!test.StartsWith("2.0N") && !test.StartsWith("2.0("))
 				return false;
 
-			if (!test.EndsWith("\0\0\0ArtDesk1.00 SLP Writer\0"))
+			if (!test.EndsWith("\0\0\0ArtDesk1.00 SLP Writer\0") && !test.EndsWith("\0\0\0RGE RLE shape file\0\0\0\0\0\0"))
 				return false;
 
-			stream.Position = pos;
 			return true;
 		}
 
