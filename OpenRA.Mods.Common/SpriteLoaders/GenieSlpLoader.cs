@@ -18,6 +18,20 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 {
 	public class GenieSlpLoader : ISpriteLoader
 	{
+		public class GenieSlpHeader
+		{
+			public readonly string Version;
+			public readonly int FrameCount;
+			public readonly string Comment;
+
+			public GenieSlpHeader(Stream stream)
+			{
+				Version = stream.ReadASCII(4);
+				FrameCount = stream.ReadInt32();
+				Comment = stream.ReadASCII(24);
+			}
+		}
+
 		class GenieSlpFrame : ISpriteFrame
 		{
 			const byte DEFAULT_INDEX = 0;
@@ -238,16 +252,15 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 		static GenieSlpFrame[] ParseFrames(Stream stream)
 		{
 			var pos = stream.Position;
-			stream.Position += 4;
-			var frameCount = stream.ReadInt32();
-			stream.Position += 24;
 
-			var frameHeaders = new GenieSlpFrameHeader[frameCount];
-			for (var i = 0; i < frameCount; i++)
+			var header = new GenieSlpHeader(stream);
+
+			var frameHeaders = new GenieSlpFrameHeader[header.FrameCount];
+			for (var i = 0; i < header.FrameCount; i++)
 				frameHeaders[i] = new GenieSlpFrameHeader(stream);
 
-			var frames = new GenieSlpFrame[frameCount];
-			for (var i = 0; i < frameCount; i++)
+			var frames = new GenieSlpFrame[header.FrameCount];
+			for (var i = 0; i < header.FrameCount; i++)
 				frames[i] = new GenieSlpFrame(stream, frameHeaders[i]);
 
 			stream.Position = pos;
