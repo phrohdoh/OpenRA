@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using OpenRA.Graphics;
 
 namespace OpenRA.Mods.Common.SpriteLoaders
@@ -48,19 +47,19 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 				for (var y = 0; y < header.Height; y++)
 				{
 					stream.Position = header.RowCommandOffsets[y];
-					frameData.Add(ReadRowCommands(stream, header, skipLeft[y]));
+					frameData.Add(ReadRowCommands(stream, header, skipLeft[y], skipRight[y]));
 				}
 
 				Data = frameData.SelectMany(x => x).ToArray();
 			}
 
-			static byte[] ReadRowCommands(Stream stream, GenieSlpFrameHeader header, ushort skipLeft)
+			static byte[] ReadRowCommands(Stream stream, GenieSlpFrameHeader header, ushort skipLeft, ushort skipRight)
 			{
 				var rowData = new List<byte>();
 				for (var x = 0; x < header.Width; x++)
 					rowData.Add(DEFAULT_INDEX);
 
-				if (header.LeftSkip == 0x8000 || header.RightSkip == 0x8000)
+				if (skipLeft == 0x8000 || skipRight == 0x8000)
 				{
 					stream.Position++;
 					return rowData.ToArray();
@@ -230,7 +229,7 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 			if (!test.StartsWith("2.0N") && !test.StartsWith("2.0("))
 				return false;
 
-			if (!test.EndsWith("\0\0\0ArtDesk1.00 SLP Writer\0") && !test.EndsWith("\0\0\0RGE RLE shape file\0\0\0\0\0\0"))
+			if (!test.EndsWith("\0\0\0ArtDesk 1.00 SLP Writer\0") && !test.EndsWith("\0\0\0RGE RLE shape file\0\0\0\0\0\0"))
 				return false;
 
 			return true;

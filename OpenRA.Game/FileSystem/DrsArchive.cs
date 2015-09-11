@@ -120,8 +120,8 @@ namespace OpenRA.FileSystem
 			stream.Seek(64, SeekOrigin.Begin);
 
 			var temp = stream.ReadASCII(4);
-			var copyrightSize = temp == "swgb" ? 60 : 40;
-			GameVersion = temp == "swgb" ? temp : "aoe";
+			var copyrightSize = temp == "swbg" ? 60 : 40;
+			GameVersion = temp == "swbg" ? temp : "aoe";
 			stream.Seek(pos, SeekOrigin.Begin);
 
 			Copyright = stream.ReadASCII(copyrightSize);
@@ -141,9 +141,13 @@ namespace OpenRA.FileSystem
 		public DrsTable(Stream stream)
 		{
 			stream.Position += 1;
-			Filetype = stream.ReadASCII(3);
+			var fileType = stream.ReadASCII(3);
 			DataOffset = stream.ReadInt32();
 			FileCount = stream.ReadInt32();
+
+			var arr = fileType.ToCharArray();
+			Array.Reverse(arr);
+			Filetype = new string(arr);
 		}
 	}
 
@@ -166,8 +170,9 @@ namespace OpenRA.FileSystem
 			stream.Seek(DataOffset, SeekOrigin.Begin);
 			Data = stream.ReadBytes(FileSize);
 			stream.Seek(pos, SeekOrigin.Begin);
-
-			GeneratedName = FileID.ToString() + table.Filetype;
+			
+			var format = "D{0}".F(table.FileCount >= 1000 ? "4" : "3");
+			GeneratedName = "{0}.{1}".F(FileID.ToString(format), table.Filetype);
 		}
 	}
 }
