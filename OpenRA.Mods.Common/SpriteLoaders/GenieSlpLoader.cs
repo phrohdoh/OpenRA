@@ -74,10 +74,7 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 					rowData.Add(DEFAULT_INDEX);
 
 				if (skipLeft == 0x8000 || skipRight == 0x8000)
-				{
-					stream.Position++;
 					return rowData.ToArray();
-				}
 
 				int opcode;
 				var rowPosX = skipLeft;
