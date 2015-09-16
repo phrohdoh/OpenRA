@@ -34,7 +34,9 @@ namespace OpenRA.Mods.TS.Traits
 	public class DamageableRegrowingCellsLayer : ITick, IWorldLoaded
 	{
 		readonly DamageableRegrowingCellsLayerInfo info;
-//		readonly TileSet tileset;
+		readonly World world;
+		readonly WorldRenderer wr;
+		readonly TileSet tileSet;
 
 		Dictionary<string, string> cellReplacements = new Dictionary<string, string>();
 
@@ -43,35 +45,46 @@ namespace OpenRA.Mods.TS.Traits
 
 		public DamageableRegrowingCellsLayer(Actor self, DamageableRegrowingCellsLayerInfo info)
 		{
+			world = self.World;
 			this.info = info;
 			ticksSinceLastRegrowth = info.RegrowthDelay;
-
-//			tileset = self.World.Map.Rules.TileSets[self.World.Map.Tileset];
 		}
 			
 		void IWorldLoaded.WorldLoaded(World w, WorldRenderer wr)
 		{
-//			var cells = w.Map.AllCells;
+			this.wr = wr;
+			tileSet = wr.World.TileSet;
 
 			foreach (var kv in info.ReplaceCellTypes)
 			{
-				// TODO: cellReplacements should be <ushort, string>
-				// by getting the ushort from the tileset definitions in this method when given a string type
-
-				foreach (var toReplace in kv.Key)
-				{
-					if (!cellReplacements.ContainsKey(toReplace))
-						cellReplacements.Add(toReplace, kv.Value);
+				foreach (var sourceType in kv.Key)
+					if (!cellReplacements.ContainsKey(sourceType))
+						cellReplacements.Add(sourceType, kv.Value);
 					else
-						cellReplacements[toReplace] = kv.Value;
-				}
+						cellReplacements[sourceType] = kv.Value;
 			}
-			/*
-			foreach (var cell in cells.Where(c => cellReplacements.ContainsKey(w.Map.MapTiles.Value[c].Type)))
-			{
-				
-			}
-			*/
+
+			foreach (var cell in w.Map.AllCells.Where(IsDesiredCell))
+				ReplaceCellWithOther(cell);
+		}
+
+		void ReplaceCellWithOther(CPos cell)
+		{
+			
+		}
+
+		// TODO: Generalize this and use this to get kv.key info
+		bool IsDesiredCell(CPos cell)
+		{
+			var tile = tileSet.GetTileInfo(world.Map.MapTiles.Value[cell]);
+			if (tile == null)
+				return false;
+
+			var index = world.Map.GetTerrainIndex(cell);
+			if (index == byte.MaxValue)
+				return false;
+
+			return tileSet[index].Type == tile.TerrainType;
 		}
 
 		public bool DamageCell(CPos cell, int damage)
@@ -95,7 +108,7 @@ namespace OpenRA.Mods.TS.Traits
 			if (--ticksSinceLastRegrowth <= 0)
 			{
 				ticksSinceLastRegrowth = info.RegrowthDelay;
-				// todo: regrowice
+				// todo: regrow ice
 			}
 		}
 	}
