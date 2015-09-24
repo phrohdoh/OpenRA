@@ -744,10 +744,10 @@ atesla:
 		Armaments: primary
 		MaxCharges: 3
 		ReloadTime: 60
+		ChargeAudio: bpripow.wav
 	Power:
 		Amount: -75
 	AutoTarget:
-	-WithSpriteBody:
 	RequiresPower:
 	WithIdleOverlay@normal:
 		Sequence: idle-normal
@@ -755,32 +755,33 @@ atesla:
 	WithRangeCircle:
 		Range: 8c0
 		Type: prismcannon
-	QuantizeFacingsFromSequence:
-	RenderSprites:
-		ChargeAudio: bpripow.wav
-	AutoSelectionSize:
 
 power:
+	AlwaysVisible:
 	Tooltip:
 		Name: Power Plant
 		Description: Power Plant
 
 refinery:
+	AlwaysVisible:
 	Tooltip:
 		Name: Refinery
 		Description: Refinery
 
 barracks:
+	AlwaysVisible:
 	Tooltip:
 		Name: Infantry Production
 		Description: Infantry Production
 
 radar:
+	AlwaysVisible:
 	Tooltip:
 		Name: Radar
 		Description: Radar
 
 repairpad:
+	AlwaysVisible:
 	Tooltip:
 		Name: Service Depot
 		Description: Service Depot

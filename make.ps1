@@ -132,14 +132,8 @@ elseif ($command -eq "test")
 	if (Test-Path OpenRA.Utility.exe)
 	{
 		echo "Testing mods..."
-		echo "Testing Red Alert mod MiniYAML..."
-		./OpenRA.Utility.exe ra --check-yaml
-		echo "Testing Tiberian Dawn mod MiniYAML..."
-		./OpenRA.Utility.exe cnc --check-yaml
-		echo "Testing Dune 2000 mod MiniYAML..."
-		./OpenRA.Utility.exe d2k --check-yaml
-		echo "Testing Tiberian Sun mod MiniYAML..."
-		./OpenRA.Utility.exe ts --check-yaml
+		echo "Testing Red Alert 2 mod MiniYAML..."
+		./OpenRA.Utility.exe ra2 --check-yaml
 	}
 	else
 	{

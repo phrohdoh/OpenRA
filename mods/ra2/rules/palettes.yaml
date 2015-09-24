@@ -11,7 +11,7 @@
 	PaletteFromFile@playerurb:
 		Name: player
 		Tileset: URBAN
-		Filename: unittem.pal
+		Filename: uniturb.pal
 		ShadowIndex: 1
 	PaletteFromFile@playersno:
 		Name: player
@@ -49,8 +49,8 @@
 		Name: colorpicker
 		Filename: unittem.pal
 		AllowModifiers: false
-	PaletteFromFile@ore:
-		Name: ore
+	PaletteFromFile@resource:
+		Name: resource
 		Filename: temperat.pal
 		ShadowIndex: 1
 	PaletteFromRGBA@shadow:
@@ -65,6 +65,12 @@
 		G: 0
 		B: 0
 		A: 140
+	PaletteFromRGBA@invuln:
+		Name: invuln
+		R: 128
+		G: 0
+		B: 0
+		A: 128
 	PaletteFromRGBA@highlight:
 		Name: highlight
 		R: 255

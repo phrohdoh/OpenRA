@@ -26,6 +26,10 @@ engineer:
 		Range: 4c0
 	Voiced:
 		VoiceSet: AlliedEngineerVoice
+	Guard:
+		Voice: Action
+	AttackMove:
+		Voice: Action
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 
@@ -98,21 +102,21 @@ e1:
 		Voice: Attack
 	Armament@primary:
 		Weapon: M60
-		UpgradeTypes: deployed
+		UpgradeTypes: eliteweapon
 		UpgradeMaxEnabledLevel: 0
 		UpgradeMaxAcceptedLevel: 1
 	Armament@elite:
 		Weapon: M60E
 		UpgradeTypes: eliteweapon
 		UpgradeMinEnabledLevel: 1
-	Armament@deployed:
-		Weapon: para
-		UpgradeTypes: paraweapon
-		UpgradeMinEnabledLevel: 1
-	Armament@elite-deployed:
-		Weapon: paraE
-		UpgradeTypes: eliteparaweapon
-		UpgradeMinEnabledLevel: 1
+#	Armament@deployed:
+#		Weapon: para
+#		UpgradeTypes: deployed
+#		UpgradeMinEnabledLevel: 1
+#	Armament@elite-deployed:
+#		Weapon: paraE
+#		UpgradeTypes: eliteparaweapon
+#		UpgradeMinEnabledLevel: 1
 	WithInfantryBody:
 	Voiced:
 		VoiceSet: GIVoice
@@ -187,8 +191,21 @@ spy:
 	WithDisguisingInfantryBody:
 		IdleAnimations: idle1,idle2
 		StandAnimations: stand
+	WithDecoration@disguise:
+		Image: pips
+		Sequence: pip-disguise
+		Palette: effect
+		ReferencePoint: Top, Right
+		Offset: 4, -2
+		ZOffset: 256
+		UpgradeTypes: disguise
+		UpgradeMinEnabledLevel: 1
 	Voiced:
 		VoiceSet: SpyVoice
+	Guard:
+		Voice: Action
+	AttackMove:
+		Voice: Action
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 
@@ -284,6 +301,8 @@ jumpjet:
 		AltitudeVelocity: 83
 		Voice: Move
 		AirborneUpgrades: airborne
+		RepairBuildings:
+		RearmBuildings:
 	WithInfantryBody:
 		StandSequence: fly
 		MoveSequence: fly
