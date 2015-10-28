@@ -105,10 +105,8 @@ ChromeLayout:
 	./mods/ra2/chrome/ingame-infostats.yaml
 	./mods/ra2/chrome/ingame-observerstats.yaml
 	./mods/ra2/chrome/musicplayer.yaml
-	./mods/ra2/chrome/install.yaml
 	./mods/ra2/chrome/tooltips.yaml
 	# NOTE: Use RA chrome until RA2 has its own UI
-	# or needs to override something, like install.yaml.
 	./mods/ra/chrome/ingame.yaml
 	./mods/ra/chrome/ingame-observer.yaml
 	./mods/ra/chrome/ingame-chat.yaml
@@ -124,14 +122,19 @@ ChromeLayout:
 	./mods/ra/chrome/settings.yaml
 	./mods/ra/chrome/credits.yaml
 	./mods/ra/chrome/lobby.yaml
+	./mods/ra/chrome/lobby-players.yaml
+	./mods/ra/chrome/lobby-options.yaml
+	./mods/ra/chrome/lobby-music.yaml
 	./mods/ra/chrome/lobby-mappreview.yaml
-	./mods/ra/chrome/lobby-playerbin.yaml
-	./mods/ra/chrome/lobby-dialogs.yaml
+	./mods/ra/chrome/lobby-kickdialogs.yaml
+	./mods/ra/chrome/lobby-globalchat.yaml
+	./mods/ra/chrome/multiplayer.yaml
+	./mods/ra/chrome/multiplayer-browser.yaml
+	./mods/ra/chrome/multiplayer-createserver.yaml
+	./mods/ra/chrome/multiplayer-directconnect.yaml
+	./mods/ra/chrome/multiplayer-globalchat.yaml
 	./mods/ra/chrome/map-chooser.yaml
-	./mods/ra/chrome/create-server.yaml
-	./mods/ra/chrome/serverbrowser.yaml
 	./mods/ra/chrome/connection.yaml
-	./mods/ra/chrome/directconnect.yaml
 	./mods/ra/chrome/replaybrowser.yaml
 	./mods/ra/chrome/assetbrowser.yaml
 	./mods/ra/chrome/missionbrowser.yaml
@@ -157,8 +160,8 @@ TileSets:
 	./mods/ra2/tilesets/urban.yaml
 
 MapGrid:
+	Type: RectangularIsometric
 	TileSize: 60,30
-	TileShape: Diamond
 	SubCellsOffsets: 0,0,0, -256,128,0, 0,-128,0, 256,128,0
 	SubCellDefaultIndex: 2
 	MaximumTerrainHeight: 16
@@ -174,12 +177,10 @@ LoadScreen: LogoStripeLoadScreen
 	Text: Carving wooden nickels..., Preparing paratroopers..., Welcoming you to Texas..., Optimizing helium mix..., Receiving thoughts..., Igniting boosters...
 
 ContentInstaller:
-	MenuWidget: INSTALL_PANEL
-	MusicMenuWidget: INSTALL_MUSIC_PANEL
+	TestFiles: ^Content/ra2/ra2.mix, ^Content/ra2/language.mix
 	# TODO: Installing from CD doesn't work (because CAB)
 	#PackageToExtractFromCD: INSTALL\Game1.CAB:CRC32
 	#ExtractFilesFromCD: ra2.mix, language.mix, theme.mix,
-	TestFiles: ra2.mix, language.mix
 
 ServerTraits:
 	LobbyCommands
