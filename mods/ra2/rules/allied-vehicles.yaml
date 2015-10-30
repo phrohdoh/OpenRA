@@ -58,6 +58,7 @@ cmin:
 		SearchFromOrderRadius: 12
 		HarvestVoice: Move
 		DeliverVoice: Move
+	ChronoResourceDelivery:
 	Health:
 		HP: 1000
 	Armor:
