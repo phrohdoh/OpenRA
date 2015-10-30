@@ -98,6 +98,7 @@ Assemblies:
 	./mods/common/OpenRA.Mods.Common.dll
 	./mods/ra/OpenRA.Mods.RA.dll
 	./mods/ts/OpenRA.Mods.TS.dll
+    ./mods/ra2/OpenRA.Mods.RA2.dll
 
 ChromeLayout:
 	./mods/ra2/chrome/ingame-player.yaml

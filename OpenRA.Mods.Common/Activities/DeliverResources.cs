@@ -19,15 +19,20 @@ namespace OpenRA.Mods.Common.Activities
 	{
 		const int NextChooseTime = 100;
 
-		readonly IMove movement;
 		readonly Harvester harv;
 
 		bool isDocking;
 		int chosenTicks;
 
+		protected IMove Movement
+		{
+			get;
+			private set;
+		}
+
 		public DeliverResources(Actor self)
 		{
-			movement = self.Trait<IMove>();
+			Movement = self.Trait<IMove>();
 			harv = self.Trait<Harvester>();
 		}
 
@@ -64,11 +69,12 @@ namespace OpenRA.Mods.Common.Activities
 			if (self.Location != proc.Location + iao.DeliveryOffset)
 			{
 				var notify = self.TraitsImplementing<INotifyHarvesterAction>();
+				var dest = proc.Location + iao.DeliveryOffset;
 				var next = new DeliverResources(self);
 				foreach (var n in notify)
-					n.MovingToRefinery(self, proc.Location + iao.DeliveryOffset, next);
+					n.MovingToRefinery(self, dest, next);
 
-				return Util.SequenceActivities(movement.MoveTo(proc.Location + iao.DeliveryOffset, 0), this);
+				return MoveToRefinery(self, dest);
 			}
 
 			if (!isDocking)
@@ -78,6 +84,11 @@ namespace OpenRA.Mods.Common.Activities
 			}
 
 			return Util.SequenceActivities(new Wait(10), this);
+		}
+
+		protected virtual Activity MoveToRefinery(Actor self, CPos dest)
+		{
+			return Util.SequenceActivities(Movement.MoveTo(dest, 0), this);
 		}
 
 		// Cannot be cancelled

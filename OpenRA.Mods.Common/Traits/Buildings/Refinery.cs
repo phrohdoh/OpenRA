@@ -132,12 +132,12 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			if (!preventDock)
 			{
-				harv.QueueActivity(new CallFunc(() => dockedHarv = harv, false));
-				harv.QueueActivity(DockSequence(harv, self));
-				harv.QueueActivity(new CallFunc(() => dockedHarv = null, false));
+				dockOrder.Queue(new CallFunc(() => dockedHarv = harv, false));
+				dockOrder.Queue(DockSequence(harv, self));
+				dockOrder.Queue(new CallFunc(() => dockedHarv = null, false));
 			}
 
-			harv.QueueActivity(new CallFunc(() => harv.Trait<Harvester>().ContinueHarvesting(harv)));
+			dockOrder.Queue(new CallFunc(() => harv.Trait<Harvester>().ContinueHarvesting(harv)));
 		}
 
 		public void OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
