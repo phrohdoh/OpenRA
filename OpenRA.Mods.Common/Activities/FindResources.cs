@@ -54,7 +54,7 @@ namespace OpenRA.Mods.Common.Activities
 			if (IsCanceled || NextActivity != null)
 				return NextActivity;
 
-			var deliver = new DeliverResources(self);
+			var deliver = harv.DeliverResources(self);
 
 			if (harv.IsFull)
 				return Util.SequenceActivities(deliver, NextActivity);

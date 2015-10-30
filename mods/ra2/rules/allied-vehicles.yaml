@@ -50,7 +50,7 @@ cmin:
 		Description: Gathers Ore.\n  Unarmed\nSpecial ability: Can teleport to own refineries
 	Selectable:
 		Bounds: 64, 52, 0, -6
-	Harvester:
+	ChronoHarvester:
 		Capacity: 20
 		Resources: Ore, Gems
 		UnloadTicksPerBale: 1

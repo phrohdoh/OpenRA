@@ -60,7 +60,7 @@ namespace OpenRA.Mods.Common.Traits
 		[VoiceReference] public readonly string HarvestVoice = "Action";
 		[VoiceReference] public readonly string DeliverVoice = "Action";
 
-		public object Create(ActorInitializer init) { return new Harvester(init.Self, this); }
+		virtual public object Create(ActorInitializer init) { return new Harvester(init.Self, this); }
 	}
 
 	public class Harvester : IIssueOrder, IResolveOrder, IPips,
@@ -259,7 +259,7 @@ namespace OpenRA.Mods.Common.Traits
 			// Are we not empty? Deliver resources:
 			if (!IsEmpty)
 			{
-				self.QueueActivity(new DeliverResources(self));
+				self.QueueActivity(DeliverResources(self));
 				return;
 			}
 
@@ -392,7 +392,7 @@ namespace OpenRA.Mods.Common.Traits
 
 				self.CancelActivity();
 
-				var next = new DeliverResources(self);
+				var next = DeliverResources(self);
 				self.QueueActivity(next);
 
 				var notify = self.TraitsImplementing<INotifyHarvesterAction>();
@@ -479,6 +479,11 @@ namespace OpenRA.Mods.Common.Traits
 
 				return true;
 			}
+		}
+
+		public virtual Activity DeliverResources(Actor self)
+		{
+			return new DeliverResources(self);
 		}
 	}
 }
