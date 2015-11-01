@@ -222,6 +222,8 @@ ElectricBolt:
 			Steel: 50
 			Concrete: 50
 		DamageTypes: ElectroDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: tesla_impact
 
 ElectricBoltE:
 	Range: 5c0
@@ -243,6 +245,8 @@ ElectricBoltE:
 			Steel: 50
 			Concrete: 50
 		DamageTypes: ElectroDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: tesla_impact
 
 IvanBomber:
 	ReloadDelay: 50
