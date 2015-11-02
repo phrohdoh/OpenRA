@@ -188,6 +188,9 @@ tractor: #Unused
 sapc:
 	idle: trs
 
+trucka:
+	idle:
+
 dtruck:
 	idle: trucka
 
