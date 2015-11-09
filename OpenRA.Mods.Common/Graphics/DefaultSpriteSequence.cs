@@ -26,7 +26,100 @@ namespace OpenRA.Mods.Common.Graphics
 			return new DefaultSpriteSequence(modData, tileSet, cache, this, sequence, animation, info);
 		}
 
-		public IReadOnlyDictionary<string, ISpriteSequence> ParseSequences(ModData modData, TileSet tileSet, SpriteCache cache, MiniYamlNode node)
+//		/* new
+		public IReadOnlyDictionary<string, ISpriteSequence> ParseSequences(ModData modData, TileSet tileSet, SpriteCache cache,
+			MiniYaml node, string name, Dictionary<string, MiniYaml> allSequences)
+		{
+			var sequences = new Dictionary<string, ISpriteSequence>();
+
+			try
+			{
+				var nodes = node.ToDictionary();
+
+				MiniYaml defaults;
+				if (nodes.TryGetValue("Defaults", out defaults))
+				{
+					nodes.Remove("Defaults");
+					nodes = nodes.ToDictionary(kv => kv.Key, kv => MiniYaml.MergeStrict(kv.Value, defaults));
+
+					foreach (var n in nodes)
+						n.Value.Value = n.Value.Value ?? defaults.Value;
+				}
+
+				Console.WriteLine(name + ":");
+				node = MiniYaml.FromDictionary2(nodes);
+
+				var allParents = new HashSet<string>();
+				var abstractType = name.StartsWith("^");
+
+				allParents.Add(name);
+
+				var mergedNode = MergeWithParents(node, allSequences, allParents).ToDictionary();
+
+				foreach (var kvp in mergedNode)
+				{
+					if (kvp.Key[0] == '-')
+						throw new YamlException("Bogus sequence removal: " + kvp.Key);
+
+					if (kvp.Key != "Inherits" && !kvp.Key.StartsWith("Inherits@"))
+					{
+						try
+						{
+							sequences.Add(kvp.Key, CreateSequence(modData, tileSet, cache, kvp.Key, kvp.Key, kvp.Value));
+						}
+						catch (FieldLoader.MissingFieldsException e)
+						{
+							if (!abstractType)
+								throw new YamlException(e.Message);
+						}
+					}
+				}
+			}
+			catch (YamlException e)
+			{
+				throw new YamlException("Sequence `{0}`: {1}".F(name, e.Message));
+			}
+			catch (FileNotFoundException ex)
+			{
+				// Eat the FileNotFound exceptions from missing sprites
+				OnMissingSpriteError(ex.Message);
+			}
+
+			return new ReadOnlyDictionary<string, ISpriteSequence>(sequences);
+		}
+
+		static Dictionary<string, MiniYaml> GetParents(MiniYaml node, Dictionary<string, MiniYaml> allSequences)
+		{
+			return node.Nodes.Where(n => n.Key == "Inherits" || n.Key.StartsWith("Inherits@"))
+				.ToDictionary(n => n.Value.Value, n =>
+					{
+						MiniYaml i;
+						if (!allSequences.TryGetValue(n.Value.Value, out i))
+							throw new YamlException(
+								"Bogus inheritance -- parent type {0} does not exist".F(n.Value.Value));
+
+						return i;
+					});
+		}
+
+		static MiniYaml MergeWithParents(MiniYaml node, Dictionary<string, MiniYaml> allSequences, HashSet<string> allParents)
+		{
+			var parents = GetParents(node, allSequences);
+
+			foreach (var kv in parents)
+			{
+				if (!allParents.Add(kv.Key))
+					throw new YamlException(
+						"Bogus inheritance -- duplicate inheritance of {0}.".F(kv.Key));
+
+				node = MiniYaml.MergeStrict(node, MergeWithParents(kv.Value, allSequences, allParents));
+			}
+
+			return node;
+		}
+//		new end */
+
+		public IReadOnlyDictionary<string, ISpriteSequence> ParseSequences(ModData modData, TileSet tileSet, SpriteCache cache, MiniYamlNode node, List<MiniYamlNode> allSequences)
 		{
 			var sequences = new Dictionary<string, ISpriteSequence>();
 			var nodes = node.Value.ToDictionary();

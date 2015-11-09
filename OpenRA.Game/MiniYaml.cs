@@ -133,6 +133,11 @@ namespace OpenRA
 			return new MiniYaml(null, dict.Select(x => new MiniYamlNode(x.Key.ToString(), new MiniYaml(x.Value.ToString()))).ToList());
 		}
 
+		public static MiniYaml FromDictionary2(Dictionary<string, MiniYaml> dict)
+		{
+			return new MiniYaml(null, dict.Select(x => new MiniYamlNode(x.Key, new MiniYaml(x.Value.Value))).ToList());
+		}
+
 		public static MiniYaml FromList<T>(List<T> list)
 		{
 			return new MiniYaml(null, list.Select(x => new MiniYamlNode(x.ToString(), new MiniYaml(null))).ToList());

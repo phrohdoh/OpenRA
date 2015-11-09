@@ -36,7 +36,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 			{
 				var ts = new TileSet(Game.ModData, t);
 				Console.WriteLine("Tileset: " + ts.Name);
-				var sc = new SpriteCache(modData.SpriteLoaders, new SheetBuilder(SheetType.Indexed));
+				//var sc = new SpriteCache(modData.SpriteLoaders, new SheetBuilder(SheetType.Indexed));
 				var sequenceFiles = modData.Manifest.Sequences;
 
 				var nodes = sequenceFiles
@@ -44,7 +44,8 @@ namespace OpenRA.Mods.Common.UtilityCommands
 					.Aggregate(MiniYaml.MergeLiberal);
 
 				foreach (var n in nodes)
-					Game.ModData.SpriteSequenceLoader.ParseSequences(Game.ModData, ts, sc, n);
+					;
+					//Game.ModData.SpriteSequenceLoader.ParseSequences(Game.ModData, ts, sc, n);
 			}
 		}
 	}

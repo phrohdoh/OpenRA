@@ -40,7 +40,7 @@ namespace OpenRA.Graphics
 	public interface ISpriteSequenceLoader
 	{
 		Action<string> OnMissingSpriteError { get; set; }
-		IReadOnlyDictionary<string, ISpriteSequence> ParseSequences(ModData modData, TileSet tileSet, SpriteCache cache, MiniYamlNode node);
+		IReadOnlyDictionary<string, ISpriteSequence> ParseSequences(ModData modData, TileSet tileSet, SpriteCache cache, MiniYaml node, string name, Dictionary<string, MiniYaml> allSequences);
 	}
 
 	public class SequenceProvider
@@ -131,6 +131,17 @@ namespace OpenRA.Graphics
 				.Select(s => MiniYaml.FromFile(s))
 				.Aggregate(sequenceNodes, MiniYaml.MergeLiberal);
 
+			var allSequences = new Dictionary<string, MiniYaml>();
+			foreach (var n in nodes)
+			{
+				/*
+				if (allSequences.ContainsKey(n.Key))
+					continue;
+				*/
+
+				allSequences.Add(n.Key, n.Value);
+			}
+
 			var items = new Dictionary<string, UnitSequences>();
 			foreach (var n in nodes)
 			{
@@ -144,7 +155,8 @@ namespace OpenRA.Graphics
 					items.Add(node.Key, t);
 				else
 				{
-					t = Exts.Lazy(() => modData.SpriteSequenceLoader.ParseSequences(modData, tileSet, SpriteCache, node));
+					t = Exts.Lazy(() => modData.SpriteSequenceLoader.ParseSequences(modData, tileSet, SpriteCache, node.Value, node.Key, allSequences));
+					//t = Exts.Lazy(() => modData.SpriteSequenceLoader.ParseSequences(modData, tileSet, SpriteCache, node, nodes));
 					sequenceCache.Add(key, t);
 					items.Add(node.Key, t);
 				}
