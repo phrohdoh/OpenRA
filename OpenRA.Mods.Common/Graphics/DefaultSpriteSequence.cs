@@ -36,6 +36,8 @@ namespace OpenRA.Mods.Common.Graphics
 			{
 				var nodes = node.ToDictionary();
 
+				Console.WriteLine("Parsing sequences for `{0}`", name);
+
 				MiniYaml defaults;
 				if (nodes.TryGetValue("Defaults", out defaults))
 				{
@@ -46,7 +48,6 @@ namespace OpenRA.Mods.Common.Graphics
 						n.Value.Value = n.Value.Value ?? defaults.Value;
 				}
 
-				Console.WriteLine(name + ":");
 				node = MiniYaml.FromDictionary2(nodes);
 
 				var allParents = new HashSet<string>();
@@ -54,7 +55,7 @@ namespace OpenRA.Mods.Common.Graphics
 
 				allParents.Add(name);
 
-				var mergedNode = MergeWithParents(node, allSequences, allParents).ToDictionary();
+				var mergedNode = MergeWithParents(name, node, allSequences, allParents).ToDictionary();
 
 				foreach (var kvp in mergedNode)
 				{
@@ -102,9 +103,12 @@ namespace OpenRA.Mods.Common.Graphics
 					});
 		}
 
-		static MiniYaml MergeWithParents(MiniYaml node, Dictionary<string, MiniYaml> allSequences, HashSet<string> allParents)
+		static MiniYaml MergeWithParents(string name, MiniYaml node, Dictionary<string, MiniYaml> allSequences, HashSet<string> allParents)
 		{
 			var parents = GetParents(node, allSequences);
+
+			if (parents.Count > 0)
+				Console.WriteLine("Merging {0} with {1} parent(s)", name, parents.Count);
 
 			foreach (var kv in parents)
 			{
@@ -112,7 +116,7 @@ namespace OpenRA.Mods.Common.Graphics
 					throw new YamlException(
 						"Bogus inheritance -- duplicate inheritance of {0}.".F(kv.Key));
 
-				node = MiniYaml.MergeStrict(node, MergeWithParents(kv.Value, allSequences, allParents));
+				node = MiniYaml.MergeStrict(node, MergeWithParents(name, kv.Value, allSequences, allParents));
 			}
 
 			return node;
