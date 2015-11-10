@@ -60,6 +60,19 @@ namespace OpenRA.Graphics
 			if (!sequences.Value.TryGetValue(unitName, out unitSeq))
 				throw new InvalidOperationException("Unit `{0}` does not have any sequences defined.".F(unitName));
 
+			if (unitSeq.IsValueCreated)
+			{
+				var dict = unitSeq.Value;
+				Console.WriteLine("unitSeq:");
+				foreach (var k in dict.Keys.Select(kk => kk))
+				{
+					var v = dict[k];
+					Console.WriteLine("\tKey={0}, Value={1}", k, v.Name);
+				}
+			}
+			else
+				Console.WriteLine("unitSeq doesn't have a value.");
+
 			ISpriteSequence seq;
 			if (!unitSeq.Value.TryGetValue(sequenceName, out seq))
 				throw new InvalidOperationException("Unit `{0}` does not have a sequence named `{1}`".F(unitName, sequenceName));

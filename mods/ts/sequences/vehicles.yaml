@@ -4,8 +4,11 @@ mcv.gdi:
 mcv.nod:
 	icon: sidec02.mix:mcvicon
 
-apc:
+^apc.icon:
 	icon: apcicon
+
+apc:
+	Inherits@icon: ^apc.icon
 
 harv.gdi:
 	harvest: harvestr

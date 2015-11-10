@@ -1,5 +1,5 @@
 mcv:
-	Inherits@idle: ^idler
+	idle:
 
 harv:
 	idle:

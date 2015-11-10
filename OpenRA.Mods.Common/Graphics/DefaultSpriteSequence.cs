@@ -116,6 +116,8 @@ namespace OpenRA.Mods.Common.Graphics
 					throw new YamlException(
 						"Bogus inheritance -- duplicate inheritance of {0}.".F(kv.Key));
 
+				Console.WriteLine("\t{0}", kv.Key);
+
 				node = MiniYaml.MergeStrict(node, MergeWithParents(name, kv.Value, allSequences, allParents));
 			}
 
