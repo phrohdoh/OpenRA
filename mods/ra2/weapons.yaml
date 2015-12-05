@@ -1133,15 +1133,9 @@ MirageGun:
 			Concrete: 20
 		DamageTypes: FlameDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: medium_clsn
-		ImpactSound: gexp14a.wav
-		InvalidImpactTypes: Water
-	Warhead@3EffWater: CreateEffect
-		Explosion: small_watersplash
-		ImpactSound: gexpwasa.wav
-		ValidImpactTypes: Water
+		Explosion: iron_fx
 	Warhead@4Smu: LeaveSmudge
-		SmudgeType: SmallCrater, SmallScorch
+		SmudgeType: SmallScorch
 
 MirageGunE:
 	ReloadDelay: 80
@@ -1167,13 +1161,6 @@ MirageGunE:
 			Concrete: 20
 		DamageTypes: FlameDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: medium_clsn
-		ImpactSound: gexp14a.wav
-		InvalidImpactTypes: Water
-	Warhead@3EffWater: CreateEffect
-		Explosion: small_watersplash
-		ImpactSound: gexpwasa.wav
-		ValidImpactTypes: Water
+		Explosion: iron_fx
 	Warhead@4Smu: LeaveSmudge
-		SmudgeType: SmallCrater, SmallScorch
-
+		SmudgeType: SmallScorch
