@@ -243,7 +243,7 @@ namespace OpenRA
 
 			Console.WriteLine("Available mods:");
 			foreach (var mod in ModMetadata.AllMods)
-				Console.WriteLine("\t{0}: {1} ({2})", mod.Key, mod.Value.Title, mod.Value.Version);
+				Console.WriteLine("\t{0}: {1} ({2}) at {3}", mod.Key, mod.Value.Title, mod.Value.Version, Platform.UnresolvePath(mod.Value.BaseFilePath));
 
 			InitializeMod(Settings.Game.Mod, args);
 

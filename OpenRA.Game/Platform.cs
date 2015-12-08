@@ -108,6 +108,17 @@ namespace OpenRA
 			if (path.StartsWith("./") || path.StartsWith(".\\"))
 				path = GameDir + path.Substring(2);
 
+			if (path.Contains("@"))
+			{
+				var refIndex = path.IndexOf('@');
+				var modId = path.Substring(0, refIndex);
+				var file = path.Substring(refIndex + 1);
+
+				string modPath;
+				if (ModMetadata.ModPaths.TryGetValue(modId, out modPath))
+					path = Path.Combine(modPath, file);
+			}
+
 			return path;
 		}
 

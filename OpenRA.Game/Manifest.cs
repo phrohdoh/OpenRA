@@ -59,13 +59,13 @@ namespace OpenRA
 		readonly TypeDictionary modules = new TypeDictionary();
 		readonly Dictionary<string, MiniYaml> yaml;
 
-		public Manifest(string mod)
+		public Manifest(string modId)
 		{
-			var path = Platform.ResolvePath(".", "mods", mod, "mod.yaml");
+			var path = Path.Combine(ModMetadata.ModPaths[modId], "mod.yaml");
 			yaml = new MiniYaml(null, MiniYaml.FromFile(path)).ToDictionary();
 
 			Mod = FieldLoader.Load<ModMetadata>(yaml["Metadata"]);
-			Mod.Id = mod;
+			Mod.Id = modId;
 
 			// TODO: Use fieldloader
 			Folders = YamlList(yaml, "Folders", true);
@@ -104,8 +104,7 @@ namespace OpenRA
 			RequiresMods = yaml["RequiresMods"].ToDictionary(my => my.Value);
 
 			// Allow inherited mods to import parent maps.
-			var compat = new List<string>();
-			compat.Add(mod);
+			var compat = new List<string> { modId };
 
 			if (yaml.ContainsKey("SupportsMapsFrom"))
 				foreach (var c in yaml["SupportsMapsFrom"].Value.Split(','))
@@ -182,24 +181,18 @@ namespace OpenRA
 
 		static Dictionary<string, Manifest> LoadMods()
 		{
-			var basePath = Platform.ResolvePath(".", "mods");
-			var mods = Directory.GetDirectories(basePath)
-				.Select(x => x.Substring(basePath.Length + 1));
-
 			var ret = new Dictionary<string, Manifest>();
-			foreach (var mod in mods)
+			foreach (var modId in ModMetadata.ModPaths.Keys)
 			{
-				if (!File.Exists(Platform.ResolvePath(".", "mods", mod, "mod.yaml")))
-					continue;
-
+				var modPath = ModMetadata.ModPaths[modId];
 				try
 				{
-					var manifest = new Manifest(mod);
-					ret.Add(mod, manifest);
+					var manifest = new Manifest(modId);
+					ret.Add(modId, manifest);
 				}
 				catch (Exception ex)
 				{
-					Log.Write("debug", "An exception occurred while trying to load mod {0}:", mod);
+					Log.Write("debug", "An exception occurred while trying to load mod {0}:", modId);
 					Log.Write("debug", ex.ToString());
 				}
 			}
