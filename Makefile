@@ -42,8 +42,8 @@
 
 ############################## TOOLCHAIN ###############################
 #
-CSC         = dmcs
-CSFLAGS     = -nologo -warn:4 -codepage:utf8 -unsafe -warnaserror
+CSC         = csc_link # mono --debug /Users/thill/projects/csharp/roslyn/Binaries/Debug/csc.exe "$@"
+CSFLAGS     = /noconfig /unsafe /nologo
 DEFINE      = TRACE
 COMMON_LIBS = System.dll System.Core.dll System.Data.dll System.Data.DataSetExtensions.dll System.Drawing.dll System.Xml.dll thirdparty/download/ICSharpCode.SharpZipLib.dll thirdparty/download/FuzzyLogicLibrary.dll thirdparty/download/Mono.Nat.dll thirdparty/download/MaxMind.Db.dll thirdparty/download/MaxMind.GeoIP2.dll thirdparty/download/Eluant.dll thirdparty/download/SmarIrc4net.dll
 NUNIT_LIBS_PATH :=
@@ -51,9 +51,9 @@ NUNIT_LIBS  := $(NUNIT_LIBS_PATH)nunit.framework.dll
 
 DEBUG = true
 ifeq ($(DEBUG), $(filter $(DEBUG),false no n off 0))
-CSFLAGS   += -debug:pdbonly -optimize+
+CSFLAGS   += /debug:pdbonly /optimize+
 else
-CSFLAGS   += -debug:full -optimize-
+CSFLAGS   += /debug:full /optimize-
 DEFINE    := DEBUG;$(DEFINE)
 endif
 
