@@ -556,7 +556,7 @@
 	Health:
 		HP: 200
 	Armor:
-		Type: Concrete
+		Type: Wood
 
 ^Rock:
 	Inherits@1: ^SpriteActor
