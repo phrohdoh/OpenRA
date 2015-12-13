@@ -26,7 +26,7 @@ engineer:
 	RevealsShroud:
 		Range: 4c0
 	Voiced:
-		VoiceSet: AlliedEngineerVoice
+		VoiceSet: EngineerVoice
 	Guard:
 		Voice: Action
 	AttackMove:
