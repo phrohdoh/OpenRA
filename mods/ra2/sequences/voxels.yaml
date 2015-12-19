@@ -69,6 +69,42 @@ fv: #Has different turrets per unit thats inside,default is patriot
 	idle:
 	turret: fvtur
 
+fvrepair:
+	idle: fv
+	turret: fvtur2
+
+fvm60:
+	idle: fv
+	turret: fvtur1
+
+fvflakguy:
+	idle: fv
+	turret: fvtur1
+
+fvmp5:
+	idle: fv
+	turret: fvtur1
+
+fvawp:
+	idle: fv
+	turret: fvtur1
+
+fvelectricbolt:
+	idle: fv
+	turret: fvtur3
+
+fvnuke:
+	idle: fv
+	turret: fvtur3
+
+fvradbeam:
+	idle: fv
+	turret: fvtur3
+
+fvterror:
+	idle: fv
+	turret: fvtur3
+
 gtgcan:
 	turret: gtgcantur
 	barrel: gtgcanbarl
