@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OpenRA.Network;
@@ -150,6 +151,15 @@ namespace OpenRA
 		public static Order StartProduction(Actor subject, string item, int count)
 		{
 			return new Order("StartProduction", subject, false) { ExtraData = (uint)count, TargetString = item };
+		}
+		
+		public static Order[] StartProduction(Actor subject, string[] items, int count)
+		{
+			var temp = new List<Order>();
+			foreach (var item in items)
+				temp.Add(StartProduction(subject, item, count));
+				
+			return temp.ToArray();
 		}
 
 		public static Order PauseProduction(Actor subject, string item, bool pause)

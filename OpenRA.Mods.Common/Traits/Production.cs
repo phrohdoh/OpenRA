@@ -107,6 +107,10 @@ namespace OpenRA.Mods.Common.Traits
 
 				foreach (var t in newUnit.TraitsImplementing<INotifyBuildComplete>())
 					t.BuildingComplete(newUnit);
+					
+				var owningPlayerActor = self.Owner.PlayerActor;
+				foreach (var notifyAIPlayer in owningPlayerActor.TraitsImplementing<AI.INotifyTrainingComplete>())
+					notifyAIPlayer.OnTrainingComplete(owningPlayerActor, newUnit, self);
 			});
 		}
 

@@ -164,7 +164,7 @@ namespace OpenRA.Mods.Common.AI
 
 	public enum BuildingType { Building, Defense, Refinery }
 
-	public sealed class HackyAI : ITick, IBot, INotifyDamage
+	public sealed class HackyAI : ITick, IBot, INotifyDamage, AI.INotifyTrainingComplete
 	{
 		public MersenneTwister Random { get; private set; }
 		public readonly HackyAIInfo Info;
@@ -209,6 +209,8 @@ namespace OpenRA.Mods.Common.AI
 
 		// Units that the ai already knows about. Any unit not on this list needs to be given a role.
 		List<Actor> activeUnits = new List<Actor>();
+		
+		List<AITeamType> teamTypes = new List<AITeamType>();
 
 		public const int FeedbackTime = 30; // ticks; = a bit over 1s. must be >= netlag.
 
@@ -242,6 +244,8 @@ namespace OpenRA.Mods.Common.AI
 					&& unit.Info.HasTraitInfo<ITargetableInfo>();
 
 			unitCannotBeOrdered = a => a.Owner != Player || a.IsDead || !a.IsInWorld;
+			
+			teamTypes = init.Self.TraitsImplementing<AITeamType>().ToList();
 
 			foreach (var decision in info.PowerDecisions)
 				powerDecisions.Add(decision.OrderName, decision);
@@ -366,6 +370,16 @@ namespace OpenRA.Mods.Common.AI
 							return Map.Rules.Actors[unit.Key];
 
 			return null;
+		}
+		
+		ActorInfo ChooseUnitToBuild(ProductionQueue queue, string[] actorTypeChoices)
+		{
+			var buildableItems = queue.BuildableItems();
+			if (!buildableItems.Any())
+				return null
+				
+			var validItems = buildableItems.Where(bi => actorTypeChoices.Contains(bi.Name));
+			return validItems.RandomOrDefault(Game.CosmeticRandom);
 		}
 
 		int CountBuilding(string frac, Player owner)
@@ -748,6 +762,35 @@ namespace OpenRA.Mods.Common.AI
 				unitsHangingAroundTheBase.Clear();
 			}
 		}
+		
+		AITeamType[] TeamTypesOfCategory(string category)
+		{
+			return teamTypes.Where(tt => tt.Info.Category == category).ToArray();
+		}
+		
+		void TryToAttackWithTeamCategory(string category)
+		{
+			var allEnemyBaseBuilder = FindEnemyConstructionYards();
+			if (allEnemyBaseBuilder.Count == 0)
+			{
+				BotDebug("TryToAttackWithTeam: Did not find any enemy conyards. Aborting.");
+				return;
+			}
+			
+			var teamsToAttackWith = TeamTypesOfCategory(category);
+			foreach (var team in teamsToAttackWith)
+			{
+				foreach (var actor in team.CurrentActors)
+				{
+					var ab = actor.TraitOrDefault<AttackBase>();
+					if (ab == null)
+						continue;
+						
+					QueueOrder(new Order("AttackMove", actor, false) { TargetLocation = allEnemyBaseBuilder.Random(Game.CosmeticRandom).Location });
+				}
+			}
+			
+		}
 
 		void TryToRushAttack()
 		{
@@ -1093,6 +1136,20 @@ namespace OpenRA.Mods.Common.AI
 				defenseCenter = e.Attacker.Location;
 				ProtectOwn(e.Attacker);
 			}
+		}
+		
+		AITeamType[] GetTeamsInNeedOfActorType(string actorInfoName)
+		{
+			return teamTypes.OrderBy(tt => tt.GetMissingActorTypeCount(actorInfoName)).ToArray();
+		}
+
+		void INotifyTrainingComplete.OnTrainingComplete(Actor self, Actor trained, Actor factory)
+		{
+			var teamThatNeedsTrainedTheMost = GetTeamsInNeedOfActorType(trained.Info.Name).FirstOrDefault();
+			if (teamThatNeedsTrainedTheMost == null)
+				return;
+				
+			teamThatNeedsTrainedTheMost.AddActor(trained);
 		}
 	}
 }
