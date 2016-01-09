@@ -124,6 +124,10 @@ SendWave = function()
 	local entry = Utils.Random(wave.entries).Location
 	local target = Utils.Random(wave.targets).Location
 
+	Utils.Do(wave.units, function(actor)
+		actor.AddTag("Phrohdoh")
+	end)
+
 	Trigger.AfterDelay(wave.delay, function()
 		SendUnits(entry, wave.units, 40, target)
 

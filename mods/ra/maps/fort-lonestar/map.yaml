@@ -421,6 +421,7 @@ Actors:
 	OilDerrick1: oilb
 		Location: 32,30
 		Owner: Multi0
+		ScriptTags: player0, money-source, foo
 	OilDerrick2: oilb
 		Location: 32,32
 		Owner: Multi1
@@ -656,13 +657,33 @@ Rules:
 		AutoTarget:
 			InitialStanceAI: Defend
 	SNIPER.soviets:
-		Inherits: SNIPER
-		Buildable:
-			Prerequisites: ~disabled
+		Inherits: ^Infantry
+		Tooltip:
+			Name: Sniper
+		WithInfantryBody:
+			IdleSequences: idle1,idle2
+			StandSequences: stand,stand2
+			AttackSequence: shoot
+		Valued:
+			Cost: 700
+		RevealsShroud:
+			Range: 6c0
+		Armament@PRIMARY:
+			Weapon: Sniper
+		AttackFrontal:
+		Cloak:
+			InitialDelay: 0
+			CloakDelay: 0
+			UncloakOnMove: true
+			IsPlayerPalette: true
+		DetectCloaked:
+			CloakTypes: Cloak, Hijacker
+			Range: 6c0
 		MustBeDestroyed:
-		DamageMultiplier@UNKILLABLE:
-			UpgradeTypes: unkillable
-			Modifier: 0, 0
+		Targetable:
+			TargetTypes: Disguise
+		AutoTarget:
+			InitialStanceAI: AttackAnything
 		RenderSprites:
 			Image: SNIPER
 	SPY:

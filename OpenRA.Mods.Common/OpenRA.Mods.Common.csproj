@@ -724,6 +724,8 @@
     <Compile Include="FileFormats\XORDeltaCompression.cs" />
     <Compile Include="FileFormats\RLEZerosCompression.cs" />
     <Compile Include="FileFormats\IniFile.cs" />
+    <Compile Include="Scripting\ScriptTags.cs" />
+    <Compile Include="Scripting\Properties\ScriptTagsProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
