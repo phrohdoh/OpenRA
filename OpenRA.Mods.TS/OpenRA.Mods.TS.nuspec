@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>OpenRA.Mods.TS</id>
+    <version>20151224.0.0</version>
+    <title>OpenRA.Mods.TS</title>
+    <authors>OpenRA</authors>
+    <owners>OpenRA</owners>
+    <licenseUrl>https://www.gnu.org/licenses/gpl-3.0.txt</licenseUrl>
+    <projectUrl>https://github.com/OpenRA/OpenRA/</projectUrl>
+    <iconUrl>http://www.openra.net/images/soviet-logo.svg</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>OpenRA's Mods.TS built for release-20151224</description>
+    <releaseNotes>https://github.com/OpenRA/OpenRA/wiki/Historical-Changelogs#20151224</releaseNotes>
+    <language>en-US</language>
+    <tags>OpenRA</tags>
+  </metadata>
+  <files>
+    <file src="../mods/ts/*.dll" target="lib"/>
+  </files>
+</package>
