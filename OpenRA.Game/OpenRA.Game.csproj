@@ -298,7 +298,6 @@
     <Compile Include="Support\Log.cs" />
     <Compile Include="Support\PerfTimer.cs" />
     <Compile Include="Exts.cs" />
-    <Compile Include="MiniYaml.cs" />
     <Compile Include="StreamExts.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\MapCache.cs" />
@@ -361,4 +360,10 @@
   </Target>
   -->
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OpenRA.Markup\OpenRA.Markup.csproj">
+      <Project>{6792B532-3350-4603-B9F8-413923437EC0}</Project>
+      <Name>OpenRA.Markup</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
