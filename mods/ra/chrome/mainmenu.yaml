@@ -168,6 +168,12 @@ Container@MAINMENU:
 							Width: 140
 							Height: 30
 							Text: Back
+						Button@UI_DESIGNER_BUTTON:
+							X: PARENT_RIGHT/2-WIDTH/2
+							Y: 300
+							Width: 140
+							Height: 30
+							Text: UI Designer
 							Font: Bold
 				Background@MAP_EDITOR_MENU:
 					Width: PARENT_RIGHT

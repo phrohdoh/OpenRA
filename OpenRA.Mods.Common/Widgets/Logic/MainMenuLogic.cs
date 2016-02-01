@@ -149,6 +149,20 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					});
 				};
 
+			var uiDesignerButton = extrasMenu.GetOrNull<ButtonWidget>("UI_DESIGNER_BUTTON");
+			if (uiDesignerButton != null)
+			{
+				uiDesignerButton.OnClick = () =>
+				{
+					SwitchMenu(MenuType.None);
+					RemoveShellmapUI();
+					Game.OpenWindow("UI_DESIGNER_WINDOW_ROOT", new WidgetArgs
+					{
+						{ "onExit", () => SwitchMenu(MenuType.Extras) },
+					});
+				};
+			}
+
 			extrasMenu.Get<ButtonWidget>("CREDITS_BUTTON").OnClick = () =>
 			{
 				SwitchMenu(MenuType.None);

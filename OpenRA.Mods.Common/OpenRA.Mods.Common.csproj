@@ -732,6 +732,10 @@
     <Compile Include="Util.cs" />
     <Compile Include="Traits\Render\WithGateSpriteBody.cs" />
     <Compile Include="ColorValidator.cs" />
+    <Compile Include="Widgets\Logic\UIDesigner\UIDesignerLogic.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Widgets\Logic\UIDesigner\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
