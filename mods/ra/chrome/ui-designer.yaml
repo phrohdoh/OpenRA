@@ -3,46 +3,43 @@ Container@UI_DESIGNER_WINDOW_ROOT:
 	Width: WINDOW_RIGHT
 	Height: WINDOW_BOTTOM
 	Children:
-		Container@UI_DESIGN_SPACE:
+		ColorBlock@DEAD_SPACE:
 			Width: WINDOW_RIGHT - (PARENT_RIGHT / 5)
 			Height: WINDOW_BOTTOM
 			X: PARENT_RIGHT / 5
 			Children:
-				ScrollPanel@BUTTON_CONTAINER:
-					Width: PARENT_RIGHT
-					Height: PARENT_BOTTOM
+				Container@UI_DESIGN_SPACE:
+					Width: PARENT_RIGHT - 8
+					Height: WINDOW_BOTTOM - 8
+					X: 4
+					Y: 4
 					Children:
-						ScrollItem@TEMPLATE:
-							Width: PARENT_RIGHT - 27
-							Height: 25
-							X: 2
-							Y: 0
-							Visible: true
+						Background@BUTTON_CONTAINER:
+							Width: PARENT_RIGHT
+							Height: PARENT_BOTTOM
 							Children:
-								Label@TITLE:
-									X: 10
-									Width: PARENT_RIGHT - 20
+								Button@INITIAL_BUTTON:
+									Width: 140
 									Height: 25
+									X: 5
+									Y: 5
+									Text: Button
+									Font: Bold
+						InvisibleBackground@MOUSE_HANDLER:
+							Width: PARENT_RIGHT
+							Height: PARENT_BOTTOM
+		ColorRect@DEAD_SPACE_STROKE:
+			Width: WINDOW_RIGHT - (PARENT_RIGHT / 5)
+			Height: WINDOW_BOTTOM
+			X: PARENT_RIGHT / 5
 		Background@TOOLS_BACKGROUND:
 			Width: PARENT_RIGHT / 5
 			Height: PARENT_BOTTOM
 			Children:
-				Background@HUE_BG:
-					Background: dialog3
-					X: (PARENT_RIGHT - (PARENT_RIGHT / 10) * 7) / 2
-					Y: 20
-					Width: (PARENT_RIGHT / 10) * 7
-					Height: 15
-					Children:
-						HueSlider@HUE_SLIDER:
-							X: 2
-							Y: 2
-							Width: PARENT_RIGHT - 4
-							Height: PARENT_BOTTOM - 4
-				Button@BUTTON_CREATOR:
-					X: (PARENT_RIGHT / 2) - (140 / 2)
+				Label@TOOLS_LABEL:
+					X: (PARENT_RIGHT / 2) - (WIDTH / 2)
 					Y: 40
 					Width: 140
 					Height: 30
-					Text: Create Button
+					Text: Tools
 					Font: Bold

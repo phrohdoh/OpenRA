@@ -154,6 +154,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			{
 				uiDesignerButton.OnClick = () =>
 				{
+					Game.Settings.Game.ShowShellmap = menuType == MenuType.Main;
 					SwitchMenu(MenuType.None);
 					RemoveShellmapUI();
 					Game.OpenWindow("UI_DESIGNER_WINDOW_ROOT", new WidgetArgs

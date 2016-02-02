@@ -62,6 +62,15 @@ namespace OpenRA.Widgets
 				}
 		}
 
+		public static void DrawRect(Rectangle r, Color c, float width)
+		{
+			Game.Renderer.RgbaColorRenderer.DrawRect(
+				new float2(r.Left, r.Top),
+				new float2(r.Right, r.Bottom),
+				width,
+				c);
+		}
+
 		public static void FillRectWithColor(Rectangle r, Color c)
 		{
 			Game.Renderer.RgbaColorRenderer.FillRect(new float2(r.Left, r.Top), new float2(r.Right, r.Bottom), c);

@@ -733,6 +733,8 @@
     <Compile Include="Traits\Render\WithGateSpriteBody.cs" />
     <Compile Include="ColorValidator.cs" />
     <Compile Include="Widgets\Logic\UIDesigner\UIDesignerLogic.cs" />
+    <Compile Include="Widgets\Logic\UIDesigner\InvisibleBackgroundWidget.cs" />
+    <Compile Include="Widgets\Logic\UIDesigner\ColorRectWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Widgets\Logic\UIDesigner\" />
