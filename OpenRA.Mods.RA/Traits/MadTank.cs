@@ -23,7 +23,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.RA.Traits
 {
-	class MadTankInfo : ITraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
+	public class MadTankInfo : ITraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
 	{
 		[SequenceReference] public readonly string ThumpSequence = "piston";
 		public readonly int ThumpInterval = 8;
@@ -59,7 +59,7 @@ namespace OpenRA.Mods.RA.Traits
 		}
 	}
 
-	class MadTank : IIssueOrder, IResolveOrder, IOrderVoice, ITick, IPreventsTeleport
+	public class MadTank : IIssueOrder, IResolveOrder, IOrderVoice, ITick, IPreventsTeleport
 	{
 		readonly Actor self;
 		readonly MadTankInfo info;
@@ -147,7 +147,7 @@ namespace OpenRA.Mods.RA.Traits
 
 		public bool PreventsTeleport(Actor self) { return deployed; }
 
-		void StartDetonationSequence()
+		void StartDetonationSequence(Target target)
 		{
 			if (deployed)
 				return;
@@ -156,11 +156,6 @@ namespace OpenRA.Mods.RA.Traits
 			if (info.ThumpSequence != null)
 				wfsb.PlayCustomAnimationRepeating(self, info.ThumpSequence);
 			deployed = true;
-			self.QueueActivity(new Wait(info.ChargeDelay, false));
-			self.QueueActivity(new CallFunc(() => Game.Sound.Play(info.ChargeSound, self.CenterPosition)));
-			self.QueueActivity(new Wait(info.DetonationDelay, false));
-			self.QueueActivity(new CallFunc(() => Game.Sound.Play(info.DetonationSound, self.CenterPosition)));
-			self.QueueActivity(new CallFunc(Detonate));
 		}
 
 		public void ResolveOrder(Actor self, Order order)
@@ -176,12 +171,12 @@ namespace OpenRA.Mods.RA.Traits
 
 				self.SetTargetLine(target, Color.Red);
 				self.QueueActivity(new MoveAdjacentTo(self, target));
-				self.QueueActivity(new CallFunc(StartDetonationSequence));
+				self.QueueActivity(new MadTankDetonate(self, target, info.ChargeSound, info.ChargeDelay, info.DetonationSound, info.DetonationDelay, info.DetonationWeaponInfo));
 			}
 			else if (order.OrderString == "Detonate")
 			{
 				self.CancelActivity();
-				self.QueueActivity(new CallFunc(StartDetonationSequence));
+				self.QueueActivity(new MadTankDetonate(self, Target.FromPos(self.CenterPosition), info.ChargeSound, info.ChargeDelay, info.DetonationSound, info.DetonationDelay, info.DetonationWeaponInfo));
 			}
 		}
 	}
