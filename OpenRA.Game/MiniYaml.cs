@@ -33,7 +33,7 @@ namespace OpenRA
 		{
 			foreach (var kv in y)
 			{
-				foreach (var line in kv.Value.ToLines(kv.Key))
+				foreach (var line in kv.Value.ToLines(kv))
 					yield return line;
 
 				if (lowest)
@@ -53,6 +53,7 @@ namespace OpenRA
 		public SourceLocation Location;
 		public string Key;
 		public MiniYaml Value;
+		public string Comment;
 
 		public MiniYamlNode(string k, MiniYaml v)
 		{
@@ -82,7 +83,7 @@ namespace OpenRA
 
 		public MiniYamlNode Clone()
 		{
-			return new MiniYamlNode(Key, Value.Clone());
+			return new MiniYamlNode(Key, Value.Clone()) { Comment = this.Comment };
 		}
 	}
 
@@ -155,9 +156,15 @@ namespace OpenRA
 				var line = ll;
 				++lineNo;
 
+				var comment = "";
 				var commentIndex = line.IndexOf('#');
 				if (commentIndex != -1)
+				{
+					if (line.Length > commentIndex + 2)
+						comment = line.Substring(commentIndex + 1, line.Length - commentIndex - 1);
+
 					line = line.Substring(0, commentIndex).TrimEnd(' ', '\t');
+				}
 
 				if (line.Length == 0)
 					continue;
@@ -207,7 +214,7 @@ namespace OpenRA
 
 				var d = new List<MiniYamlNode>();
 				var rhs = SplitAtColon(ref realText);
-				levels[level].Add(new MiniYamlNode(realText, rhs, d, location));
+				levels[level].Add(new MiniYamlNode(realText, rhs, d, location) { Comment = comment });
 
 				levels.Add(d);
 			}
@@ -369,6 +376,15 @@ namespace OpenRA
 		public IEnumerable<string> ToLines(string name)
 		{
 			yield return name + ": " + Value;
+
+			if (Nodes != null)
+				foreach (var line in Nodes.ToLines(false))
+					yield return "\t" + line;
+		}
+
+		public IEnumerable<string> ToLines(MiniYamlNode node)
+		{
+			yield return node.Key + ": " + Value + (string.IsNullOrWhiteSpace(node.Comment) ? "" : " #" + node.Comment);
 
 			if (Nodes != null)
 				foreach (var line in Nodes.ToLines(false))
