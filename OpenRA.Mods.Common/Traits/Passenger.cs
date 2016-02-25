@@ -23,7 +23,8 @@ namespace OpenRA.Mods.Common.Traits
 	public class PassengerInfo : ITraitInfo
 	{
 		public readonly string CargoType = null;
-		public readonly PipType PipType = PipType.Green;
+		public readonly string PipImage = "pips";
+		public readonly string PipSequence = "pip-transparent";
 		public readonly int Weight = 1;
 
 		[Desc("Use to set when to use alternate transports (Never, Force, Default, Always).",

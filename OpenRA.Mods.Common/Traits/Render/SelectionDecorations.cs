@@ -33,6 +33,12 @@ namespace OpenRA.Mods.Common.Traits
 
 		public readonly Color SelectionBoxColor = Color.White;
 
+		[Desc("The animation tree to search for 'PipSequence' in.")]
+		public readonly string PipImage = "pips";
+
+		[Desc("The sequence to render for pips.")]
+		public readonly string PipSequence = "pip-transparent";
+
 		public object Create(ActorInitializer init) { return new SelectionDecorations(init.Self, this); }
 
 		public int[] SelectionBoxBounds { get { return VisualBounds; } }
