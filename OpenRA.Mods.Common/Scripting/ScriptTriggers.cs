@@ -21,7 +21,8 @@ namespace OpenRA.Mods.Common.Scripting
 	{
 		OnIdle, OnDamaged, OnKilled, OnProduction, OnOtherProduction, OnPlayerWon, OnPlayerLost,
 		OnObjectiveAdded, OnObjectiveCompleted, OnObjectiveFailed, OnCapture, OnInfiltrated,
-		OnAddedToWorld, OnRemovedFromWorld, OnDiscovered, OnPlayerDiscovered
+		OnAddedToWorld, OnRemovedFromWorld, OnDiscovered, OnPlayerDiscovered,
+		OnPassengerEntered, OnPassengerExited
 	}
 
 	[Desc("Allows map scripts to attach triggers to this actor via the Triggers global.")]
@@ -412,6 +413,46 @@ namespace OpenRA.Mods.Common.Scripting
 					using (var a = self.Owner.ToLuaValue(f.Context))
 					using (var b = discoverer.ToLuaValue(f.Context))
 						f.Function.Call(a, b, f.Self).Dispose();
+				}
+				catch (Exception ex)
+				{
+					f.Context.FatalError(ex.Message);
+					return;
+				}
+			}
+		}
+
+		public void OnPassengerEntered(Actor self, Actor passenger)
+		{
+			if (world.Disposing)
+				return;
+
+			foreach (var f in Triggerables(Trigger.OnPassengerEntered))
+			{
+				try
+				{
+					using (var pass = passenger.ToLuaValue(f.Context))
+						f.Function.Call(pass).Dispose();
+				}
+				catch (Exception ex)
+				{
+					f.Context.FatalError(ex.Message);
+					return;
+				}
+			}
+		}
+
+		public void OnPassengerExited(Actor self, Actor passenger)
+		{
+			if (world.Disposing)
+				return;
+
+			foreach (var f in Triggerables(Trigger.OnPassengerExited))
+			{
+				try
+				{
+					using (var pass = passenger.ToLuaValue(f.Context))
+						f.Function.Call(pass).Dispose();
 				}
 				catch (Exception ex)
 				{
