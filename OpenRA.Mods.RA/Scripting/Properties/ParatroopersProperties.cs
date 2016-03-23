@@ -28,9 +28,9 @@ namespace OpenRA.Mods.RA.Scripting
 		}
 
 		[Desc("Activate the actor's Paratroopers Power. Returns the dropped units.")]
-		public Actor[] SendParatroopers(WPos target, bool randomize = true, int facing = 0)
+		public Actor[] SendParatroopers(WPos target, bool randomize = true, int facing = 0, string[] dropItemTypes = null)
 		{
-			return pp.SendParatroopers(Self, target, randomize, facing);
+			return pp.SendParatroopers(Self, target, randomize, facing, dropItemTypes);
 		}
 	}
 }
