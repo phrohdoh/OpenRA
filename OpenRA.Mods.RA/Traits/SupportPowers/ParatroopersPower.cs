@@ -64,7 +64,7 @@ namespace OpenRA.Mods.RA.Traits
 			SendParatroopers(self, self.World.Map.CenterOfCell(order.TargetLocation));
 		}
 
-		public Actor[] SendParatroopers(Actor self, WPos target, bool randomize = true, int dropFacing = 0)
+		public Actor[] SendParatroopers(Actor self, WPos target, bool randomize = true, int dropFacing = 0, string[] dropItems = null)
 		{
 			var units = new List<Actor>();
 
@@ -142,7 +142,7 @@ namespace OpenRA.Mods.RA.Traits
 				}
 			};
 
-			foreach (var p in info.DropItems)
+			foreach (var p in dropItems ?? info.DropItems)
 			{
 				var unit = self.World.CreateActor(false, p.ToLowerInvariant(),
 					new TypeDictionary { new OwnerInit(self.Owner) });
