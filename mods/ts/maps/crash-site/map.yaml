@@ -22,10 +22,32 @@ Players:
 		OwnsWorld: True
 		NonCombatant: True
 		Faction: Random
-	PlayerReference@Creeps:
-		Name: Creeps
-		NonCombatant: True
-		Faction: Random
+	PlayerReference@GDI:
+		Name: GDI
+		Playable: False
+		AllowBots: False
+		Required: True
+		LockFaction: True
+		Faction: gdi
+		LockColor: True
+		Color: F5D378
+		LockSpawn: True
+		LockTeam: True
+		Allies: GDI
+		Enemies: Nod
+	PlayerReference@Nod:
+		Name: Nod
+		Playable: False
+		AllowBots: False
+		Required: True
+		LockFaction: True
+		Faction: nod
+		LockColor: True
+		Color: FE1100
+		LockSpawn: True
+		LockTeam: True
+		Allies: Nod
+		Enemies: GDI
 
 Actors:
 	Actor0: ca0014
