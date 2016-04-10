@@ -26,7 +26,10 @@ namespace OpenRA.Mods.Common.Widgets
 		readonly EditorDefaultBrush defaultBrush;
 		readonly WorldRenderer worldRenderer;
 
+		LabelWidget currentBrushLabel;
+
 		bool enableTooltips;
+		bool triedToFindCurrentBrushLabel;
 
 		[ObjectCreator.UseCtor]
 		public EditorViewportControllerWidget(World world, WorldRenderer worldRenderer)
@@ -42,7 +45,16 @@ namespace OpenRA.Mods.Common.Widgets
 			if (CurrentBrush != null)
 				CurrentBrush.Dispose();
 
+			if (!triedToFindCurrentBrushLabel)
+			{
+				currentBrushLabel = GetOrNull<LabelWidget>("CURRENT_BRUSH");
+				triedToFindCurrentBrushLabel = true;
+			}
+
 			CurrentBrush = brush ?? defaultBrush;
+
+			if (currentBrushLabel != null)
+				currentBrushLabel.Text = CurrentBrush.GetType().Name;
 		}
 
 		public override void MouseEntered()

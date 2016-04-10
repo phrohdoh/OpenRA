@@ -197,6 +197,10 @@ Container@EDITOR_WORLD_ROOT:
 					Visible: false
 				Sprite@DRAG_LAYER_PREVIEW:
 					Visible: false
+				Label@CURRENT_BRUSH:
+					Text: Default Brush
+					X: 15
+					Y: PARENT_BOTTOM - 15
 		Background@RADAR_BG:
 			X: WINDOW_RIGHT-255
 			Y: 5
