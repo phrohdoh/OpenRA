@@ -9,6 +9,9 @@
  */
 #endregion
 
+using System;
+using System.Linq;
+using System.Reflection;
 using Eluant;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -71,6 +74,53 @@ namespace OpenRA.Mods.Common.Scripting
 		public bool HasProperty(string name)
 		{
 			return Self.HasScriptProperty(name);
+		}
+
+		object GetTraitByName(string traitName)
+		{
+			var tico = Self.Info.TraitsInConstructOrder();
+			var t = tico.FirstOrDefault(trait => {
+				var name = trait.GetType().Name;
+
+				if (name.EndsWith("Info"))
+					name = name.Substring(0, name.Length - 4);
+
+				return name == traitName;
+			});
+
+			if (t == null)
+				Context.FatalError("Actor {0} does not have any traits named '{1}'".F(Self.Info.Name, traitName));
+
+			return t;
+		}
+
+		public LuaValue GetTraitField(string traitName, string fieldName)
+		{
+			var trait = GetTraitByName(traitName);
+			if (trait == null)
+			{
+				Console.WriteLine("Could not find trait named '{0}' for actor type '{1}'", traitName, Self.Info.Name);
+				return null;
+			}
+
+			var field = trait.GetType().GetField(fieldName);
+			if (field == null)
+			{
+				Console.WriteLine("Could not find field {0}.{1} for actor type '{2}'", traitName, fieldName, Self.Info.Name);
+				return null;
+			}
+
+			try
+			{
+				var value = field.GetValue(trait);
+				return value.ToLuaValue(Context);
+			}
+			catch (InvalidOperationException ex)
+			{
+				Context.FatalError("Impossible to convert {0}.{1} to a Lua value.\n{1} does not implement IScriptBindable.\n\n{2}".F(
+					field.FieldType.Namespace, field.FieldType.Name, ex.Message));
+				return null;
+			}
 		}
 	}
 
