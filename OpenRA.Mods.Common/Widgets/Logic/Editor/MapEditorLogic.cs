@@ -95,6 +95,27 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				if (reslayer != null)
 					cashLabel.GetText = () => "$ {0}".F(reslayer.NetWorth);
 			}
+
+			var rampTypeLabel = widget.GetOrNull<LabelWidget>("RAMP_TYPE_LABEL");
+			if (rampTypeLabel != null)
+			{
+				rampTypeLabel.GetText = () =>
+				{
+					// TODO: Zooming causes an out of bounds exception
+					if (worldRenderer.Viewport.Zoom != 1)
+						return "<zoom>";
+
+					var cell = worldRenderer.Viewport.ViewToWorld(Viewport.LastMousePos);
+					var tile = world.Map.Tiles[cell];
+					var ti = world.Map.Rules.TileSet.GetTileInfo(tile);
+
+					var rampType = 0;
+					if (ti != null)
+						rampType = ti.RampType;
+
+					return "Ramp type: {0}".F(rampType);
+				};
+			}
 		}
 	}
 }
