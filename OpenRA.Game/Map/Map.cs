@@ -527,10 +527,97 @@ namespace OpenRA
 			var s = root.WriteToString();
 			toPackage.Update("map.yaml", Encoding.UTF8.GetBytes(s));
 			toPackage.Update("map.bin", SaveBinaryData());
+			toPackage.Update("map.bin.yaml", Encoding.UTF8.GetBytes(SaveBinDataToYaml()));
 			Package = toPackage;
 
 			// Update UID to match the newly saved data
 			Uid = ComputeUID(toPackage);
+		}
+
+		public string SaveBinDataToYaml()
+		{
+			var root = new MiniYaml("");
+
+			root.Nodes.Add(new MiniYamlNode("TileFormat", TileFormat.ToString()));
+
+			var mapSize = new MiniYamlNode("MapSize", "");
+			mapSize.Value.Nodes.Add(new MiniYamlNode("X", MapSize.X.ToString()));
+			mapSize.Value.Nodes.Add(new MiniYamlNode("Y", MapSize.Y.ToString()));
+			root.Nodes.Add(mapSize);
+
+			var tilesOffset = 17;
+			var heightsOffset = Grid.MaximumTerrainHeight > 0 ? 3 * MapSize.X * MapSize.Y + 17 : 0;
+			var resourcesOffset = (Grid.MaximumTerrainHeight > 0 ? 4 : 3) * MapSize.X * MapSize.Y + 17;
+
+			var offsets = new MiniYamlNode("Offsets", "");
+			offsets.Value.Nodes.Add(new MiniYamlNode("Tiles", tilesOffset.ToString()));
+			offsets.Value.Nodes.Add(new MiniYamlNode("Heights", heightsOffset.ToString()));
+			offsets.Value.Nodes.Add(new MiniYamlNode("Resources", resourcesOffset.ToString()));
+			root.Nodes.Add(offsets);
+
+			if (tilesOffset != 0)
+			{
+				var tileData = new MiniYamlNode("TileData", "");
+				var memCoordNum = 0;
+				for (var i = 0; i < MapSize.X; i++)
+				{
+					for (var j = 0; j < MapSize.Y; j++)
+					{
+						var mpos = new MPos(i, j);
+						var tile = Tiles[new MPos(i, j)];
+						var memCoords = new MiniYamlNode("MemCoordinates@{0}".F(memCoordNum++), mpos.ToString());
+						memCoords.Value.Nodes.Add(new MiniYamlNode("CellCoordinates", mpos.ToCPos(this).ToString()));
+						memCoords.Value.Nodes.Add(new MiniYamlNode("Type", tile.Type.ToString()));
+						memCoords.Value.Nodes.Add(new MiniYamlNode("Index", tile.Index.ToString()));
+						tileData.Value.Nodes.Add(memCoords);
+					}
+				}
+
+				root.Nodes.Add(tileData);
+			}
+
+			if (heightsOffset != 0)
+			{
+				var heightData = new MiniYamlNode("HeightData", "");
+				var memCoordNum = 0;
+				for (var i = 0; i < MapSize.X; i++)
+				{
+					for (var j = 0; j < MapSize.Y; j++)
+					{
+						var mpos = new MPos(i, j);
+						var height = Height[new MPos(i, j)];
+						var memCoords = new MiniYamlNode("MemCoordinates@{0}".F(memCoordNum++), mpos.ToString());
+						memCoords.Value.Nodes.Add(new MiniYamlNode("CellCoordinates", mpos.ToCPos(this).ToString()));
+						memCoords.Value.Nodes.Add(new MiniYamlNode("Height", height.ToString()));
+						heightData.Value.Nodes.Add(memCoords);
+					}
+				}
+
+				root.Nodes.Add(heightData);
+			}
+
+			if (resourcesOffset != 0)
+			{
+				var resourceData = new MiniYamlNode("ResourceData", "");
+				var memCoordNum = 0;
+				for (var i = 0; i < MapSize.X; i++)
+				{
+					for (var j = 0; j < MapSize.Y; j++)
+					{
+						var mpos = new MPos(i, j);
+						var resource = Resources[new MPos(i, j)];
+						var memCoords = new MiniYamlNode("MemCoordinates@{0}".F(memCoordNum++), mpos.ToString());
+						memCoords.Value.Nodes.Add(new MiniYamlNode("CellCoordinates", mpos.ToCPos(this).ToString()));
+						memCoords.Value.Nodes.Add(new MiniYamlNode("Type", resource.Type.ToString()));
+						memCoords.Value.Nodes.Add(new MiniYamlNode("Index", resource.Index.ToString()));
+						resourceData.Value.Nodes.Add(memCoords);
+					}
+				}
+
+				root.Nodes.Add(resourceData);
+			}
+
+			return root.Nodes.WriteToString();
 		}
 
 		public byte[] SaveBinaryData()
