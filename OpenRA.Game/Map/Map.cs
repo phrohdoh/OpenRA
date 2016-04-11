@@ -569,6 +569,15 @@ namespace OpenRA
 						memCoords.Value.Nodes.Add(new MiniYamlNode("CellCoordinates", mpos.ToCPos(this).ToString()));
 						memCoords.Value.Nodes.Add(new MiniYamlNode("Type", tile.Type.ToString()));
 						memCoords.Value.Nodes.Add(new MiniYamlNode("Index", tile.Index.ToString()));
+
+						var rampType = 0;
+						var ti = Rules.TileSet.GetTileInfo(tile);
+						if (ti != null)
+							rampType = ti.RampType;
+
+						if (rampType != 0)
+							memCoords.Value.Nodes.Add(new MiniYamlNode("RampType", "{0} # Not included in map.bin!".F(rampType)));
+
 						tileData.Value.Nodes.Add(memCoords);
 					}
 				}
