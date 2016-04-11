@@ -70,7 +70,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var cell = wr.Viewport.ViewToWorld(mi.Location);
 			mapHeight[cell] = GetNewHeight(cell, mi);
-			var surroundingCells = cell.Expand(map, false, true);
+			var surroundingCells = Util.Neighbours(cell, true, false);
 
 			foreach (var c in surroundingCells)
 				IncrementHeight(c);
