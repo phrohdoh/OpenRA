@@ -186,6 +186,7 @@ Container@EDITOR_WORLD_ROOT:
 			Height: WINDOW_BOTTOM
 			TooltipContainer: TOOLTIP_CONTAINER
 		EditorViewportController@MAP_EDITOR:
+			Logic: MapEditorViewportLogic
 			Width: WINDOW_RIGHT
 			Height: WINDOW_BOTTOM
 			TooltipContainer: TOOLTIP_CONTAINER
@@ -201,6 +202,18 @@ Container@EDITOR_WORLD_ROOT:
 					Text: Default Brush
 					X: 15
 					Y: PARENT_BOTTOM - 15
+				Button@DEFAULT_BRUSH:
+					X: 15
+					Width: 70
+					Height: 25
+					Y: PARENT_BOTTOM - 45
+					Text: Default Brush
+				Button@ELEVATION_BRUSH:
+					X: 15
+					Width: 70
+					Height: 25
+					Y: PARENT_BOTTOM - 85
+					Text: Elevation Brush
 		Background@RADAR_BG:
 			X: WINDOW_RIGHT-255
 			Y: 5
