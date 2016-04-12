@@ -86,7 +86,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			var coordinateLabel = widget.GetOrNull<LabelWidget>("COORDINATE_LABEL");
 			if (coordinateLabel != null)
-				coordinateLabel.GetText = () => worldRenderer.Viewport.ViewToWorld(Viewport.LastMousePos).ToString();
+			{
+				coordinateLabel.GetText = () =>
+				{
+					var cell = worldRenderer.Viewport.ViewToWorld(Viewport.LastMousePos);
+					if (world.Map.Grid.MaximumTerrainHeight == 0)
+						return cell.ToString();
+
+					var height = world.Map.Height[cell];
+					return cell.ToString() + ",{0}".F(height);
+				};
+			}
 
 			var cashLabel = widget.GetOrNull<LabelWidget>("CASH_LABEL");
 			if (cashLabel != null)
