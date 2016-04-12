@@ -90,6 +90,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				coordinateLabel.GetText = () =>
 				{
 					var cell = worldRenderer.Viewport.ViewToWorld(Viewport.LastMousePos);
+					if (!world.Map.Contains(cell))
+						return "<off map>";
+
 					if (world.Map.Grid.MaximumTerrainHeight == 0)
 						return cell.ToString();
 
@@ -116,6 +119,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						return "<zoom>";
 
 					var cell = worldRenderer.Viewport.ViewToWorld(Viewport.LastMousePos);
+					if (!world.Map.Contains(cell))
+						return "<off map>";
+
 					var tile = world.Map.Tiles[cell];
 					var ti = world.Map.Rules.TileSet.GetTileInfo(tile);
 
@@ -126,6 +132,11 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					return "Ramp type: {0}".F(rampType);
 				};
 			}
+
+			// TODO: Introduce UI for toggling this.
+			var mrvo = world.WorldActor.TraitOrDefault<MouseRelativeVectorsOverlay>();
+			if (mrvo != null)
+				mrvo.Enabled = true;
 		}
 	}
 }
