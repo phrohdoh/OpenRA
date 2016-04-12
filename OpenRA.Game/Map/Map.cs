@@ -965,6 +965,31 @@ namespace OpenRA
 			}
 		}
 
+		public bool TryFindTemplateWithRampType(byte rampType, out ushort templateId)
+		{
+			foreach (var terrainTemplateInfo in Rules.TileSet.Templates.Values)
+			{
+				if (terrainTemplateInfo == null)
+					continue;
+
+				for (var i = 0; i < terrainTemplateInfo.TilesCount; i++)
+				{
+					var tti = terrainTemplateInfo[i];
+					if (tti == null)
+						continue;
+
+					if (tti.RampType == rampType)
+					{
+						templateId = terrainTemplateInfo.Id;
+						return true;
+					}
+				}
+			}
+
+			templateId = ushort.MaxValue;
+			return false;
+		}
+
 		public byte GetTerrainIndex(CPos cell)
 		{
 			const short InvalidCachedTerrainIndex = -1;

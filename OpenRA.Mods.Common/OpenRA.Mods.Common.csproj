@@ -741,6 +741,7 @@
     <Compile Include="Traits\ScriptTags.cs" />
     <Compile Include="EditorBrushes\EditorElevationModifierBrush.cs" />
     <Compile Include="Widgets\Logic\Editor\MapEditorViewportLogic.cs" />
+    <Compile Include="Traits\MouseRelativeVectorsOverlay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
