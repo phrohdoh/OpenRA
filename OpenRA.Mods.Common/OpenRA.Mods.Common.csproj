@@ -742,6 +742,7 @@
     <Compile Include="EditorBrushes\EditorElevationModifierBrush.cs" />
     <Compile Include="Widgets\Logic\Editor\MapEditorViewportLogic.cs" />
     <Compile Include="Traits\MouseRelativeVectorsOverlay.cs" />
+    <Compile Include="Traits\RampTypeOverlay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -133,10 +133,14 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				};
 			}
 
-			// TODO: Introduce UI for toggling this.
+			// TODO: Introduce UI for toggling these overlays.
 			var mrvo = world.WorldActor.TraitOrDefault<MouseRelativeVectorsOverlay>();
 			if (mrvo != null)
 				mrvo.Enabled = true;
+
+			var rto = world.WorldActor.TraitOrDefault<RampTypeOverlay>();
+			if (rto != null)
+				rto.Enabled = true;
 		}
 	}
 }
