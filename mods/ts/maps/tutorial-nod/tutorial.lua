@@ -5,22 +5,27 @@ McvIsIdle = function(mcv)
     end
 
     Media.DisplayMessage("To deploy a vehicle: select it, place the cursor over the vehicle, and right-click on it.")
-    Trigger.AfterDelay(DateTime.Seconds(8), function()
-        Media.DisplayMessage("Deploy your M.C.V. now that it has reached its destination.")
-        Beacon.New(nod, MCV.CenterPosition, 750, false)
-    end)
+
+    if mcv.IsInWorld and not mcv.IsDead then
+        Trigger.AfterDelay(DateTime.Seconds(4), function()
+            Media.DisplayMessage("Deploy your M.C.V. now that it has reached its destination.")
+            Beacon.New(nod, mcv.CenterPosition, 750, false)
+        end)
 
     Trigger.Clear(mcv, 'OnIdle')
+    end
 end
 
-WorldLoaded = function()
-    nod = Player.GetPlayer("Nod")
-    gdi = Player.GetPlayer("GDI")
-    Camera.Position = MCV.CenterPosition
+OnMcvSelected = function(mcv)
+    Trigger.Clear(mcv, 'OnSelected')
 
-    Media.DisplayMessage("Select your forces by left-clicking then moving your cursor to draw a box around them, then releasing the held mouse button. "
-        .. "You may select individual units by hovering your cursor over them then left-clicking.")
+    Media.DisplayMessage("With your M.C.V. selected, right-click inside of the derelict base to the East. "
+        .. "It would be wise to protect your M.C.V.")
 
+    Trigger.AfterDelay(DateTime.Seconds(8), WorldLoadedPart2)
+end
+
+WorldLoadedPart2 = function()
     Trigger.AfterDelay(DateTime.Seconds(12), function()
         Media.DisplayMessage("With your units selected, move them to the derelict base to the East by right-clicking on a destination cell.")
     end)
@@ -51,4 +56,21 @@ WorldLoaded = function()
             Buggy.Move(CPos.New(39, 9))
         end
     end)
+end
+
+WorldLoaded = function()
+    nod = Player.GetPlayer("Nod")
+    gdi = Player.GetPlayer("GDI")
+    Camera.Position = MCV.CenterPosition
+
+    Trigger.AfterDelay(DateTime.Seconds(2), function()
+        Media.DisplayMessage("Select your forces by left-clicking then moving your cursor to draw a box around them, then releasing the held mouse button. "
+            .. "You may select individual units by hovering your cursor over them then left-clicking.")
+    end)
+
+    Trigger.AfterDelay(DateTime.Seconds(4), function()
+        Media.DisplayMessage("Order your selected units to move with a right-click on a destination cell.")
+    end)
+
+    Trigger.OnSelected(MCV, OnMcvSelected)
 end
