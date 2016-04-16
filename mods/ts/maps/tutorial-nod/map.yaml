@@ -21,21 +21,27 @@ Players:
 		Name: Neutral
 		OwnsWorld: True
 		NonCombatant: True
+		LockFaction: True
 		Faction: nod
-	PlayerReference@Creeps:
-		Name: Creeps
-		Faction: nod
-		Enemies: Creeps, Nod, GDI
+	#PlayerReference@Creeps:
+	#	Name: Creeps
+	#	LockFaction: True
+	#	Faction: nod
+	#	Enemies: Creeps, Nod, GDI
 	PlayerReference@Nod:
 		Name: Nod
+		AllowBots: False
+		Playable: True
+		LockFaction: True
 		Faction: nod
+		LockColor: True
 		Color: FE1100
 		Enemies: GDI, Creeps
-		Playable: true
-		AllowBots: false
 	PlayerReference@GDI:
 		Name: GDI
+		LockFaction: True
 		Faction: gdi
+		LockColor: True
 		Color: EEEE66
 		Enemies: Nod, Creeps
 
@@ -97,44 +103,36 @@ Actors:
 	Actor21: nawall
 		Owner: Nod
 		Location: 40,12
-	Actor435: camera
+	MainCamera: camera
 		Owner: Nod
 		Location: 37,7
-	Actor24: proc
+	Actor443: engineer
 		Owner: Nod
-		Location: 32,6
+		Location: 16,5
 	Actor25: gasilo
 		Owner: Nod
 		Location: 31,9
-	Actor26: gasilo
+	Actor442: e1
 		Owner: Nod
-		Location: 33,10
+		Location: 19,4
 	Actor27: nalasr
 		Owner: Nod
 		Location: 43,5
-		Facing: 170
 	Actor28: nalasr
 		Owner: Nod
 		Location: 43,9
-		Facing: 170
-	nodhand1: nahand
+	Actor441: e1
 		Owner: Nod
-		Location: 38,4
+		Location: 18,4
 	Actor30: galite
 		Owner: Nod
 		Location: 40,2
-	Actor31: gaoldcc2
-		Owner: Nod
-		Location: 37,-6
-	Actor32: gaoldcc1
-		Owner: Nod
-		Location: 37,-2
 	Actor33: naapwr
 		Owner: Nod
 		Location: 32,2
-	Actor34: naapwr
+	Actor444: engineer
 		Owner: Nod
-		Location: 34,2
+		Location: 16,6
 	Actor35: gasand
 		Owner: Nod
 		Location: 43,11
@@ -195,19 +193,9 @@ Actors:
 	Actor54: gagate_a
 		Owner: GDI
 		Location: 81,-3
-	Actor55: gactwr
-		Owner: GDI
-		Location: 84,-1
-		TurretFacing: 92
-		Facing: 60
-		Plugs:
-			0,0: tower.vulcan
-	Actor56: gactwr
+	Actor435: gawall
 		Owner: GDI
 		Location: 80,-3
-		Facing: 60
-		Plugs:
-			0,0: tower.vulcan
 	Actor57: gawall
 		Owner: GDI
 		Location: 79,-3
@@ -235,12 +223,9 @@ Actors:
 	Actor65: gawall
 		Owner: GDI
 		Location: 87,-1
-	Actor66: gactwr
+	Actor428: gawall
 		Owner: GDI
-		Location: 84,-4
-		Facing: 60
-		Plugs:
-			0,0: tower.rocket
+		Location: 81,-11
 	Actor67: gawall
 		Owner: GDI
 		Location: 88,-1
@@ -283,25 +268,15 @@ Actors:
 	gdibar1: gapile
 		Owner: GDI
 		Location: 85,-9
-	Actor81: gapowr
-		Owner: GDI
-		Location: 86,-3
-		Facing: 60
-		Plugs:
-			0,1: powrup
-			1,1: powrup
 	Actor82: gapowr
 		Owner: GDI
 		Location: 86,-5
 		Plugs:
 			0,1: powrup
 			1,1: powrup
-	Actor91: gactwr
+	Actor427: gawall
 		Owner: GDI
 		Location: 85,-11
-		Facing: -40
-		Plugs:
-			0,0: tower.vulcan
 	Actor90: gasilo
 		Owner: GDI
 		Location: 79,-10
@@ -314,12 +289,9 @@ Actors:
 	Actor87: gawall
 		Owner: GDI
 		Location: 80,-11
-	Actor88: gactwr
+	Actor430: gawall
 		Owner: GDI
-		Location: 81,-11
-		Facing: -40
-		Plugs:
-			0,0: tower.vulcan
+		Location: 84,-1
 	Actor89: gagate_a
 		Owner: GDI
 		Location: 82,-11
@@ -407,15 +379,12 @@ Actors:
 	Actor119: pick
 		Owner: Neutral
 		Location: 73,1
-		Facing: 92
 	Actor120: car
 		Owner: Neutral
 		Location: 49,-11
-		Facing: 92
 	Actor121: wini
 		Owner: Neutral
 		Location: 48,-11
-		Facing: 92
 	Actor122: srock01
 		Owner: Neutral
 		Location: 52,6
@@ -431,7 +400,6 @@ Actors:
 	Actor126: trucka
 		Owner: Neutral
 		Location: 51,1
-		Facing: 92
 	Actor127: ca0014
 		Owner: Neutral
 		Location: 53,22
@@ -765,9 +733,6 @@ Actors:
 	Actor237: tree10
 		Owner: Neutral
 		Location: 78,-12
-	Actor238: palet04
-		Owner: Neutral
-		Location: 77,-2
 	Actor239: drum02
 		Owner: Neutral
 		Location: 82,0
@@ -782,7 +747,7 @@ Actors:
 		Location: 81,-9
 	Actor243: palet01
 		Owner: Neutral
-		Location: 39,10
+		Location: 37,11
 	Actor244: palet03
 		Owner: Neutral
 		Location: 39,2
@@ -1323,9 +1288,6 @@ Actors:
 	Actor426: gasand
 		Owner: GDI
 		Location: 76,-2
-	GDIW: waypoint
-		Owner: Neutral
-		Location: 86,-8
 	MidW: waypoint
 		Owner: Neutral
 		Location: 62,5
@@ -1338,75 +1300,36 @@ Actors:
 	Actor429: e1
 		Owner: GDI
 		Location: 85,-5
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
 	Actor440: e1
 		Owner: GDI
 		Location: 86,-10
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
 	Actor431: e1
 		Owner: GDI
 		Location: 85,-7
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
 	Actor432: e2
 		Owner: GDI
 		Location: 83,-8
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
 	Actor433: e2
 		Owner: GDI
 		Location: 83,-9
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
-	Actor434: e1
+	Actor437: e1
 		Owner: Nod
-		Location: 39,6
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
-	Actor439: e1
+		Location: 18,8
+	MCV: mcv
 		Owner: Nod
-		Location: 39,11
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
+		Location: 18,6
 	Actor436: e1
 		Owner: Nod
-		Location: 40,6
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
-	Actor437: e3
+		Location: 17,8
+	Actor438: e1
 		Owner: Nod
-		Location: 37,3
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
-	Actor438: e3
+		Location: 19,8
+	Actor439: e1
 		Owner: Nod
-		Location: 37,4
-		SubCell: 2
-		Facing: 92
-		TurretFacing: 92
-	North: waypoint
-		Owner: Neutral
-		Location: 41,-33
-	South: waypoint
-		Owner: Neutral
-		Location: 67,48
-	GDIBase: waypoint
-		Owner: Neutral
-		Location: 80,-1
-	NodBase: waypoint
-		Owner: Neutral
-		Location: 45,6
+		Location: 17,4
+	Buggy: bggy
+		Owner: Nod
+		Location: 20,6
 
 Rules:
 	Player:

@@ -1,45 +1,54 @@
-ProducedUnitTypes =
-{
-    { nodhand1, { "e1", "e3" } },
-    { gdibar1, { "e1", "e2" } }
-}
-
-ProduceUnits = function(t)
-    local factory = t[1]
-    if not factory.IsDead then
-        local unitType = t[2][Utils.RandomInteger(1, #t[2] + 1)]
-        factory.Wait(Actor.BuildTime(unitType))
-        factory.Produce(unitType)
-        factory.CallFunc(function() ProduceUnits(t) end)
+McvIsIdle = function(mcv)
+    if (not mcv.IsInWorld) or mcv.IsDead then
+        Trigger.Clear(mcv, 'OnIdle')
+        return
     end
-end
 
-SetupFactories = function()
-    Utils.Do(ProducedUnitTypes, function(pair)
-        Trigger.OnProduction(pair[1], function(_, a) BindActorTriggers(a) end)
+    Media.DisplayMessage("To deploy a vehicle: select it, place the cursor over the vehicle, and right-click on it.")
+    Trigger.AfterDelay(DateTime.Seconds(8), function()
+        Media.DisplayMessage("Deploy your M.C.V. now that it has reached its destination.")
+        Beacon.New(nod, MCV.CenterPosition, 750, false)
     end)
-end
 
-BindActorTriggers = function(a)
-    if a.HasProperty("Hunt") then
-        Trigger.OnIdle(a, a.Hunt)
-    end
-
-    if a.HasProperty("HasPassengers") then
-        Trigger.OnDamaged(a, function()
-            if a.HasPassengers then
-                a.Stop()
-                a.UnloadPassengers()
-            end
-        end)
-    end
+    Trigger.Clear(mcv, 'OnIdle')
 end
 
 WorldLoaded = function()
     nod = Player.GetPlayer("Nod")
     gdi = Player.GetPlayer("GDI")
-    
-    SetupFactories()
+    Camera.Position = MCV.CenterPosition
 
-    Utils.Do(ProducedUnitTypes, ProduceUnits)
+    Media.DisplayMessage("Select your forces by left-clicking then moving your cursor to draw a box around them, then releasing the held mouse button. "
+        .. "You may select individual units by hovering your cursor over them then left-clicking.")
+
+    Trigger.AfterDelay(DateTime.Seconds(12), function()
+        Media.DisplayMessage("With your units selected, move them to the derelict base to the East by right-clicking on a destination cell.")
+    end)
+
+    Trigger.AfterDelay(DateTime.Seconds(24), function()
+        local guards1 = { Actor436, Actor438, Actor439 }
+        local guards2 = { Actor437, Actor442, Actor441 }
+
+        if MCV.IsInWorld and not MCV.IsDead and MCV.IsIdle then
+            MCV.Move(CPos.New(36, 3))
+        end
+
+        Trigger.OnIdle(MCV, McvIsIdle)
+
+        Utils.Do(guards1, function(guard)
+            if guard.IsInWorld and not guard.IsDead and guard.IsIdle then
+                guard.AttackMove(CPos.New(45, 6), 1)
+            end
+        end)
+
+        Utils.Do(guards2, function(guard)
+            if guard.IsInWorld and not guard.IsDead and guard.IsIdle then
+                guard.AttackMove(CPos.New(45, 8), 1)
+            end
+        end)
+
+        if Buggy.IsInWorld and not Buggy.IsDead and Buggy.IsIdle then
+            Buggy.Move(CPos.New(39, 9))
+        end
+    end)
 end
