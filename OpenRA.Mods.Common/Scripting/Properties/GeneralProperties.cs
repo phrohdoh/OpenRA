@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System.Linq;
 using Eluant;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -94,6 +95,9 @@ namespace OpenRA.Mods.Common.Scripting
 
 		[Desc("The actor position in world coordinates.")]
 		public WPos CenterPosition { get { return Self.CenterPosition; } }
+
+		[Desc("Returns whether or not this actor is currently selected by the LocalPlayer.")]
+		public bool IsSelected { get { return Self.World.Selection.Actors.Contains(Self); } }
 
 		[Desc("The direction that the actor is facing.")]
 		public int Facing
