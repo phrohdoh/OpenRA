@@ -432,6 +432,12 @@ namespace OpenRA.Mods.Common.Scripting
 			GetScriptTriggers(discovered.PlayerActor).RegisterCallback(Trigger.OnPlayerDiscovered, func, Context);
 		}
 
+		[Desc("Call a function when this actor is selected by the LocalPlayer if the LocalPlayer owns this actor.")]
+		public void OnSelected(Actor a, LuaFunction func)
+		{
+			GetScriptTriggers(a).RegisterCallback(Trigger.OnSelected, func, Context);
+		}
+
 		[Desc("Removes all triggers from this actor. " +
 			"Note that the removal will only take effect at the end of a tick, " +
 			"so you must not add new triggers at the same time that you are calling this function.")]
