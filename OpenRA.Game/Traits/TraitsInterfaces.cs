@@ -326,6 +326,7 @@ namespace OpenRA.Traits
 	[SuppressMessage("StyleCop.CSharp.NamingRules", "SA1302:InterfaceNamesMustBeginWithI", Justification = "Not a real interface, but more like a tag.")]
 	public interface UsesInit<T> : ITraitInfo where T : IActorInit { }
 
+	[RequireExplicitImplementation]
 	public interface INotifySelected { void Selected(Actor self); }
 	public interface INotifySelection { void SelectionChanged(); }
 	public interface IWorldLoaded { void WorldLoaded(World w, WorldRenderer wr); }

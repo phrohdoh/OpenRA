@@ -50,7 +50,7 @@ namespace OpenRA.Traits
 				lifetime = info.Delay;
 		}
 
-		public void Selected(Actor a)
+		void INotifySelected.Selected(Actor a)
 		{
 			if (a.IsIdle)
 				return;
