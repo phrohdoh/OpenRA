@@ -159,7 +159,7 @@ namespace OpenRA.FileSystem
 				// Mounting the package for the first time
 				mountedPackages.Add(package, 1);
 
-				if (explicitName != null)
+				if (!string.IsNullOrWhiteSpace(explicitName))
 					explicitMounts.Add(explicitName, package);
 
 				foreach (var filename in package.Contents)

@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.FileSystem;
+using System;
 
 namespace OpenRA.Graphics
 {
@@ -38,7 +39,11 @@ namespace OpenRA.Graphics
 			cachedSprites = new Dictionary<string, Dictionary<string, Sprite>>();
 
 			var chrome = MiniYaml.Merge(modData.Manifest.Chrome
-				.Select(s => MiniYaml.FromStream(fileSystem.Open(s))));
+				.Select(s =>
+			{
+				Console.WriteLine("ChromeProvider::Initialize({0})", s);
+				return MiniYaml.FromStream(fileSystem.Open(s));
+			}));
 
 			foreach (var c in chrome)
 				LoadCollection(c.Key, c.Value);
@@ -80,7 +85,7 @@ namespace OpenRA.Graphics
 			var collection = new Collection()
 			{
 				Src = yaml.Value,
-				Regions = yaml.Nodes.ToDictionary(n => n.Key, n => new MappedImage(yaml.Value, n.Value))
+				Regions = yaml.Nodes.Where(n => !string.IsNullOrWhiteSpace(n.Key)).ToDictionary(n => n.Key, n => new MappedImage(yaml.Value, n.Value))
 			};
 
 			collections.Add(name, collection);

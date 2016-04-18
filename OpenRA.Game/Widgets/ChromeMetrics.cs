@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace OpenRA.Widgets
 {
@@ -21,8 +22,21 @@ namespace OpenRA.Widgets
 		public static void Initialize(ModData modData)
 		{
 			data = new Dictionary<string, string>();
+			/*
 			var metrics = MiniYaml.Merge(modData.Manifest.ChromeMetrics.Select(
-				y => MiniYaml.FromStream(modData.DefaultFileSystem.Open(y))));
+				y => MiniYaml.FromStream(modData.DefaultFileSystem.Open(y))
+					.Where(my => !string.IsNullOrWhiteSpace(my.Key))
+					.ToList()));
+			*/
+			var metrics = MiniYaml.Merge(modData.Manifest.ChromeMetrics.Select(y =>
+			{
+				Console.WriteLine("Loading ChromeMetrics from: " + y);
+
+				return MiniYaml.FromStream(modData.DefaultFileSystem.Open(y))
+					.Where(my => !string.IsNullOrWhiteSpace(my.Key))
+					.ToList();
+			}));
+
 			foreach (var m in metrics)
 				foreach (var n in m.Value.Nodes)
 					data[n.Key] = n.Value.Value;

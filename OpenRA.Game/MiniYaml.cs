@@ -35,6 +35,9 @@ namespace OpenRA
 		{
 			foreach (var kv in y)
 			{
+				if (string.IsNullOrWhiteSpace(kv.Key))
+					yield return "";
+
 				foreach (var line in kv.Value.ToLines(kv.Key))
 					yield return line;
 
@@ -176,7 +179,7 @@ namespace OpenRA
 
 				var text = "";
 				var comment = "";
-				var column = 0;
+				var indentLevel = 0;
 
 				for (var i = 0; i < line.Length; i++)
 				{
@@ -193,13 +196,14 @@ namespace OpenRA
 						comment += currChar;
 					else if (textStarted && commentStartPos != i)
 						text += currChar;
-					else
-						column++;
+
+					if (!textStarted && !commentStarted)
+						++indentLevel;
 				}
 
 				var key = "";
 				var val = "";
-				var location = new MiniYamlNode.SourceLocation() { Filename = filename ?? "<no filename>", Line = lineNum, Column = column };
+				var location = new MiniYamlNode.SourceLocation() { Filename = filename ?? "<no filename>", Line = lineNum, Column = indentLevel };
 
 				if (!string.IsNullOrWhiteSpace(text))
 				{
@@ -208,15 +212,36 @@ namespace OpenRA
 					val = split.Length == 2 ? split[1].Trim() : "";
 				}
 
-				if (levels.Count <= column)
-					throw new YamlException("Bad indent in miniyaml at {0}".F(location));
+				if (levels.Count <= indentLevel)
+				{
+					var output = "=== START ===\n";
 
-				while (levels.Count > column + 1)
+					foreach (var nodes in levels)
+						output += nodes.WriteToString();
+
+					if (!output.EndsWith("\n"))
+						output += "\n";
+
+					output += "=== END ===";
+
+					var output4 = "key={0}\n".F(key)
+						 + "val={0}\n".F(val)
+						 + "text={0}\n".F(text)
+						 + "comment={0}\n".F(comment)
+						 + "indentLevel={0}\n".F(indentLevel)
+						 + "commentStarted={0}\n".F(commentStarted)
+						 + "commentStartPos={0}\n".F(commentStartPos)
+						 + "textStarted={0}\n".F(textStarted);
+
+					throw new YamlException("\n{3}\n\nBad indent in miniyaml at {0} ({1} <= {2})\n\n{4}".F(location, levels.Count, indentLevel, output, output4));
+				}
+
+				while (levels.Count > indentLevel + 1)
 					levels.RemoveAt(levels.Count - 1);
 
 				var empty = new List<MiniYamlNode>();
 
-				levels[column].Add(new MiniYamlNode(key, val, empty, location));
+				levels[indentLevel].Add(new MiniYamlNode(key, val, empty, location));
 				levels.Add(empty);
 			}
 
