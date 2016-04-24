@@ -173,6 +173,15 @@ mod_d2k_LIBS = $(COMMON_LIBS) $(STD_MOD_LIBS) $(mod_common_TARGET)
 PROGRAMS += mod_d2k
 mod_d2k: $(mod_d2k_TARGET)
 
+# Dune 2
+mod_d2_SRCS := $(shell find OpenRA.Mods.D2/ -iname '*.cs')
+mod_d2_TARGET = mods/d2/OpenRA.Mods.D2.dll
+mod_d2_KIND = library
+mod_d2_DEPS = $(STD_MOD_DEPS) $(mod_common_TARGET)
+mod_d2_LIBS = $(COMMON_LIBS) $(STD_MOD_LIBS) $(mod_common_TARGET)
+PROGRAMS += mod_d2
+mod_d2: $(mod_d2_TARGET)
+
 # Tiberian Sun
 mod_ts_SRCS := $(shell find OpenRA.Mods.TS/ -iname '*.cs')
 mod_ts_TARGET = mods/ts/OpenRA.Mods.TS.dll
@@ -210,6 +219,9 @@ check: utility mods
 	@echo
 	@echo "Checking for code style violations in OpenRA.Mods.D2k..."
 	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.D2k
+	@echo
+	@echo "Checking for code style violations in OpenRA.Mods.D2..."
+	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.D2
 	@echo
 	@echo "Checking for code style violations in OpenRA.Mods.TS..."
 	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.TS
@@ -252,6 +264,9 @@ test: utility mods
 	@echo
 	@echo "Testing Dune 2000 mod MiniYAML..."
 	@mono --debug OpenRA.Utility.exe d2k --check-yaml
+	@echo
+	@echo "Testing Dune 2 mod MiniYAML..."
+	@mono --debug OpenRA.Utility.exe d2 --check-yaml
 	@echo
 	@echo "Testing Tiberian Dawn mod MiniYAML..."
 	@mono --debug OpenRA.Utility.exe cnc --check-yaml
@@ -324,7 +339,7 @@ tools: gamemonitor
 
 package: all-dependencies core tools docs version
 
-mods: mod_common mod_ra mod_cnc mod_d2k mod_ts
+mods: mod_common mod_ra mod_cnc mod_d2k mod_d2 mod_ts
 
 all: dependencies core tools
 
@@ -359,7 +374,7 @@ dependencies: $(os-dependencies)
 
 all-dependencies: cli-dependencies windows-dependencies osx-dependencies
 
-version: mods/ra/mod.yaml mods/cnc/mod.yaml mods/d2k/mod.yaml mods/ts/mod.yaml mods/modchooser/mod.yaml mods/all/mod.yaml
+version: mods/ra/mod.yaml mods/cnc/mod.yaml mods/d2k/mod.yaml mods/d2/mod.yaml mods/ts/mod.yaml mods/modchooser/mod.yaml mods/all/mod.yaml
 	@for i in $? ; do \
 		awk '{sub("Version:.*$$","Version: $(VERSION)"); print $0}' $${i} > $${i}.tmp && \
 		awk '{sub("\tmodchooser:.*$$","\tmodchooser: $(VERSION)"); print $0}' $${i}.tmp > $${i}.tmp2 && \
@@ -393,6 +408,8 @@ install-core: default
 	@$(INSTALL_PROGRAM) $(mod_ra_TARGET) "$(DATA_INSTALL_DIR)/mods/ra"
 	@$(CP_R) mods/d2k "$(DATA_INSTALL_DIR)/mods/"
 	@$(INSTALL_PROGRAM) $(mod_d2k_TARGET) "$(DATA_INSTALL_DIR)/mods/d2k"
+	@$(CP_R) mods/d2 "$(DATA_INSTALL_DIR)/mods/"
+	@$(INSTALL_PROGRAM) $(mod_d2_TARGET) "$(DATA_INSTALL_DIR)/mods/d2"
 	@$(CP_R) mods/modchooser "$(DATA_INSTALL_DIR)/mods/"
 
 	@$(INSTALL_DATA) "global mix database.dat" "$(DATA_INSTALL_DIR)/global mix database.dat"
