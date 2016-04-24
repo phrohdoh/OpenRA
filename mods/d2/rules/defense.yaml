@@ -1,0 +1,20 @@
+^Defense:
+	Inherits: ^Building
+	WithSpriteTurret:
+	AttackTurreted:
+	AutoTarget:
+	RenderRangeCircle:
+	-GivesBuildableArea:
+	-WithTilesetBody:
+	WithWallSpriteBody:
+	LineBuildNode:
+		Types: turret
+	ThrowsShrapnel:
+		Weapons: Debris, Debris3
+		Pieces: 2, 2
+		Range: 2c0, 4c0
+	MustBeDestroyed:
+		RequiredForShortGame: false
+	Building:
+		Dimensions: 1,1
+		Footprint: x

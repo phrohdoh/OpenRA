@@ -1,0 +1,148 @@
+^ExistsInWorld:
+	AppearsOnRadar:
+	UpdatesPlayerStatistics:
+	CombatDebugOverlay:
+	GivesExperience:
+	ScriptTriggers:
+	UpgradeManager:
+	Huntable:
+	RenderDebugState:
+
+^SpriteActor:
+	BodyOrientation:
+	QuantizeFacingsFromSequence:
+	AutoSelectionSize:
+	RenderSprites:
+
+^GainsExperience:
+	GainsExperience:
+		Upgrades:
+			200: firepower, damage, speed, reload, inaccuracy, rank
+			400: firepower, damage, speed, reload, inaccuracy, rank
+			800: firepower, damage, speed, reload, inaccuracy, rank
+			1600: firepower, damage, speed, reload, inaccuracy, rank, eliteweapon, selfheal
+	FirepowerMultiplier@EXPERIENCE:
+		UpgradeTypes: firepower
+		Modifier: 105, 110, 115, 125
+	DamageMultiplier@EXPERIENCE:
+		UpgradeTypes: damage
+		Modifier: 96, 92, 88, 80
+	SpeedMultiplier@EXPERIENCE:
+		UpgradeTypes: speed
+		Modifier: 105, 110, 115, 125
+	ReloadDelayMultiplier@EXPERIENCE:
+		UpgradeTypes: reload
+		Modifier: 96, 92, 88, 80
+	InaccuracyMultiplier@EXPERIENCE:
+		UpgradeTypes: inaccuracy
+		Modifier: 90, 80, 70, 50
+	SelfHealing@ELITE:
+		Step: 2
+		Delay: 125
+		HealIfBelow: 1
+		DamageCooldown: 125
+		UpgradeTypes: selfheal
+		UpgradeMinEnabledLevel: 1
+	WithRankDecoration:
+		Image: rank
+		Sequence: rank
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		UpgradeTypes: rank
+		ZOffset: 256
+		UpgradeMinEnabledLevel: 1
+		UpgradeMaxAcceptedLevel: 4
+
+^Vehicle:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^SpriteActor
+	Mobile:
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
+		Crushes: crate, spicebloom
+		TerrainSpeeds:
+			Sand: 100
+			Rock: 100
+			Transition: 100
+			Concrete: 100
+			SpiceSand: 100
+			Spice: 100
+			SpiceBlobs: 100
+			Dune: 50
+		TurnSpeed: 5
+	SelectionDecorations:
+	Selectable:
+		Bounds: 32,32
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4
+	Passenger:
+		CargoType: Vehicle
+	AttackMove:
+	DrawLineToTarget:
+	HiddenUnderFog:
+	ActorLostNotification:
+	Repairable:
+		RepairBuildings: repair_pad
+	Guard:
+		Voice: Guard
+	Guardable:
+	WithFacingSpriteBody:
+	Demolishable:
+	TemporaryOwnerManager:
+	MustBeDestroyed:
+	Voiced:
+		VoiceSet: VehicleVoice
+	Carryable:
+		CarryableUpgrades: notmobile
+	WithDecorationCarryable:
+		Image: pips
+		Sequence: pickup-indicator
+		Offset: -12, -12
+
+^Tank:
+	Inherits: ^Vehicle
+	Mobile:
+		Crushes: crate, infantry, spicebloom
+
+^Husk:
+	Inherits@1: ^SpriteActor
+	Health:
+		HP: 75
+	Armor:
+		Type: light
+	HiddenUnderFog:
+		Type: CenterPosition
+	Tooltip:
+		Name: Wreck
+	AutoTargetIgnore:
+	ScriptTriggers:
+	WithFacingSpriteBody:
+
+^VehicleHusk:
+	Inherits: ^Husk
+	Husk:
+		AllowedTerrain: Sand, Rock, Transition, Concrete, Spice, SpiceSand, SpiceBlobs, Dune
+	Burns:
+		Interval: 4
+	Targetable:
+		TargetTypes: Ground, Vehicle
+		RequiresForceFire: yes
+	DisabledOverlay:
+	Explodes:
+		Weapon: UnitExplodeMed
+		EmptyWeapon: UnitExplodeMed
+
+^TowerHusk:
+	Health:
+		HP: 125
+	Armor:
+		Type: concrete
+	Husk:
+	AppearsOnRadar:
+	HiddenUnderFog:
+	Burns:
+		Interval: 2
+	Tooltip:
+		Name: Destroyed Tower
+	ScriptTriggers:

@@ -1,0 +1,60 @@
+light_factory:
+	Inherits: ^Building
+	Buildable:
+		Prerequisites: construction_yard, refinery
+		Queue: Building
+		BuildPaletteOrder: 70
+	Selectable:
+		Bounds: 32,32
+	Valued:
+		Cost: 500
+	CustomBuildTimeValue:
+		Value: 277
+	Tooltip:
+		Name: Light Factory
+		Description: Produces light vehicles
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 3300
+	Armor:
+		Type: light
+	RevealsShroud:
+		Range: 4c768
+	WithTilesetBody:
+		SkipFrames: 1
+	RenderSprites:
+		Image: light
+		PlayerPalette: player
+	WithIdleOverlay@FLAG:
+		Sequence: idle-flag
+	WithProductionOverlay@WELDING:
+		Sequence: production-welding
+	RallyPoint:
+		Offset: 1,3
+	Exit@1:
+		SpawnOffset: -244,224,0
+		ExitCell: 1,2
+	Production:
+		Produces: Vehicle
+	PrimaryBuilding:
+	ProductionBar:
+	ProvidesPrerequisite@atreides:
+		Prerequisite: light.atreides
+		Factions: atreides
+	ProvidesPrerequisite@ordos:
+		Prerequisite: light.ordos
+		Factions: ordos
+	ProvidesPrerequisite@harkonnen:
+		Prerequisite: light.harkonnen
+		Factions: harkonnen
+	ProvidesPrerequisite@trikes:
+		Prerequisite: light.regulartrikes
+		Factions: atreides, harkonnen
+	ProvidesPrerequisite@buildingname:
+	Power:
+		Amount: -125
+	GlobalUpgradable:
+		Prerequisites: upgrade.light
+		Upgrades: stardecoration

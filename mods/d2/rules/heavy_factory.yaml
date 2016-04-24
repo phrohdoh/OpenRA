@@ -1,0 +1,63 @@
+heavy_factory:
+	Inherits: ^Building
+	Buildable:
+		Prerequisites: construction_yard, refinery
+		Queue: Building
+		BuildPaletteOrder: 100
+	Selectable:
+		Bounds: 32,32
+	Valued:
+		Cost: 1000
+	CustomBuildTimeValue:
+		Value: 648
+	Tooltip:
+		Name: Heavy Factory
+		Description: Produces heavy vehicles
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 3500
+	Armor:
+		Type: wood
+	RevealsShroud:
+		Range: 4c768
+	RallyPoint:
+		Offset: 0,3
+	Exit@1:
+		SpawnOffset: 256,192,0
+		ExitCell: 0,2
+	Production:
+		Produces: Armor
+	PrimaryBuilding:
+	ProductionBar:
+	ProvidesPrerequisite@atreides:
+		Prerequisite: heavy.atreides
+		Factions: atreides
+	ProvidesPrerequisite@ordos:
+		Prerequisite: heavy.ordos
+		Factions: ordos
+	ProvidesPrerequisite@harkonnen:
+		Prerequisite: heavy.harkonnen
+		Factions: harkonnen
+	ProvidesPrerequisite@missiletank:
+		Prerequisite: heavy.missiletank
+		Factions: atreides, harkonnen
+	WithTilesetBody:
+		SkipFrames: 0
+	RenderSprites:
+		Image: heavy
+	WithProductionOverlay@WELDING1:
+		Sequence: production-welding-1
+	WithProductionOverlay@WELDING2:
+		Sequence: production-welding-2
+	WithIdleOverlay@FLAG:
+		Sequence: idle-flag
+	Power:
+		Amount: -150
+	ProvidesPrerequisite@buildingname:
+	SelectionDecorations:
+		VisualBounds: 32,32
+	GlobalUpgradable:
+		Prerequisites: upgrade.heavy
+		Upgrades: stardecoration

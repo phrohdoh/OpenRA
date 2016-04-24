@@ -1,0 +1,109 @@
+ICON.ICN
+
+0 shadow 50%
+1-6 concrete crater
+7-12 dune crater
+13 ornitopter husk
+14 ornitopter husk on dune crater
+15 dune crater after ornitopter husk gone away
+16 carryall husk
+17 - as for ornitopter
+18 - as for ornithopter
+19 infantry husk
+20 infantry dune after husk gone away
+21-22 infantry skuad husk
+23-24 infantry dead under vehicle
+25 vertical footprint
+26 / footprint
+27 horizontal footprint
+28 \ footprint
+29-32 more footprints
+33 damaged parts
+34-45 walls
+46-107 damaged walls
+108 dot fog
+109 top fog
+110 right
+111 top-right fog
+112 bottom
+113 top+bottom
+114 bottom right
+115 top right bottom
+116 left fog
+117 top left
+118 left and right
+119 left top right
+120 left bottom
+121 top left bottom
+122 left bottom right
+123 filled fog
+124 broken slab
+
+
+
+
+palace 54
+
+
+216/219 217 218
+     226    227    228
+235 236 237
+
+spicebloom 208/209
+
+
+heavy
+
+254/257 255 256
+261 262/264/266 263/265/267
+
+highcentre 57
+
+270 271 272
+276/279 277 278
+
+ix 58
+
+280 281
+282 283/284
+
+barracks 62
+
+299 300
+301 302/303
+
+
+starport
+
+309/312 310 311
+314/317 315/318 316
+319/322 320/323 321
+
+324 325
+328 329
+
+326 327
+330 331
+
+
+rocket 20 - 24
+small rocket 25-29 (no flame)
+very small rocket(bomb?) 30-34 (no flame)
+small rocket + flame 35-39
+big rocket+flame (hand of death?) 40-44
+bullet 116 ?
+
+ornithopter 51/52/53 54/55/56 57/58/59  115?
+
+transport 60-62
+
+siege-tank 10-14
+siege-tank-2 15-19
+
+devastator 20-24
+devastator-2 25-29
+
+sonic-2 30-34
+
+missle-2 35-39
+

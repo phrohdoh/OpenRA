@@ -1,0 +1,7 @@
+^carryall.colorpicker:
+	Inherits: carryall
+	Aircraft:
+		InitialFacing: 104
+	RenderSprites:
+		Image: carryall
+		Palette: colorpicker
