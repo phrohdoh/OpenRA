@@ -39,7 +39,7 @@ namespace OpenRA
 			Rules, ServerTraits,
 			Sequences, VoxelSequences, Cursors, Chrome, Assemblies, ChromeLayout,
 			Weapons, Voices, Notifications, Music, Translations, TileSets,
-			ChromeMetrics, MapCompatibility, Missions;
+			ChromeMetrics, MapCompatibility, Missions, LintRules;
 
 		public readonly IReadOnlyDictionary<string, string> Packages;
 		public readonly IReadOnlyDictionary<string, string> MapFolders;
@@ -55,7 +55,7 @@ namespace OpenRA
 			"Sequences", "VoxelSequences", "Cursors", "Chrome", "Assemblies", "ChromeLayout", "Weapons",
 			"Voices", "Notifications", "Music", "Translations", "TileSets", "ChromeMetrics", "Missions",
 			"ServerTraits", "LoadScreen", "LobbyDefaults", "Fonts", "SupportsMapsFrom", "SoundFormats", "SpriteFormats",
-			"RequiresMods" };
+			"RequiresMods", "LintRules" };
 
 		readonly TypeDictionary modules = new TypeDictionary();
 		readonly Dictionary<string, MiniYaml> yaml;
@@ -91,6 +91,7 @@ namespace OpenRA
 			TileSets = YamlList(yaml, "TileSets");
 			ChromeMetrics = YamlList(yaml, "ChromeMetrics");
 			Missions = YamlList(yaml, "Missions");
+			LintRules = YamlList(yaml, "LintRules");
 
 			ServerTraits = YamlList(yaml, "ServerTraits");
 

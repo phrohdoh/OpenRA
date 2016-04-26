@@ -59,11 +59,12 @@ namespace OpenRA.Mods.Common.UtilityCommands
 				{
 					Console.WriteLine("Testing mod: {0}".F(modData.Manifest.Mod.Title));
 
-					// Run all rule checks on the default mod rules.
+					// Run all rule checks that the manifest opts-into on the default mod rules.
 					CheckRules(modData, modData.DefaultRules);
 
 					// Run all generic (not mod-level) checks here.
-					foreach (var customPassType in modData.ObjectCreator.GetTypesImplementing<ILintPass>())
+					var lintRuleTypes = modData.ObjectCreator.GetTypesImplementing<ILintPass>().Where(t => modData.Manifest.LintRules.Contains(t.Name));
+					foreach (var customPassType in lintRuleTypes)
 					{
 						try
 						{
@@ -122,7 +123,8 @@ namespace OpenRA.Mods.Common.UtilityCommands
 
 		void CheckRules(ModData modData, Ruleset rules, Map map = null)
 		{
-			foreach (var customRulesPassType in modData.ObjectCreator.GetTypesImplementing<ILintRulesPass>())
+			var lintRuleTypes = modData.ObjectCreator.GetTypesImplementing<ILintRulesPass>().Where(t => modData.Manifest.LintRules.Contains(t.Name));
+			foreach (var customRulesPassType in lintRuleTypes)
 			{
 				try
 				{
