@@ -5,7 +5,7 @@ gun_turret:
 		Prerequisites: construction_yard, barracks
 		BuildPaletteOrder: 90
 	Valued:
-		Cost: 550
+		Cost: 125
 	CustomBuildTimeValue:
 		Value: 231
 	Tooltip:
@@ -20,7 +20,7 @@ gun_turret:
 		Bounds: 16,16
 		Priority: 3
 	Health:
-		HP: 2700
+		HP: 100
 	Armor:
 		Type: heavy
 	RevealsShroud:
@@ -36,6 +36,6 @@ gun_turret:
 		LocalOffset: 512,0,432
 		MuzzleSequence: muzzle
 	Power:
-		Amount: -50
+		Amount: -10
 	SelectionDecorations:
 		VisualBounds: 16,16

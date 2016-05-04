@@ -9,7 +9,7 @@ refinery:
 	CustomBuildTimeValue:
 		Value: 540
 	Valued:
-		Cost: 1500
+		Cost: 400
 	CustomBuildTimeValue:
 		Value: 540
 	Tooltip:
@@ -19,7 +19,7 @@ refinery:
 		Footprint: xx= xx=
 		Dimensions: 3,2
 	Health:
-		HP: 3000
+		HP: 450
 	Armor:
 		Type: building
 	RevealsShroud:
@@ -45,7 +45,7 @@ refinery:
 	RenderSprites:
 		Image: refinery
 	Power:
-		Amount: -75
+		Amount: -30
 	WithIdleOverlay@FLAG:
 		Sequence: idle-flag
 	WithIdleOverlay@DOCK1:

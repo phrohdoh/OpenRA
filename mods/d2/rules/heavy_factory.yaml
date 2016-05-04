@@ -7,7 +7,7 @@ heavy_factory:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 1000
+		Cost: 600
 	CustomBuildTimeValue:
 		Value: 648
 	Tooltip:
@@ -17,7 +17,7 @@ heavy_factory:
 		Footprint: xxx xxx
 		Dimensions: 3,2
 	Health:
-		HP: 3500
+		HP: 200
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -54,7 +54,7 @@ heavy_factory:
 	WithIdleOverlay@FLAG:
 		Sequence: idle-flag
 	Power:
-		Amount: -150
+		Amount: -35
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 32,32

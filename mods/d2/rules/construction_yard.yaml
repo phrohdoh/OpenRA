@@ -11,7 +11,7 @@ construction_yard:
 	Selectable:
 		Bounds: 32,32
 	Health:
-		HP: 3000
+		HP: 400
 	Armor:
 		Type: cy
 	RevealsShroud:
@@ -20,17 +20,17 @@ construction_yard:
 		Produces: Building, Upgrade
 	Exit:
 	Valued:
-		Cost: 2000
+		Cost: 400
 	Tooltip:
 		Name: Construction Yard
 	CustomSellValue:
-		Value: 2000
+		Value: 400
 	EmitInfantryOnSell:
 		ActorTypes: light_inf, light_inf, light_squad
 	BaseBuilding:
 	ProductionBar:
 	Power:
-		Amount: 20
+		Amount: 0
 	WithTilesetBody:
 		SkipFrames: 0
 	RenderSprites:
@@ -55,7 +55,7 @@ upgrade.conyard:
 		Queue: Upgrade
 		BuildLimit: 1
 	Valued:
-		Cost: 1000
+		Cost: 400
 	CustomBuildTimeValue:
 		Value: 590
 	RenderSprites:

@@ -5,7 +5,7 @@ repair_pad:
 		Prerequisites: construction_yard, heavy_factory, upgrade.heavy, ~techlevel.medium
 		BuildPaletteOrder: 130
 	Valued:
-		Cost: 800
+		Cost: 700
 	CustomBuildTimeValue:
 		Value: 324
 	Tooltip:
@@ -15,7 +15,7 @@ repair_pad:
 		Footprint: xxx xxx
 		Dimensions: 3,2
 	Health:
-		HP: 3000
+		HP: 400
 	Armor:
 		Type: building
 	RevealsShroud:
@@ -44,6 +44,6 @@ repair_pad:
 		Sequence: active-2
 		#Palette: effect75alpha
 	Power:
-		Amount: -50
+		Amount: -20
 	ProvidesPrerequisite@buildingname:
 

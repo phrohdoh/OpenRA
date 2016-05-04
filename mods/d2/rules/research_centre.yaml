@@ -7,7 +7,7 @@ research_centre:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 1000
+		Cost: 500
 	CustomBuildTimeValue:
 		Value: 270
 	Tooltip:
@@ -17,7 +17,7 @@ research_centre:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 2500
+		HP: 400
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -29,7 +29,7 @@ research_centre:
 	WithIdleOverlay@FLAG
 		Sequence: idle-flag
 	Power:
-		Amount: -175
+		Amount: -40
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 32,32

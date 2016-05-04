@@ -7,7 +7,7 @@ high_tech_factory:
 	Selectable:
 		Bounds: 48,32
 	Valued:
-		Cost: 1150
+		Cost: 500
 	CustomBuildTimeValue:
 		Value: 405
 	Tooltip:
@@ -22,7 +22,7 @@ high_tech_factory:
 		Footprint: xxx xxx
 		Dimensions: 3,2
 	Health:
-		HP: 3500
+		HP: 400
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -53,7 +53,7 @@ high_tech_factory:
 		DisplayBeacon: True
 		CameraActor: camera
 	Power:
-		Amount: -75
+		Amount: -35
 	SelectionDecorations:
 		VisualBounds: 64,32
 	GlobalUpgradable:
@@ -71,7 +71,7 @@ upgrade.hightech:
 		Queue: Upgrade
 		BuildLimit: 1
 	Valued:
-		Cost: 1500
+		Cost: 500
 	CustomBuildTimeValue:
 		Value: 720
 	RenderSprites:

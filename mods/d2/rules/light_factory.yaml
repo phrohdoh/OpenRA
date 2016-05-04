@@ -7,7 +7,7 @@ light_factory:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 500
+		Cost: 400
 	CustomBuildTimeValue:
 		Value: 277
 	Tooltip:
@@ -17,7 +17,7 @@ light_factory:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 3300
+		HP: 350
 	Armor:
 		Type: light
 	RevealsShroud:
@@ -54,7 +54,7 @@ light_factory:
 		Factions: atreides, harkonnen
 	ProvidesPrerequisite@buildingname:
 	Power:
-		Amount: -125
+		Amount: -20
 	GlobalUpgradable:
 		Prerequisites: upgrade.light
 		Upgrades: stardecoration

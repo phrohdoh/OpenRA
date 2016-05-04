@@ -7,7 +7,7 @@ wind_trap:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 225
+		Cost: 300
 	CustomBuildTimeValue:
 		Value: 180
 	Tooltip:
@@ -17,7 +17,7 @@ wind_trap:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 3000
+		HP: 200
 	Armor:
 		Type: building
 	RevealsShroud:
@@ -30,6 +30,6 @@ wind_trap:
 	WithIdleOverlay@FLAG:
 		Sequence: idle-flag
 	Power:
-		Amount: 200
+		Amount: 100
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:

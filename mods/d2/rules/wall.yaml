@@ -10,7 +10,7 @@ wall:
 		DamagedSounds:
 		DestroyedSounds: EXPLSML4.WAV
 	Valued:
-		Cost: 20
+		Cost: 50
 	CustomBuildTimeValue:
 		Value: 54
 	CustomSellValue:
@@ -24,7 +24,7 @@ wall:
 		Adjacent: 7
 		TerrainTypes: Rock, Concrete
 	Health:
-		HP: 2000
+		HP: 50
 		Shape: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512

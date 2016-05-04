@@ -7,7 +7,7 @@ wor:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 225
+		Cost: 400
 	CustomBuildTimeValue:
 		Value: 231
 	Tooltip:
@@ -17,7 +17,7 @@ wor:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 3200
+		HP: 400
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -44,7 +44,7 @@ wor:
 		Prerequisite: wor.harkonnen
 		Factions: harkonnen
 	Power:
-		Amount: -30
+		Amount: -20
 	RenderSprites:
 		Image: wor
 		PlayerPalette: player

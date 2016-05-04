@@ -7,7 +7,7 @@ barracks:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 225
+		Cost: 300
 	CustomBuildTimeValue:
 		Value: 231
 	Tooltip:
@@ -17,7 +17,7 @@ barracks:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 3200
+		HP: 300
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -44,7 +44,7 @@ barracks:
 		Prerequisite: barracks.harkonnen
 		Factions: harkonnen
 	Power:
-		Amount: -30
+		Amount: -10
 	RenderSprites:
 		Image: barracks
 		PlayerPalette: player

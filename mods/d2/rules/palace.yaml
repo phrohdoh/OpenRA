@@ -7,7 +7,7 @@ palace:
 	Selectable:
 		Bounds: 48,48
 	Valued:
-		Cost: 1600
+		Cost: 999
 	CustomBuildTimeValue:
 		Value: 810
 	Tooltip:
@@ -17,7 +17,7 @@ palace:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
 	Health:
-		HP: 4000
+		HP: 1000
 	Armor:
 		Type: wood
 	RevealsShroud:
@@ -30,7 +30,7 @@ palace:
 	WithIdleOverlay@FLAG
 		Sequence: idle-flag
 	Power:
-		Amount: -200
+		Amount: -80
 	ProvidesPrerequisite@nuke:
 		Prerequisite: palace.nuke
 		Factions: harkonnen

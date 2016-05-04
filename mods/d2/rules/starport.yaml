@@ -8,7 +8,7 @@ starport:
 		Queue: Building
 		BuildPaletteOrder: 80
 	Valued:
-		Cost: 1500
+		Cost: 500
 	CustomBuildTimeValue:
 		Value: 540
 	Building:
@@ -17,7 +17,7 @@ starport:
 	Selectable:
 		Bounds: 48,48
 	Health:
-		HP: 3500
+		HP: 500
 	Armor:
 		Type: building
 	RevealsShroud:
@@ -59,5 +59,5 @@ starport:
 		Prerequisite: starport.harkonnen
 		Factions: harkonnen
 	Power:
-		Amount: -150
+		Amount: -50
 	ProvidesPrerequisite@buildingname:

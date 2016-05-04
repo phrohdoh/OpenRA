@@ -7,7 +7,7 @@ silo:
 	Selectable:
 		Bounds: 32,32
 	Valued:
-		Cost: 120
+		Cost: 150
 	CustomBuildTimeValue:
 		Value: 135
 	Tooltip:
@@ -17,7 +17,7 @@ silo:
 		Adjacent: 4
 	-GivesBuildableArea:
 	Health:
-		HP: 1500
+		HP: 150
 	Armor:
 		Type: wall
 	RevealsShroud:
@@ -35,6 +35,6 @@ silo:
 	WithIdleOverlay@FLAG:
 		Sequence: idle-flag
 	Power:
-		Amount: -15
+		Amount: -5
 	MustBeDestroyed:
 		RequiredForShortGame: false
