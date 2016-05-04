@@ -85,14 +85,6 @@ allyrepair:
 		Offset: -11,-10
 		ZOffset: 2047
 
-atomic:
-	up: DATA.R8
-		Start: 2147
-		ZOffset: 1023
-	down: DATA.R8
-		Start: 2148
-		ZOffset: 1023
-
 mpspawn:
 	idle: mpspawn.shp
 		Length: *

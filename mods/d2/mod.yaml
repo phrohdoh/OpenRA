@@ -64,6 +64,7 @@ Rules:
 	d2|rules/carryall.yaml
 	d2|rules/colorpicker.yaml
 	d2|rules/ornithopter.yaml
+	d2|rules/frigate.yaml
 	d2|rules/infantry.yaml
 	d2|rules/light_inf.yaml
 	d2|rules/light_squad.yaml
@@ -125,6 +126,7 @@ Sequences:
 	d2|sequences/saboteur.yaml
 	d2|sequences/mcv.yaml
 	d2|sequences/ornithopter.yaml
+	d2|sequences/frigate.yaml
 	d2|sequences/outpost.yaml
 	d2|sequences/sandworm.yaml
 	d2|sequences/shroud.yaml
@@ -153,7 +155,8 @@ Sequences:
 	d2|sequences/smoke.yaml
 	d2|sequences/explosion.yaml
 	d2|sequences/fire.yaml
-	d2|sequences/bombs.yaml
+	#d2|sequences/bombs.yaml
+	d2|sequences/atomic.yaml
 
 TileSets:
 	d2|tilesets/dune2.yaml
