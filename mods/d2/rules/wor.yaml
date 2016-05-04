@@ -58,3 +58,21 @@ wor:
 	GlobalUpgradable:
 		Prerequisites: upgrade.wor
 		Upgrades: stardecoration
+
+upgrade.wor:
+	AlwaysVisible:
+	Tooltip:
+		Name: WOR Upgrade
+		Description: Unlocks troopers squads
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: wor
+		Queue: Upgrade
+		BuildLimit: 1
+	Valued:
+		Cost: 500
+	CustomBuildTimeValue:
+		Value: 290
+	RenderSprites:
+		Image: wor
+	ProvidesPrerequisite@upgradename:

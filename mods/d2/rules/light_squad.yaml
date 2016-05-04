@@ -3,6 +3,7 @@ light_squad:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 10
+		Prerequisites: upgrade.barracks
 	Valued:
 		Cost: 50
 	CustomBuildTimeValue:

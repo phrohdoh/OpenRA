@@ -56,3 +56,21 @@ barracks:
 	GlobalUpgradable:
 		Prerequisites: upgrade.barracks
 		Upgrades: stardecoration
+
+upgrade.barracks:
+	AlwaysVisible:
+	Tooltip:
+		Name: Barracks Upgrade
+		Description: Unlocks infantry squads
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: barracks
+		Queue: Upgrade
+		BuildLimit: 1
+	Valued:
+		Cost: 500
+	CustomBuildTimeValue:
+		Value: 290
+	RenderSprites:
+		Image: barracks
+	ProvidesPrerequisite@upgradename:

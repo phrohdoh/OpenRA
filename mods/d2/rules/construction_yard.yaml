@@ -43,19 +43,21 @@ construction_yard:
 	GlobalUpgradable:
 		Prerequisites: upgrade.conyard
 		Upgrades: stardecoration
-	WithDecoration@upgraded:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-upgraded
-		ReferencePoint: Top, Right
-		ZOffset: 256
-		UpgradeTypes: stardecoration
-		UpgradeMinEnabledLevel: 1
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		UpgradeTypes: primary
-		UpgradeMinEnabledLevel: 1
+
+upgrade.conyard:
+	AlwaysVisible:
+	Tooltip:
+		Name: Construction Yard Upgrade
+		Description: Unlocks new construction options
+	Buildable:
+		BuildPaletteOrder: 10
+		Prerequisites: construction_yard
+		Queue: Upgrade
+		BuildLimit: 1
+	Valued:
+		Cost: 1000
+	CustomBuildTimeValue:
+		Value: 590
+	RenderSprites:
+		Image: conyard
+	ProvidesPrerequisite@upgradename:

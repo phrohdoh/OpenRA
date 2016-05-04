@@ -2,7 +2,7 @@ quad:
 	Inherits: ^Vehicle
 	Buildable:
 		Queue: Vehicle
-		#Prerequisites: upgrade.light, ~techlevel.medium
+		Prerequisites: upgrade.light, ~techlevel.medium
 		BuildPaletteOrder: 20
 	Valued:
 		Cost: 400

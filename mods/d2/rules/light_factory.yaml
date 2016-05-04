@@ -58,3 +58,21 @@ light_factory:
 	GlobalUpgradable:
 		Prerequisites: upgrade.light
 		Upgrades: stardecoration
+
+upgrade.light:
+	AlwaysVisible:
+	Tooltip:
+		Name: Light Factory Upgrade
+		Description: Unlocks additional light units
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: light_factory
+		Queue: Upgrade
+		BuildLimit: 1
+	Valued:
+		Cost: 400
+	CustomBuildTimeValue:
+		Value: 215
+	RenderSprites:
+		Image: light
+	ProvidesPrerequisite@upgradename:

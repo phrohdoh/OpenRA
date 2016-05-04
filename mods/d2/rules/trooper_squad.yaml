@@ -3,7 +3,7 @@ trooper_squad:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 20
-		Prerequisites: upgrade.barracks, ~techlevel.medium
+		Prerequisites: wor, upgrade.wor, ~techlevel.medium
 	Valued:
 		Cost: 90
 	CustomBuildTimeValue:
