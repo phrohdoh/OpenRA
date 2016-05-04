@@ -46,3 +46,45 @@ Actors:
 	Actor5: refinery
 		Owner: Neutral
 		Location: 73,56
+	Actor6: wormspawner
+		Owner: Neutral
+		Location: 72,72
+	Actor7: wormspawner
+		Owner: Neutral
+		Location: 72,66
+	Actor8: wormspawner
+		Owner: Neutral
+		Location: 68,61
+	Actor9: wormspawner
+		Owner: Neutral
+		Location: 78,59
+	Actor10: wormspawner
+		Owner: Neutral
+		Location: 74,62
+	Actor11: wormspawner
+		Owner: Neutral
+		Location: 60,55
+	Actor12: wormspawner
+		Owner: Neutral
+		Location: 53,54
+	Actor13: wormspawner
+		Owner: Neutral
+		Location: 49,57
+	Actor14: wormspawner
+		Owner: Neutral
+		Location: 47,61
+	Actor15: wormspawner
+		Owner: Neutral
+		Location: 62,52
+	Actor16: wormspawner
+		Owner: Neutral
+		Location: 55,50
+	Actor17: wormspawner
+		Owner: Neutral
+		Location: 62,77
+	Actor18: wormspawner
+		Owner: Neutral
+		Location: 53,72
+	Actor19: wormspawner
+		Owner: Neutral
+		Location: 61,62

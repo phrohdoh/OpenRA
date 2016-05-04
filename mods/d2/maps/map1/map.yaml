@@ -26,7 +26,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Multi0, Multi1
+		Enemies: Multi0, Multi1, Multi2, Multi3, Multi4
 	PlayerReference@Multi0:
 		Name: Multi0
 		Playable: True
@@ -34,6 +34,21 @@ Players:
 		Enemies: Creeps
 	PlayerReference@Multi1:
 		Name: Multi1
+		Playable: True
+		Faction: Random
+		Enemies: Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		Faction: Random
+		Enemies: Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		Faction: Random
+		Enemies: Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
 		Playable: True
 		Faction: Random
 		Enemies: Creeps
@@ -69,3 +84,12 @@ Actors:
 	Actor9: wormspawner
 		Owner: Neutral
 		Location: 59,70
+	Actor10: mpspawn
+		Owner: Neutral
+		Location: 68,80
+	Actor11: mpspawn
+		Owner: Neutral
+		Location: 49,43
+	Actor12: mpspawn
+		Owner: Neutral
+		Location: 17,70

@@ -1,12 +1,84 @@
 shroud:
-	shrouda: ICON.ICN
-		Frames: 112, 116, 108, 109, 108, 110, 108, 108, 120, 117, 111, 114
+	shrouda:
+		Combine:
+			ICON.ICN:
+				Start: 112
+				Length: 1
+			ICON.ICN:
+				Start: 116
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 109
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 110
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 120
+				Length: 1
+			ICON.ICN:
+				Start: 117
+				Length: 1
+			ICON.ICN:
+				Start: 111
+				Length: 1
+			ICON.ICN:
+				Start: 114
+				Length: 1
 		Length: 12
 	shroudfull: ICON.ICN
 		Start: 123
 		Length: 1
-	foga: ICON.ICN
-		Frames: 112, 116, 108, 109, 108, 110, 108, 108, 120, 117, 111, 114
+	foga:
+		Combine:
+			ICON.ICN:
+				Start: 112
+				Length: 1
+			ICON.ICN:
+				Start: 116
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 109
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 110
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			transparent.shp:
+				Start: 0
+				Length: 1
+			ICON.ICN:
+				Start: 120
+				Length: 1
+			ICON.ICN:
+				Start: 117
+				Length: 1
+			ICON.ICN:
+				Start: 111
+				Length: 1
+			ICON.ICN:
+				Start: 114
+				Length: 1
 		Length: 12
 	fogfull: ICON.ICN
 		Start: 123

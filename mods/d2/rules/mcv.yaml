@@ -1,5 +1,5 @@
 mcv:
-	Inherits: ^Dune2.Vehicle
+	Inherits: ^Vehicle
 	Buildable:
 		Prerequisites: repair_pad, upgrade.heavy, ~techlevel.medium
 		Queue: Armor

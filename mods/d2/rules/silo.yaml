@@ -38,7 +38,3 @@ silo:
 		Amount: -15
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	ThrowsShrapnel:
-		Weapons: Debris, Debris2, Debris3, Debris4
-		Pieces: 3, 5
-		Range: 2c0, 5c0

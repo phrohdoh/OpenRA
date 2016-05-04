@@ -63,15 +63,8 @@ harvester:
 		Offset: 0,0
 
 harvester.husk:
-	idle:
-		Combine:
-			UNITS.SHP:
-				Start: 10
-				Length: 5
-			UNITS.SHP:
-				Start: 11
-				Length: 3
-				FlipX: true
-		Frames: 0, 1, 2, 3, 4, 7, 6, 5
-		Facings: -8
+	idle: UNITS1.SHP
+		Start: 14
+		Length: 3
+		Tick: 4000
 		ZOffset: -1023

@@ -16,10 +16,6 @@ Terrain:
 		TargetTypes: Ground
 		AcceptsSmudgeType: RockCrater
 		Color: E8C498
-	TerrainType@Dune:
-		Type: Dune
-		TargetTypes: Ground
-		Color: EFDE8C
 	TerrainType@Rock:
 		Type: Rock
 		TargetTypes: Ground
@@ -38,6 +34,7 @@ Terrain:
 	TerrainType@Spice:
 		Type: Spice
 		TargetTypes: Ground
+		AcceptsSmudgeType: SandCrater
 		Color: EF944A
 
 Templates:
@@ -86,7 +83,7 @@ Templates:
 		Size: 1,1
 		Category: Basic
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@175:
 		Id: 175
@@ -238,135 +235,135 @@ Templates:
 		Images: ICON.ICN
 		Frames: 144
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@145:
 		Id: 145
 		Images: ICON.ICN
 		Frames: 145
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@146:
 		Id: 146
 		Images: ICON.ICN
 		Frames: 146
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@147:
 		Id: 147
 		Images: ICON.ICN
 		Frames: 147
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@148:
 		Id: 148
 		Images: ICON.ICN
 		Frames: 148
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@149:
 		Id: 149
 		Images: ICON.ICN
 		Frames: 149
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@150:
 		Id: 150
 		Images: ICON.ICN
 		Frames: 150
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@151:
 		Id: 151
 		Images: ICON.ICN
 		Frames: 151
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@152:
 		Id: 152
 		Images: ICON.ICN
 		Frames: 152
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@153:
 		Id: 153
 		Images: ICON.ICN
 		Frames: 153
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@154:
 		Id: 154
 		Images: ICON.ICN
 		Frames: 154
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@155:
 		Id: 155
 		Images: ICON.ICN
 		Frames: 155
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@156:
 		Id: 156
 		Images: ICON.ICN
 		Frames: 156
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@157:
 		Id: 157
 		Images: ICON.ICN
 		Frames: 157
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 	Template@158:
 		Id: 158
 		Images: ICON.ICN
 		Frames: 158
 		Size: 1,1
-		Category: Dune
+		Category: Sand
 		Tiles:
-			0: Dune
+			0: Sand
 
 
 	Template@160:

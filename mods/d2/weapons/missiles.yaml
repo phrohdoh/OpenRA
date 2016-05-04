@@ -5,11 +5,8 @@ Bazooka:
 	Projectile: Missile
 		Speed: 281
 		Inaccuracy: 256
-		Image: RPG
+		Image: rpg
 		HorizontalRateOfTurn: 1
-		TrailImage: bazooka_trail2
-		TrailPalette: effect75alpha
-		TrailInterval: 1
 		RangeLimit: 35
 	Warhead@1Dam: SpreadDamage
 		Spread: 192
@@ -28,7 +25,7 @@ Bazooka:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater, RockCrater
 	Warhead@3Eff: CreateEffect
-		Explosions: tiny_explosion
+		Explosions: small_explosion
 		ImpactSounds: EXPLSML1.WAV
 
 Bazooka_squad:
@@ -38,11 +35,8 @@ Bazooka_squad:
 	Projectile: Missile
 		Speed: 281
 		Inaccuracy: 256
-		Image: RPG
+		Image: rpg
 		HorizontalRateOfTurn: 1
-		TrailImage: bazooka_trail2
-		TrailPalette: effect75alpha
-		TrailInterval: 1
 		RangeLimit: 35
 	Warhead@1Dam: SpreadDamage
 		Spread: 192
@@ -61,7 +55,7 @@ Bazooka_squad:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater, RockCrater
 	Warhead@3Eff: CreateEffect
-		Explosions: tiny_explosion
+		Explosions: small_explosion
 		ImpactSounds: EXPLSML1.WAV
 
 Rocket:
@@ -70,11 +64,8 @@ Rocket:
 	Report: ROCKET1.WAV
 	Projectile: Missile
 		Inaccuracy: 256
-		Image: RPG
+		Image: missile
 		HorizontalRateOfTurn: 0
-		TrailImage: bazooka_trail2
-		TrailPalette: effect75alpha
-		TrailInterval: 1
 		Speed: 343
 		RangeLimit: 35
 	Warhead@1Dam: SpreadDamage
@@ -111,9 +102,7 @@ TowerMissile:
 		HorizontalRateOfTurn: 1
 		RangeLimit: 50
 		Inaccuracy: 384
-		Image: MISSILE2
-		TrailImage: large_trail
-		TrailInterval: 1
+		Image: missile
 		Speed: 320
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
@@ -150,9 +139,7 @@ mtank_pri:
 		Blockable: false
 		Shadow: yes
 		Inaccuracy: 96
-		Image: MISSILE2
-		TrailImage: large_trail
-		TrailInterval: 1
+		Image: missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Falloff: 100, 50, 25, 0
@@ -185,11 +172,7 @@ DeviatorMissile:
 		Blockable: false
 		Shadow: yes
 		Inaccuracy: 384
-		Image: MISSILE
-		TrailImage: deviator_trail
-		TrailPalette: deviatorgas
-		TrailUsePlayerPalette: true
-		TrailInterval: 1
+		Image: missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Falloff: 100, 50, 25, 0

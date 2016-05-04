@@ -41,8 +41,4 @@
 	#WithCrumbleOverlay:
 	Demolishable:
 	DamagedWithoutFoundation:
-	ThrowsShrapnel:
-		Weapons: Debris, Debris2, Debris3, Debris4
-		Pieces: 2, 5
-		Range: 1c512, 4c0
 	#WithMakeAnimation:

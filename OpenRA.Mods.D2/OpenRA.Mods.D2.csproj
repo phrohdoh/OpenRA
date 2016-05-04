@@ -78,11 +78,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SpriteLoaders\IcnD2Loader.cs" />
+    <Compile Include="SpriteLoaders\CpsD2Loader.cs" />
+    <Compile Include="SpriteLoaders\WsaD2Loader.cs" />
     <Compile Include="Traits\Render\WithTilesetBody.cs" />
     <Compile Include="Traits\World\D2ResourceLayer.cs" />
     <Compile Include="Traits\World\D2EditorResourceLayer.cs" />
     <Compile Include="Traits\World\D2TerrainLayer.cs" />
-    <Compile Include="Traits\Buildings\D2ClearTerrain.cs" />
+    <Compile Include="D2LoadScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

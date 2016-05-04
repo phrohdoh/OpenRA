@@ -78,8 +78,6 @@ World:
 	WarheadDebugOverlay:
 	D2TerrainLayer:
 	BuildableTerrainLayer:
-	D2ResourceLayer:
-	ResourceClaimLayer:
 	SmudgeLayer@Rock:
 		Type: RockCrater
 		Sequence: rockcraters
@@ -88,6 +86,8 @@ World:
 		Type: SandCrater
 		Sequence: sandcraters
 		SmokePercentage: 0
+	D2ResourceLayer:
+	ResourceClaimLayer:
 	MapCreeps:
 	SpawnMapActors:
 	MapBuildRadius:

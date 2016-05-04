@@ -144,7 +144,7 @@ DevBullet:
 		Shadow: yes
 		Angle: 62
 		Inaccuracy: 768
-		ContrailLength: 20
+		#ContrailLength: 20
 		Image: 155mm
 	Warhead@1Dam: SpreadDamage
 		Spread: 416

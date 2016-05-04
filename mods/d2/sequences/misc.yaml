@@ -1,132 +1,10 @@
-explosion:
-	Defaults:
-		BlendMode: Additive
-		Tick: 80
-		ZOffset: 511
-	piff: DATA.R8
-		Start: 3626
-		Length: 5
-	piffs: DATA.R8
-		Start: 3429
-		Length: 4
-	small_explosion: DATA.R8
-		Start: 3403
-		Length: 15
-	med_explosion: DATA.R8
-		Start: 3390
-		Length: 12
-	tiny_explosion: DATA.R8
-		Start: 3386
-		Length: 4
-	nuke: DATA.R8
-		Start: 3965
-		Length: 14
-	self_destruct: DATA.R8
-		Start: 3433
-		Length: 15
-	building: DATA.R8
-		Start: 3448
-		Length: 22
-	large_explosion: DATA.R8
-		Start: 3988
-		Length: 22
-	small_napalm: DATA.R8
-		Start: 3421
-		Length: 8
-	rocket_explosion: DATA.R8
-		Start: 3381
-		Length: 5
-		BlendMode: Alpha
-	shockwave: DATA.R8
-		Start: 3687
-		Length: 6
-		Tick: 120
-	deviator: DATA.R8
-		Start: 3512
-		Length: 23
-		BlendMode: Alpha
-		Offset: 12, -10
-		Tick: 120
-	bloomspawn: DATA.R8
-		Start: 3980
-		Length: 8
-		Tick: 120
-		Offset: 0, -16
-	corpse: DATA.R8
-		ZOffset: -511
-		Start: 430
-		Length: 12
-		Tick: 1600
-
-large_trail: 
-	idle: DATA.R8
-		Start: 3873
-		Length: 4
-		Tick: 80
-		BlendMode: Additive
-		ZOffset: 1023
-
-small_trail:
-	idle: DATA.R8
-		Start: 3735
-		Length: 4
-		Tick: 80
-		ZOffset: 1023
-
-small_trail2:
-	idle: DATA.R8
-		Start: 3540
-		Length: 4
-		Tick: 80
-		ZOffset: 1023
-
-bazooka_trail:
-	idle: DATA.R8
-		Start: 3381
-		Length: 4
-		Tick: 80
-		ZOffset: 1023
-
-bazooka_trail2:
-	idle: DATA.R8
-		Start: 3544
-		Length: 4
-		Tick: 80
-		ZOffset: 1023
-
-deviator_trail:
-	idle: DATA.R8
-		Start: 3535
-		Length: 5
-		Tick: 80
-		ZOffset: 1023
-
-laserfire:
-	idle: DATA.R8
-		Start: 3386
-		Length: 4
-		Tick: 80
-		BlendMode: Additive
-		ZOffset: 511
-
-sandtrail:
-	Defaults:
-		Length: 8
-		Tick: 200
-		ZOffset: -512
-	traila: sandtrail.shp
-	trailb: sandtrail.shp
-		Frames: 2, 6, 4, 5, 0, 1, 3, 7
-	trailc: sandtrail.shp
-		Frames: 7, 4, 6, 5, 2, 0, 3, 1
-
 pips:
 	groups: DATA.R8
 		Start: 17
 		Length: 10
 	pickup-indicator: DATA.R8
 		Start: 112
-	tag-primary: primary.shp
+	tag-primary: transparent.shp
 		Offset: 0, 2
 	pip-empty: DATA.R8
 		Start: 15
@@ -180,23 +58,6 @@ beacon:
 		Length: *
 		ZOffset: 2047
 
-rpg:
-	idle: DATA.R8
-		Start: 3015
-		Facings: -32
-		ZOffset: 1023
-
-120mm:
-	idle: DATA.R8
-		Start: 3014
-		BlendMode: Additive
-		ZOffset: 1023
-
-155mm:
-	idle: DATA.R8
-		Start: 3081
-		ZOffset: 1023
-
 crate-effects:
 	Defaults:
 		ZOffset: 2047
@@ -224,18 +85,6 @@ allyrepair:
 		Offset: -11,-10
 		ZOffset: 2047
 
-missile:
-	idle: DATA.R8
-		Start: 3088
-		Facings: -32
-		ZOffset: 1023
-
-missile2:
-	idle: DATA.R8
-		Start: 3306
-		Facings: -32
-		ZOffset: 1023
-
 atomic:
 	up: DATA.R8
 		Start: 2147
@@ -244,84 +93,6 @@ atomic:
 		Start: 2148
 		ZOffset: 1023
 
-fire:
-	1: DATA.R8
-		Start: 3712
-		Length: 10
-		Offset: 4,-17
-		ZOffset: 1023
-		BlendMode: Additive
-	2: DATA.R8
-		Start: 3723
-		Length: 11
-		Offset: 0,-3
-		ZOffset: 1023
-		BlendMode: Additive
-	3: DATA.R8
-		Start: 3885
-		Length: 13
-		Offset: 0,-3
-		ZOffset: 1023
-		BlendMode: Additive
-	4: DATA.R8
-		Start: 3712
-		Length: 10
-		Offset: 0,-3
-		ZOffset: 1023
-		BlendMode: Additive
-
-smoke_m:
-	Defaults:
-		ZOffset: 511
-	idle: DATA.R8
-		Start: 3418
-		Length: 2
-		BlendMode: Additive
-	loop: DATA.R8
-		Start: 3418
-		Length: 2
-		BlendMode: Additive
-	end: DATA.R8
-		Start: 3418
-		Length: 3
-		BlendMode: Additive
-
-bombs:
-	idle: DATA.R8
-		Start: 3280
-		Length: 4
-		ZOffset: 1023
-
-grenade:
-	idle: grenade.shp	# frames 3618-3621 from patch 1.06 DATA.R8
-		Length: 4
-		Tick: 80
-		ZOffset: 1023
-
-shrapnel:
-	idle: DATA.R8
-		Start: 3290
-		Length: 4
-		ZOffset: 1023
-
-shrapnel2:
-	idle: DATA.R8
-		Start: 3294
-		Length: 1
-		ZOffset: 1023
-
-shrapnel3:
-	idle: DATA.R8
-		Start: 3295
-		Length: 8
-		ZOffset: 1023
-
-shrapnel4:
-	idle: DATA.R8
-		Start: 3303
-		Length: 1
-		ZOffset: 1023
-		
 mpspawn:
 	idle: mpspawn.shp
 		Length: *
@@ -349,13 +120,6 @@ doubleblast:
 		Facings: -16
 		BlendMode: Additive
 		ZOffset: 511
-
-doubleblastbullet:
-	idle: DATA.R8
-		Start: 3248
-		Facings: -16
-		BlendMode: Additive
-		ZOffset: 1023
 
 crate:
 	idle: DATA.R8
@@ -387,11 +151,13 @@ spicebloom:
 
 moveflsh:
 	idle: DATA.R8
-		Start: 3621
-		Length: 5
-		Tick: 80
-		BlendMode: Multiply
-		ZOffset: 2047
+		Start: 3304
+#	idle: DATA.R8
+#		Start: 3621
+#		Length: 5
+#		Tick: 80
+#		BlendMode: Multiply
+#		ZOffset: 2047
 
 null:
 	idle: DATA.R8

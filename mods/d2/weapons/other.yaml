@@ -185,59 +185,10 @@ UnitExplodeLarge:
 		Explosions: large_explosion
 		ImpactSounds: EXPLLG2.WAV
 
-grenade:
-	ReloadDelay: 50
-	Range: 4c0
-	Projectile: Bullet
-		Speed: 256
-		Blockable: false
-		Angle: 75
-		Inaccuracy: 416
-		Image: grenade
-		Shadow: true
-	Warhead@1Dam: SpreadDamage
-		Spread: 320
-		Falloff: 100, 65, 35, 20, 0
-		Damage: 150
-		Versus:
-			none: 125
-			wood: 70
-			light: 30
-			heavy: 20
-			invulnerable: 0
-			cy: 20
-			harvester: 25
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: SandCrater
-	Warhead@3Eff: CreateEffect
-		Explosions: med_explosion
-		ImpactSounds: EXPLLG5.WAV
-
 Weathering:
 	ReloadDelay: 100
 	Warhead@1Dam: SpreadDamage
 		Damage: 10
-
-GrenDeath:
-	Warhead@1Dam: SpreadDamage
-		Spread: 320
-		Falloff: 100, 60, 30, 15, 0
-		Damage: 150
-		Versus:
-			none: 125
-			wood: 70
-			light: 30
-			heavy: 20
-			invulnerable: 0
-			cy: 20
-			harvester: 25
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: SandCrater, RockCrater
-	Warhead@3Eff: CreateEffect
-		Explosions: building
-		ImpactSounds: EXPLSML4.WAV
 
 SardDeath:
 	Warhead@1Dam: SpreadDamage
@@ -265,7 +216,6 @@ SpiceExplosion:
 		Speed: 50, 75
 		Blockable: false
 		Angle: 60, 90
-		Trail: large_trail
 		Image: 120mm
 	Warhead@1Dam: SpreadDamage
 		Spread: 320

@@ -8,7 +8,7 @@
 	Armor:
 		Type: none
 	RevealsShroud:
-		Range: 3c768
+		Range: 1c768
 	Mobile:
 		Crushes: crate, spicebloom
 		SharesCell: true
@@ -27,8 +27,10 @@
 		Bounds: 16,16,0,0
 	Targetable:
 		TargetTypes: Ground, Infantry
-	QuantizeFacingsFromSequence:
-		Sequence: stand
+	BodyOrientation:
+		QuantizedFacings: 4
+	#QuantizeFacingsFromSequence:
+	#	Sequence: stand
 	WithInfantryBody:
 	TakeCover:
 		DamageModifiers:

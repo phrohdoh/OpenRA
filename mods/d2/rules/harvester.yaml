@@ -1,5 +1,5 @@
 harvester:
-	Inherits: ^Dune2.Vehicle
+	Inherits: ^Vehicle
 	Buildable:
 		Queue: Armor
 		Prerequisites: refinery

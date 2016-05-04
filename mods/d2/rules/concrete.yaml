@@ -24,8 +24,6 @@ concretea:
 	LaysTerrain:
 		Template: 126
 		TerrainTypes: Rock
-	D2ClearTerrain:
-		Size: 1,1
 	WithSpriteBody:
 	RenderSprites:
 		Image: concretea
@@ -42,8 +40,6 @@ concreteb:
 	LaysTerrain:
 		Template: 127
 		TerrainTypes: Rock
-	D2ClearTerrain:
-		Size: 2,2
 	WithTilesetBody:
 	RenderSprites:
 		Image: concreteb

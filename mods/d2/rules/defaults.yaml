@@ -10,7 +10,8 @@
 
 ^SpriteActor:
 	BodyOrientation:
-	QuantizeFacingsFromSequence:
+		QuantizedFacings: 8
+	#QuantizeFacingsFromSequence:
 	AutoSelectionSize:
 	RenderSprites:
 
@@ -39,7 +40,7 @@
 	SelfHealing@ELITE:
 		Step: 2
 		Delay: 125
-		HealIfBelow: 1
+		HealIfBelow: 100
 		DamageCooldown: 125
 		UpgradeTypes: selfheal
 		UpgradeMinEnabledLevel: 1
@@ -52,58 +53,6 @@
 		ZOffset: 256
 		UpgradeMinEnabledLevel: 1
 		UpgradeMaxAcceptedLevel: 4
-
-^Vehicle:
-	Inherits@1: ^ExistsInWorld
-	Inherits@2: ^GainsExperience
-	Inherits@3: ^SpriteActor
-	Mobile:
-		UpgradeTypes: notmobile
-		UpgradeMaxEnabledLevel: 0
-		Crushes: crate, spicebloom
-		TerrainSpeeds:
-			Sand: 100
-			Rock: 100
-			Transition: 100
-			Concrete: 100
-			SpiceSand: 100
-			Spice: 100
-			SpiceBlobs: 100
-			Dune: 50
-		TurnSpeed: 5
-	SelectionDecorations:
-	Selectable:
-		Bounds: 32,32
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4
-	Passenger:
-		CargoType: Vehicle
-	AttackMove:
-	DrawLineToTarget:
-	HiddenUnderFog:
-	ActorLostNotification:
-	Repairable:
-		RepairBuildings: repair_pad
-	Guard:
-		Voice: Guard
-	Guardable:
-	WithFacingSpriteBody:
-	Demolishable:
-	TemporaryOwnerManager:
-	MustBeDestroyed:
-	Voiced:
-		VoiceSet: VehicleVoice
-	Carryable:
-		CarryableUpgrades: notmobile
-	WithDecorationCarryable:
-		Image: pips
-		Sequence: pickup-indicator
-		Offset: -12, -12
-
-^Tank:
-	Inherits: ^Vehicle
-	Mobile:
-		Crushes: crate, infantry, spicebloom
 
 ^Husk:
 	Inherits@1: ^SpriteActor
@@ -128,7 +77,7 @@
 	Targetable:
 		TargetTypes: Ground, Vehicle
 		RequiresForceFire: yes
-	DisabledOverlay:
+	#DisabledOverlay:
 	Explodes:
 		Weapon: UnitExplodeMed
 		EmptyWeapon: UnitExplodeMed

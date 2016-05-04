@@ -43,4 +43,19 @@ construction_yard:
 	GlobalUpgradable:
 		Prerequisites: upgrade.conyard
 		Upgrades: stardecoration
-
+	WithDecoration@upgraded:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-upgraded
+		ReferencePoint: Top, Right
+		ZOffset: 256
+		UpgradeTypes: stardecoration
+		UpgradeMinEnabledLevel: 1
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1

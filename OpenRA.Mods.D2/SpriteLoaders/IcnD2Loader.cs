@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -19,10 +20,9 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 {
 	public class IcnD2Loader : ISpriteLoader
 	{
-		public const int SizeX = 16;
-		public const int SizeY = 16;
-		public ushort BuildingsStartIndex;
-		const int TileSize = SizeX * SizeY / 2;
+		public const int TileWidth = 16;
+		public const int TileHeight = 16;
+		public const int TileSize = TileWidth * TileHeight / 2;
 
 		uint ssetOffset, ssetLength;
 		uint rpalOffset, rpalLength;
@@ -44,15 +44,15 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 			{
 				var tile = StreamExts.ReadBytes(s, TileSize);
 
-				Size = new Size(SizeX, SizeY);
+				Size = new Size(TileWidth, TileHeight);
 				Data = new byte[Size.Width * Size.Height];
 
 				var i = 0;
-				for (var y = 0; y < SizeY; y++)
+				for (var y = 0; y < TileHeight; y++)
 				{
-					for (var x = 0; x < SizeX; x += 2)
+					for (var x = 0; x < TileWidth; x += 2)
 					{
-						var val = tile[(y * SizeX + x) / 2];
+						var val = tile[(y * TileWidth + x) / 2];
 						Data[i++] = palette[val >> 4];
 						Data[i++] = palette[val & 0x0F];
 					}
@@ -76,7 +76,6 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 
 			ssetLength = int2.Swap(s.ReadUInt32()) - 8;
 			s.Position += 3;
-			BuildingsStartIndex = s.ReadUInt8();
 			ssetOffset = 0x18 + 16;
 			if (s.Length < ssetOffset + ssetLength)
 			{

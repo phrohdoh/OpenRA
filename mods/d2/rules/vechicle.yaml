@@ -1,4 +1,4 @@
-^Dune2.Vehicle:
+^Vehicle:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^SpriteActor
@@ -44,8 +44,9 @@
 		Image: pips
 		Sequence: pickup-indicator
 		Offset: -12, -12
+	WithSmoke:
 
-^Dune2.Tank:
-	Inherits: ^Dune2.Vehicle
+^Tank:
+	Inherits: ^Vehicle
 	Mobile:
 		Crushes: crate, infantry, spicebloom

@@ -47,7 +47,3 @@ wall:
 	Sellable:
 		SellSounds: CHUNG.WAV
 	Guardable:
-	ThrowsShrapnel:
-		Weapons: Debris, Debris2, Debris3, Debris4
-		Pieces: 3, 7
-		Range: 2c0, 5c0

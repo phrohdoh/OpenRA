@@ -50,67 +50,6 @@ spicebloom:
 	Armor:
 		Type: none
 
-sandworm:
-	Inherits@1: ^SpriteActor
-	Tooltip:
-		Name: Sandworm
-		Description: Attracted by vibrations in the sand.\nWill eat units whole and has a large appetite.
-	Health:
-		HP: 9990
-		Radius: 256
-	Armor:
-		Type: heavy
-	Mobile:
-		Speed: 42
-		TerrainSpeeds:
-			Sand: 100
-			Dune: 100
-			SpiceSand: 100
-			Spice: 100
-	Targetable:
-		TargetTypes: Ground
-	WithSpriteBody:
-	WithIdleAnimation:
-		Interval: 160
-		Sequences: lightninga, lightningb, lightningc, lightningd, lightninge, lightningf
-		UpgradeTypes: attacking
-		UpgradeMaxEnabledLevel: 0
-	AmbientSound:
-		SoundFile: WRMSIGN1.WAV
-		Interval: 160
-		UpgradeTypes: attacking
-		UpgradeMaxEnabledLevel: 0
-	WithAttackOverlay@mouth:
-		Sequence: mouth
-	WithAttackOverlay@sand:
-		Sequence: sand
-	HiddenUnderFog:
-	AppearsOnRadar:
-		UseLocation: yes
-	AttackSwallow:
-		AttackRequiresEnteringCell: true
-		IgnoresVisibility: true
-	Armament:
-		Weapon: WormJaw
-	Sandworm:
-		WanderMoveRadius: 5
-	IgnoresCloak:
-	AnnounceOnSeen:
-		Notification: WormSign
-		PingRadar: True
-	RevealsShroud:
-		Range: 5c0
-	LeavesTrails:
-		Image: sandtrail
-		Sequences: traila, trailb, trailc
-		Palette: effect
-		Type: CenterPosition
-		TerrainTypes: Sand, Dune, SpiceSand, Spice
-		MovingInterval: 3
-		UpgradeTypes: attacking
-		UpgradeMaxEnabledLevel: 0
-	UpgradeManager:
-
 sietch:
 	Inherits: ^Building
 	Tooltip:
