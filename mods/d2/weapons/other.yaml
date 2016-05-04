@@ -72,7 +72,8 @@ OrniBomb:
 	BurstDelay: 3
 	Range: 3c0
 	Projectile: GravityBomb
-		Image: BOMBS
+		#Image: BOMBS
+		Image: missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 320
 		Falloff: 100, 60, 30, 15, 0
@@ -89,7 +90,7 @@ OrniBomb:
 			harvester: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
+		SmudgeType: SandCrater, RockCrater
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: NAPALM1.WAV
