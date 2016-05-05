@@ -3,7 +3,7 @@
 	WithSpriteTurret:
 	AttackTurreted:
 	AutoTarget:
-	RenderRangeCircle:
+	#RenderRangeCircle:
 	-GivesBuildableArea:
 	-WithTilesetBody:
 	WithWallSpriteBody:
