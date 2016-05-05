@@ -23,56 +23,18 @@ InfantryVoice:
 		Die: VSCREAM1, VSCREAM2, VSCREAM3, VSCREAM4, VSCREAM5
 #		Guard: I_GUARD
 
-#EngineerVoice:
-#	DefaultVariant: .AUD
-#	Variants:
-#		atreides: .WAV
-#		ordos: .WAV
-#		harkonnen: .WAV
-#	Prefixes:
-#		atreides: A
-#		ordos: O
-#		harkonnen: H
-#	Voices:
-#		Select: _ESEL1,_ESEL2,_ESEL3
-#		Action: _ECONF1,_ECONF2,_ECONF3
-#		Die: KILLGUY1,KILLGUY2,KILLGUY3,KILLGUY4,KILLGUY5,KILLGUY6,KILLGUY7,KILLGUY8,KILLGUY9
+FremenVoice:
+	DefaultVariant: .AUD
+	Voices:
+		Select: REPORT1, REPORT2, REPORT3
+		Action: MOVEOUT, OVEROUT, AFFIRM
+		Die: VSCREAM1, VSCREAM2, VSCREAM3, VSCREAM4, VSCREAM5
 #		Guard: I_GUARD
-#	DisablePrefixes: Die
-#	DisableVariants: Select, Action, Guard
-#
-#FremenVoice:
-#	DefaultVariant: .AUD
-#	Variants:
-#		atreides: .WAV
-#		ordos: .WAV
-#		harkonnen: .WAV
-#	Prefixes:
-#		atreides: A
-#		ordos: O
-#		harkonnen: H
-#	Voices:
-#		Select: A_FSEL1,A_FSEL2,A_FSEL3,A_FSEL4
-#		Action: A_FCONF1,A_FCONF2,A_FCONF3,A_FCONF4
-#		Die: KILLGUY1,KILLGUY2,KILLGUY3,KILLGUY4,KILLGUY5,KILLGUY6,KILLGUY7,KILLGUY8,KILLGUY9
+
+SaboteurVoice:
+	DefaultVariant: .AUD
+	Voices:
+		Select: REPORT1, REPORT2, REPORT3
+		Action: MOVEOUT, OVEROUT, AFFIRM
+		Die: VSCREAM1, VSCREAM2, VSCREAM3, VSCREAM4, VSCREAM5
 #		Guard: I_GUARD
-#	DisablePrefixes: Select, Action, Die
-#	DisableVariants: Select, Action, Guard
-#
-#SaboteurVoice:
-#	DefaultVariant: .AUD
-#	Variants:
-#		atreides: .WAV
-#		ordos: .WAV
-#		harkonnen: .WAV
-#	Prefixes:
-#		atreides: A
-#		ordos: O
-#		harkonnen: H
-#	Voices:
-#		Select: O_SSEL1,O_SSEL2,O_SSEL3
-#		Action: O_SCONF1,O_SCONF2,O_SCONF3
-#		Die: KILLGUY1,KILLGUY2,KILLGUY3,KILLGUY4,KILLGUY5,KILLGUY6,KILLGUY7,KILLGUY8,KILLGUY9
-#		Guard: I_GUARD
-#	DisablePrefixes: Select, Action, Die
-#	DisableVariants: Select, Action, Guard
