@@ -459,6 +459,8 @@
 		String: Structure
 	Sellable:
 		SellSounds: cashturn.aud
+	TerritoryOwnershipInfluence:
+		Range: 5
 
 ^ScienceBuilding:
 	Inherits: ^Building

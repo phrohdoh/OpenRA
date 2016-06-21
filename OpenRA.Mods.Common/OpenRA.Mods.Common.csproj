@@ -758,6 +758,8 @@
     <Compile Include="FileFormats\MSCabCompression.cs" />
     <Compile Include="UtilityCommands\OutputActorMiniYamlCommand.cs" />
     <Compile Include="Traits\World\ScriptLobbyDropdown.cs" />
+    <Compile Include="Traits\World\TerritoryOwnershipManager.cs" />
+    <Compile Include="Traits\TerritoryOwnershipInfluence.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

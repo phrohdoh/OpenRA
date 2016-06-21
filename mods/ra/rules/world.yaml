@@ -86,6 +86,7 @@
 		AllowedTerrainTypes: Clear,Road
 		AllowUnderActors: true
 		TerrainType: Gems
+	TerritoryOwnershipManager:
 
 World:
 	Inherits: ^BaseWorld
