@@ -27,7 +27,10 @@ namespace OpenRA.Mods.Common.Traits
 		public object Create(ActorInitializer init) { return new TerritoryOwnershipInfluence(init, this); }
 	}
 
-	public class TerritoryOwnershipInfluence : INotifyCreated, INotifyKilled, IRadarSignature
+	public class TerritoryOwnershipInfluence : INotifyCreated,
+		//IRadarSignature,
+		INotifyKilled,
+		INotifySold
 	{
 		readonly TerritoryOwnershipManager manager;
 
@@ -50,10 +53,19 @@ namespace OpenRA.Mods.Common.Traits
 			return self.World.Map.FindTilesInCircle(self.Location, info.Range, false);
 		}
 
-		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		//IEnumerable<CPos> GetOwnedCells()
+		//{
+		//	foreach (var cell in GetInfluenceCells())
+		//		if (manager.GetOwningPlayer(cell) == owner)
+		//			yield return cell;
+		//}
+
+		void ClearValue()
 		{
-			manager.ClearValue(owner, self.Location);
+			manager.ClearValue(owner, GetInfluenceCells());
 		}
+
+		void INotifyKilled.Killed(Actor self, AttackInfo e) { ClearValue(); }
 
 		void INotifyCreated.Created(Actor self)
 		{
@@ -62,10 +74,36 @@ namespace OpenRA.Mods.Common.Traits
 			});
 		}
 
-		IEnumerable<Pair<CPos, Color>> IRadarSignature.RadarSignatureCells(Actor self)
-		{
-			foreach (var cell in GetInfluenceCells())
-				yield return Pair.New(cell, self.Owner.Color.RGB);
-		}
+		//IEnumerable<CPos> GetOwnedEdgeCells()
+		//{
+		//	var markedForRemoval = new HashSet<CPos>();
+		//	var ownedCells = GetOwnedCells();
+
+		//	foreach (var cell in ownedCells)
+		//	{
+		//		var numContained = 0;
+
+		//		foreach (var neighbor in Util.Neighbours(cell, false, false))
+		//			if (ownedCells.Contains(neighbor))
+		//				numContained++;
+
+		//		if (numContained == 4)
+		//			markedForRemoval.Add(cell);
+		//	}
+
+		//	return ownedCells.Except(markedForRemoval);
+		//}
+
+		//IEnumerable<Pair<CPos, Color>> IRadarSignature.RadarSignatureCells(Actor self)
+		//{
+		//	//foreach (var cell in GetInfluenceCells())
+		//	//	if (manager.GetOwningPlayer(cell) == owner)
+		//	foreach (var cell in GetOwnedEdgeCells())
+		//		yield return Pair.New(cell, self.Owner.Color.RGB);
+		//}
+
+		void INotifySold.Selling(Actor self) { }
+
+		void INotifySold.Sold(Actor self) { ClearValue(); }
 	}
 }

@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using OpenRA.Traits;
 using System.Linq;
 using System.IO;
+using OpenRA.Primitives;
+using System;
+using System.Drawing;
 
 namespace OpenRA.Mods.Common.Traits
 {
@@ -23,16 +26,17 @@ namespace OpenRA.Mods.Common.Traits
 		public object Create(ActorInitializer init) { return new TerritoryOwnershipManager(init, this); }
 	}
 
-	public class TerritoryOwnershipManager : INotifyCreated
+	public class TerritoryOwnershipManager : INotifyCreated, IRadarSignature
 	{
 		readonly Dictionary<Player, CellLayer<int>> ownershipValues;
 		readonly TerritoryOwnershipManagerInfo info;
-		//Player initialOwnerOfAllCells;
+		readonly World world;
 
 		public TerritoryOwnershipManager(ActorInitializer init, TerritoryOwnershipManagerInfo info)
 		{
 			ownershipValues = new Dictionary<Player, CellLayer<int>>();
 			this.info = info;
+			world = init.World;
 		}
 
 		public void UpdateValue(Player ofPlayer, CPos location, int delta)
@@ -73,6 +77,16 @@ namespace OpenRA.Mods.Common.Traits
 			values[location] = 0;
 		}
 
+		public void ClearValue(Player ofPlayer, IEnumerable<CPos> locations)
+		{
+			CellLayer<int> values;
+			if (!ownershipValues.TryGetValue(ofPlayer, out values))
+				return;
+
+			foreach (var location in locations)
+				values[location] = 0;
+		}
+
 		public int GetValue(Player ofPlayer, CPos location)
 		{
 			CellLayer<int> values;
@@ -100,6 +114,38 @@ namespace OpenRA.Mods.Common.Traits
 			return ret;
 		}
 
+		IEnumerable<CPos> GetOwnedCells(Player owner)
+		{
+			if (!ownershipValues.ContainsKey(owner))
+				yield break;
+
+			foreach (var cell in world.Map.AllCells)
+				if (GetOwningPlayer(cell) == owner)
+					yield return cell;
+		}
+
+		IEnumerable<CPos> GetOwnedEdgeCells(Player owner)
+		{
+			var ownedCells = GetOwnedCells(owner).ToArray();
+			if (!ownedCells.Any())
+				return Enumerable.Empty<CPos>();
+
+			var markedForRemoval = new HashSet<CPos>();
+			foreach (var cell in ownedCells)
+			{
+				var numContained = 0;
+
+				foreach (var neighbor in Util.Neighbours(cell, false, false))
+					if (ownedCells.Contains(neighbor))
+						numContained++;
+
+				if (numContained == 4)
+					markedForRemoval.Add(cell);
+			}
+
+			return ownedCells.Except(markedForRemoval);
+		}
+
 		void INotifyCreated.Created(Actor self)
 		{
 			self.World.AddFrameEndTask(world => {
@@ -113,9 +159,16 @@ namespace OpenRA.Mods.Common.Traits
 				// As soon as another player stakes a claim they will be the owner.
 				defaultValues.Clear(1);
 
-				//initialOwnerOfAllCells = initialOwner;
 				ownershipValues.Add(initialOwner, defaultValues);
 			});
+		}
+
+		IEnumerable<Pair<CPos, Color>> IRadarSignature.RadarSignatureCells(Actor self)
+		{
+			foreach (var player in ownershipValues.Keys)
+				if (player.Stances[world.RenderPlayer] == Stance.Ally)
+					foreach (var cell in GetOwnedEdgeCells(player))
+						yield return Pair.New(cell, player.Color.RGB);
 		}
 	}
 }
