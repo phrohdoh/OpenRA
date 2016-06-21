@@ -10,12 +10,11 @@
 #endregion
 
 using System.Collections.Generic;
-using OpenRA.Traits;
-using System.Linq;
-using System.IO;
-using OpenRA.Primitives;
-using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using OpenRA.Primitives;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
@@ -32,9 +31,13 @@ namespace OpenRA.Mods.Common.Traits
 		readonly TerritoryOwnershipManagerInfo info;
 		readonly World world;
 
+		readonly Dictionary<Player, IEnumerable<CPos>> cachedOwnedCells;
+
 		public TerritoryOwnershipManager(ActorInitializer init, TerritoryOwnershipManagerInfo info)
 		{
 			ownershipValues = new Dictionary<Player, CellLayer<int>>();
+			cachedOwnedCells = new Dictionary<Player, IEnumerable<CPos>>();
+
 			this.info = info;
 			world = init.World;
 		}
@@ -50,6 +53,7 @@ namespace OpenRA.Mods.Common.Traits
 
 			values[location] += delta;
 			values[location] = values[location].Clamp(0, int.MaxValue);
+			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
 		}
 
 		public void UpdateValue(Player ofPlayer, IEnumerable<CPos> locations, int delta)
@@ -66,6 +70,8 @@ namespace OpenRA.Mods.Common.Traits
 				values[location] += delta;
 				values[location] = values[location].Clamp(0, int.MaxValue);
 			}
+
+			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
 		}
 
 		public void ClearValue(Player ofPlayer, CPos location)
@@ -75,6 +81,7 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 
 			values[location] = 0;
+			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
 		}
 
 		public void ClearValue(Player ofPlayer, IEnumerable<CPos> locations)
@@ -85,6 +92,8 @@ namespace OpenRA.Mods.Common.Traits
 
 			foreach (var location in locations)
 				values[location] = 0;
+
+			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
 		}
 
 		public int GetValue(Player ofPlayer, CPos location)
@@ -117,16 +126,24 @@ namespace OpenRA.Mods.Common.Traits
 		IEnumerable<CPos> GetOwnedCells(Player owner)
 		{
 			if (!ownershipValues.ContainsKey(owner))
-				yield break;
+				return Enumerable.Empty<CPos>();
 
+			IEnumerable<CPos> cached = new CPos[0];
+			if (cachedOwnedCells.TryGetValue(owner, out cached) && cached.Any())
+				return cached;
+
+			var ret = new HashSet<CPos>();
 			foreach (var cell in world.Map.AllCells)
 				if (GetOwningPlayer(cell) == owner)
-					yield return cell;
+					ret.Add(cell);
+
+			cachedOwnedCells[owner] = ret;
+			return ret;
 		}
 
 		IEnumerable<CPos> GetOwnedEdgeCells(Player owner)
 		{
-			var ownedCells = GetOwnedCells(owner).ToArray();
+			var ownedCells = GetOwnedCells(owner);
 			if (!ownedCells.Any())
 				return Enumerable.Empty<CPos>();
 
@@ -166,9 +183,21 @@ namespace OpenRA.Mods.Common.Traits
 		IEnumerable<Pair<CPos, Color>> IRadarSignature.RadarSignatureCells(Actor self)
 		{
 			foreach (var player in ownershipValues.Keys)
-				if (player.Stances[world.RenderPlayer] == Stance.Ally)
+				if (world.RenderPlayer == null || player.Stances[world.RenderPlayer] == Stance.Ally)
 					foreach (var cell in GetOwnedEdgeCells(player))
-						yield return Pair.New(cell, player.Color.RGB);
+						yield return Pair.New(cell, player.Color.RGB.WithBrightness(0.9f));
+		}
+	}
+
+	static class ColorExts
+	{
+		public static Color WithBrightness(this Color c, float brightness)
+		{
+			//brightness = brightness.Clamp(0, 1);
+			return Color.FromArgb(c.A,
+				(int)(c.R * brightness).Clamp(0, 255),
+				(int)(c.G * brightness).Clamp(0, 255),
+				(int)(c.B * brightness).Clamp(0, 255));
 		}
 	}
 }

@@ -9,13 +9,9 @@
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using OpenRA.Primitives;
 using OpenRA.Traits;
-using System.Linq;
 
 namespace OpenRA.Mods.Common.Traits
 {
@@ -28,14 +24,13 @@ namespace OpenRA.Mods.Common.Traits
 	}
 
 	public class TerritoryOwnershipInfluence : INotifyCreated,
-		//IRadarSignature,
 		INotifyKilled,
 		INotifySold
 	{
+		readonly Actor self;
+		readonly TerritoryOwnershipInfluenceInfo info;
 		readonly TerritoryOwnershipManager manager;
 
-		Actor self;
-		TerritoryOwnershipInfluenceInfo info;
 		Player owner { get { return self.Owner; } }
 
 		public TerritoryOwnershipInfluence(ActorInitializer init, TerritoryOwnershipInfluenceInfo info)
@@ -53,13 +48,6 @@ namespace OpenRA.Mods.Common.Traits
 			return self.World.Map.FindTilesInCircle(self.Location, info.Range, false);
 		}
 
-		//IEnumerable<CPos> GetOwnedCells()
-		//{
-		//	foreach (var cell in GetInfluenceCells())
-		//		if (manager.GetOwningPlayer(cell) == owner)
-		//			yield return cell;
-		//}
-
 		void ClearValue()
 		{
 			manager.ClearValue(owner, GetInfluenceCells());
@@ -73,34 +61,6 @@ namespace OpenRA.Mods.Common.Traits
 				manager.UpdateValue(owner, GetInfluenceCells(), 1);
 			});
 		}
-
-		//IEnumerable<CPos> GetOwnedEdgeCells()
-		//{
-		//	var markedForRemoval = new HashSet<CPos>();
-		//	var ownedCells = GetOwnedCells();
-
-		//	foreach (var cell in ownedCells)
-		//	{
-		//		var numContained = 0;
-
-		//		foreach (var neighbor in Util.Neighbours(cell, false, false))
-		//			if (ownedCells.Contains(neighbor))
-		//				numContained++;
-
-		//		if (numContained == 4)
-		//			markedForRemoval.Add(cell);
-		//	}
-
-		//	return ownedCells.Except(markedForRemoval);
-		//}
-
-		//IEnumerable<Pair<CPos, Color>> IRadarSignature.RadarSignatureCells(Actor self)
-		//{
-		//	//foreach (var cell in GetInfluenceCells())
-		//	//	if (manager.GetOwningPlayer(cell) == owner)
-		//	foreach (var cell in GetOwnedEdgeCells())
-		//		yield return Pair.New(cell, self.Owner.Color.RGB);
-		//}
 
 		void INotifySold.Selling(Actor self) { }
 
