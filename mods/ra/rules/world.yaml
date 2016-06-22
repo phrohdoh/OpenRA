@@ -87,6 +87,7 @@
 		AllowUnderActors: true
 		TerrainType: Gems
 	TerritoryOwnershipManager:
+	TerritoryOwnershipDebugOverlay:
 
 World:
 	Inherits: ^BaseWorld

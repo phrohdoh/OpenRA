@@ -44,6 +44,11 @@ namespace OpenRA.Mods.Common.Traits
 			world = init.World;
 		}
 
+		public Player[] GetTrackedPlayers()
+		{
+			return ownershipValues.Keys.ToArray();
+		}
+
 		public void UpdateValue(Player ofPlayer, CPos location, int delta)
 		{
 			CellLayer<int> values;
@@ -103,7 +108,7 @@ namespace OpenRA.Mods.Common.Traits
 			return ret;
 		}
 
-		IEnumerable<CPos> GetOwnedCells(Player owner, bool allowCheckingCache = true)
+		public IEnumerable<CPos> GetOwnedCells(Player owner, bool allowCheckingCache = true)
 		{
 			if (!ownershipValues.ContainsKey(owner))
 				return Enumerable.Empty<CPos>();
@@ -124,9 +129,9 @@ namespace OpenRA.Mods.Common.Traits
 			return ret;
 		}
 
-		IEnumerable<CPos> GetOwnedEdgeCells(Player owner)
+		public IEnumerable<CPos> GetOwnedEdgeCells(Player owner, bool allowCheckingCache = true)
 		{
-			var ownedCells = GetOwnedCells(owner);
+			var ownedCells = GetOwnedCells(owner, allowCheckingCache);
 			if (!ownedCells.Any())
 				return Enumerable.Empty<CPos>();
 
