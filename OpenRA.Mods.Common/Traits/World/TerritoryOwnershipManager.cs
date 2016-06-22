@@ -74,28 +74,6 @@ namespace OpenRA.Mods.Common.Traits
 			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
 		}
 
-		public void ClearValue(Player ofPlayer, CPos location)
-		{
-			CellLayer<int> values;
-			if (!ownershipValues.TryGetValue(ofPlayer, out values))
-				return;
-
-			values[location] = 0;
-			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
-		}
-
-		public void ClearValue(Player ofPlayer, IEnumerable<CPos> locations)
-		{
-			CellLayer<int> values;
-			if (!ownershipValues.TryGetValue(ofPlayer, out values))
-				return;
-
-			foreach (var location in locations)
-				values[location] = 0;
-
-			cachedOwnedCells[ofPlayer] = Enumerable.Empty<CPos>();
-		}
-
 		public int GetValue(Player ofPlayer, CPos location)
 		{
 			CellLayer<int> values;

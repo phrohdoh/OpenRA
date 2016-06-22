@@ -50,7 +50,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		void ClearValue()
 		{
-			manager.ClearValue(owner, GetInfluenceCells());
+			manager.UpdateValue(owner, GetInfluenceCells(), -2);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e) { ClearValue(); }
@@ -58,7 +58,7 @@ namespace OpenRA.Mods.Common.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			self.World.AddFrameEndTask(world => {
-				manager.UpdateValue(owner, GetInfluenceCells(), 1);
+				manager.UpdateValue(owner, GetInfluenceCells(), 2);
 			});
 		}
 
