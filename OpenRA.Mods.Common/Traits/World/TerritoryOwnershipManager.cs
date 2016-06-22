@@ -28,6 +28,7 @@ namespace OpenRA.Mods.Common.Traits
 	public class TerritoryOwnershipManager : INotifyCreated, IRadarSignature
 	{
 		readonly Dictionary<Player, CellLayer<int>> ownershipValues;
+		readonly Dictionary<Player, Color> mutedColors;
 		readonly TerritoryOwnershipManagerInfo info;
 		readonly World world;
 
@@ -37,6 +38,7 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			ownershipValues = new Dictionary<Player, CellLayer<int>>();
 			cachedOwnedCells = new Dictionary<Player, IEnumerable<CPos>>();
+			mutedColors = new Dictionary<Player, Color>();
 
 			this.info = info;
 			world = init.World;
@@ -101,14 +103,17 @@ namespace OpenRA.Mods.Common.Traits
 			return ret;
 		}
 
-		IEnumerable<CPos> GetOwnedCells(Player owner)
+		IEnumerable<CPos> GetOwnedCells(Player owner, bool allowCheckingCache = true)
 		{
 			if (!ownershipValues.ContainsKey(owner))
 				return Enumerable.Empty<CPos>();
 
-			IEnumerable<CPos> cached = new CPos[0];
-			if (cachedOwnedCells.TryGetValue(owner, out cached) && cached.Any())
-				return cached;
+			if (allowCheckingCache)
+			{
+				IEnumerable<CPos> cached = new CPos[0];
+				if (cachedOwnedCells.TryGetValue(owner, out cached) && cached.Any())
+					return cached;
+			}
 
 			var ret = new HashSet<CPos>();
 			foreach (var cell in world.Map.AllCells)
@@ -148,13 +153,15 @@ namespace OpenRA.Mods.Common.Traits
 				if (initialOwner == null)
 					throw new InvalidDataException("No player with InternalName '{0}' could be found.".F(info.InitialOwnerInternalName));
 
+				foreach (var player in world.Players)
+					mutedColors.Add(player, player.Color.RGB.WithBrightness(0.8f));
+
 				var defaultValues = new CellLayer<int>(world.Map);
 
 				// The default player must be the initial result of `GetOwningPlayer` for all cells.
 				// As soon as another player stakes a claim they will be the owner.
 				defaultValues.Clear(1);
-
-				ownershipValues.Add(initialOwner, defaultValues);
+				ownershipValues[initialOwner] = defaultValues;
 			});
 		}
 
@@ -163,7 +170,7 @@ namespace OpenRA.Mods.Common.Traits
 			foreach (var player in ownershipValues.Keys)
 				if (world.RenderPlayer == null || player.Stances[world.RenderPlayer] == Stance.Ally)
 					foreach (var cell in GetOwnedEdgeCells(player))
-						yield return Pair.New(cell, player.Color.RGB.WithBrightness(0.9f));
+						yield return Pair.New(cell, mutedColors[player]);
 		}
 	}
 
