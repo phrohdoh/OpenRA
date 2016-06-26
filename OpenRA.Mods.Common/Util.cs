@@ -103,7 +103,7 @@ namespace OpenRA.Mods.Common
 				yield return items[items.Length - 1];
 		}
 
-		static IEnumerable<CPos> Neighbours(CPos c, bool allowDiagonal)
+		public static IEnumerable<CPos> Neighbours(CPos c, bool allowDiagonal)
 		{
 			yield return c;
 			yield return new CPos(c.X - 1, c.Y);

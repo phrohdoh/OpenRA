@@ -42,6 +42,11 @@ Player:
 			stek: 1%
 			fix: 0.1%
 			dome: 10%
+		ProtectWithWalls:
+			fact: brik
+			powr: brik
+			apwr: brik
+			dome: brik
 		UnitsToBuild:
 			e1: 50%
 			e2: 20%

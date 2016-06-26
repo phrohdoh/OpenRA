@@ -167,6 +167,8 @@ namespace OpenRA.Mods.Common.AI
 		[FieldLoader.LoadUsing("LoadDecisions")]
 		public readonly List<SupportPowerDecision> PowerDecisions = new List<SupportPowerDecision>();
 
+		public readonly Dictionary<string, HashSet<string>> ProtectWithWalls = new Dictionary<string, HashSet<string>>();
+
 		static object LoadUnitCategories(MiniYaml yaml)
 		{
 			var categories = yaml.Nodes.First(n => n.Key == "UnitsCommonNames");
@@ -192,7 +194,7 @@ namespace OpenRA.Mods.Common.AI
 		public object Create(ActorInitializer init) { return new HackyAI(this, init); }
 	}
 
-	public enum BuildingType { Building, Defense, Refinery }
+	public enum BuildingType { Building, Defense, Refinery, Wall }
 
 	public sealed class HackyAI : ITick, IBot, INotifyDamage
 	{
@@ -525,6 +527,9 @@ namespace OpenRA.Mods.Common.AI
 
 				case BuildingType.Building:
 					return findPos(baseCenter, baseCenter, Info.MinBaseRadius, distanceToBaseIsImportant ? Info.MaxBaseRadius : Map.Grid.MaximumTileSearchRange);
+
+				case BuildingType.Wall:
+					return CellsIntendedForWalls.FirstOrDefault(kv => kv.Value == actorType).Key;
 			}
 
 			// Can't find a build location
@@ -547,6 +552,7 @@ namespace OpenRA.Mods.Common.AI
 			AssignRolesToIdleUnits(self);
 			SetRallyPointsForNewProductionBuildings(self);
 			TryToUseSupportPower(self);
+			ProtectWithWalls();
 
 			foreach (var b in builders)
 				b.Tick();
@@ -554,6 +560,47 @@ namespace OpenRA.Mods.Common.AI
 			var ordersToIssueThisTick = Math.Min((orders.Count + Info.MinOrderQuotientPerTick - 1) / Info.MinOrderQuotientPerTick, orders.Count);
 			for (var i = 0; i < ordersToIssueThisTick; i++)
 				World.IssueOrder(orders.Dequeue());
+		}
+
+		public Dictionary<CPos, string> CellsIntendedForWalls = new Dictionary<CPos, string>();
+		void ProtectWithWalls()
+		{
+			foreach (var toProtectType in Info.ProtectWithWalls.Keys)
+			{
+				var existingActors = World.ActorsHavingTrait<Building>().Where(a => a.Owner == Player
+					&& !a.IsDead
+					&& a.Info.Name == toProtectType);
+
+				if (!existingActors.Any())
+					continue;
+
+				var wallTypes = Info.ProtectWithWalls[toProtectType];
+				if (!wallTypes.Any())
+					continue;
+
+				var highestValuedActorToProtect = existingActors.OrderByDescending(a => a.GetSellValue()).FirstOrDefault();
+				if (highestValuedActorToProtect == null)
+					continue;
+
+				var cells = FootprintUtils.Tiles(World.Map.Rules,
+					toProtectType,
+					highestValuedActorToProtect.Info.TraitInfo<BuildingInfo>(),
+					highestValuedActorToProtect.Location);
+
+				var edgeCells = Util.ExpandFootprint(cells, true).Except(cells);
+				var cornerCells = edgeCells.Where(c =>
+				{
+					var neighbors = Util.Neighbours(c, true).Except(new[] { c });
+					return edgeCells.Intersect(neighbors).Count() == 2;
+				}).Where(c => World.ActorMap.GetActorsAt(c).Count() == 0);
+
+				var randWallType = wallTypes.Random(Random);
+				foreach (var cornerCell in cornerCells)
+				{
+					if (!CellsIntendedForWalls.ContainsKey(cornerCell))
+						CellsIntendedForWalls.Add(cornerCell, randWallType);
+				}
+			}
 		}
 
 		internal Actor FindClosestEnemy(WPos pos)

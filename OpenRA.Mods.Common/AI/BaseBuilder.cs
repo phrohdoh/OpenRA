@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -138,6 +139,8 @@ namespace OpenRA.Mods.Common.AI
 					type = BuildingType.Defense;
 				else if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<RefineryInfo>())
 					type = BuildingType.Refinery;
+				else if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<BlocksProjectilesInfo>())
+					type = BuildingType.Wall;
 
 				var location = ai.ChooseBuildLocation(currentBuilding.Item, true, type);
 				if (location == null)
@@ -156,13 +159,27 @@ namespace OpenRA.Mods.Common.AI
 				else
 				{
 					failCount = 0;
-					ai.QueueOrder(new Order("PlaceBuilding", player.PlayerActor, false)
+					if (type == BuildingType.Wall)
 					{
-						TargetLocation = location.Value,
-						TargetString = currentBuilding.Item,
-						TargetActor = queue.Actor,
-						SuppressVisualFeedback = true
-					});
+						ai.QueueOrder(new Order("LineBuild", player.PlayerActor, false)
+						{
+							TargetLocation = location.Value,
+							TargetString = currentBuilding.Item,
+							TargetActor = queue.Actor,
+							SuppressVisualFeedback = true
+						});
+					}
+					else
+						ai.QueueOrder(new Order("PlaceBuilding", player.PlayerActor, false)
+						{
+							TargetLocation = location.Value,
+							TargetString = currentBuilding.Item,
+							TargetActor = queue.Actor,
+							SuppressVisualFeedback = true
+						});
+
+					if (ai.CellsIntendedForWalls.ContainsKey(location.Value))
+						ai.CellsIntendedForWalls.Remove(location.Value);
 
 					return true;
 				}
@@ -246,6 +263,21 @@ namespace OpenRA.Mods.Common.AI
 				{
 					HackyAI.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
 					return power;
+				}
+			}
+
+			if (ai.CellsIntendedForWalls.Any())
+			{
+				foreach (var targetWallCell in ai.CellsIntendedForWalls.Keys.ToArray())
+				{
+					var wallType = ai.CellsIntendedForWalls[targetWallCell];
+					var wallTypeLower = wallType.ToLowerInvariant();
+
+					ActorInfo wall;
+					if (!world.Map.Rules.Actors.TryGetValue(wallTypeLower, out wall))
+						throw new InvalidDataException("Actor type '{0}' not defined.".F(wallTypeLower));
+
+					return wall;
 				}
 			}
 
