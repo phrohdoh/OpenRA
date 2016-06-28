@@ -100,10 +100,21 @@ namespace OpenRA.Mods.Common.Traits
 		long windTickCountdown = 1500;
 		float2 antiScrollPrevTopLeft;
 
+		public float ParticleDensityFactor;
+		public bool ChangingWindLevel;
+		public bool InstantWindChanges;
+		public bool UseSquares;
+
 		public WeatherOverlay(World world, WeatherOverlayInfo info)
 		{
 			this.info = info;
 			this.world = world;
+
+			ParticleDensityFactor = info.ParticleDensityFactor;
+			ChangingWindLevel = info.ChangingWindLevel;
+			InstantWindChanges = info.InstantWindChanges;
+			UseSquares = info.UseSquares;
+
 			currentWindIndex = info.WindLevels.Length / 2;
 			targetWindXOffset = info.WindLevels[0];
 			maxParticleCount = CalculateParticleCount(Game.Renderer.Resolution.Width, Game.Renderer.Resolution.Height);
@@ -111,7 +122,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		int CalculateParticleCount(int x, int y)
 		{
-			return (int)(x * y * info.ParticleDensityFactor);
+			return (int)(x * y * ParticleDensityFactor);
 		}
 
 		void SpawnParticles(int count, int rangeY, int spawnChancePercent)
@@ -208,7 +219,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		void WindLogic(ref Particle tempParticle)
 		{
-			if (!info.ChangingWindLevel)
+			if (!ChangingWindLevel)
 				targetWindXOffset = info.WindLevels[0];
 			else if (windTickCountdown <= 0)
 			{
@@ -226,7 +237,7 @@ namespace OpenRA.Mods.Common.Traits
 			}
 
 			// Fading the wind in little steps towards the TargetWindOffset
-			if (info.InstantWindChanges)
+			if (InstantWindChanges)
 				currentWindXOffset = targetWindXOffset;
 			else if (currentWindXOffset != targetWindXOffset)
 			{
@@ -288,7 +299,7 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				var tempPos = new float2(item.PosX + topLeft.X, item.PosY + topLeft.Y);
 
-				if (info.UseSquares)
+				if (UseSquares)
 					Game.Renderer.WorldRgbaColorRenderer.FillRect(tempPos, tempPos + new float2(item.Size, item.Size), item.Color);
 				else
 				{
