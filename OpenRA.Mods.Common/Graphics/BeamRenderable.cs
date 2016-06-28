@@ -9,12 +9,15 @@
  */
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using OpenRA.Graphics;
 
 namespace OpenRA.Mods.Common.Graphics
 {
-	public enum BeamRenderableShape { Cylindrical, Flat }
+	public enum BeamRenderableShape { Cylindrical, Flat, Sine }
 	public struct BeamRenderable : IRenderable, IFinalizedRenderable
 	{
 		readonly WPos pos;
@@ -61,12 +64,33 @@ namespace OpenRA.Mods.Common.Graphics
 				var d = wr.ScreenPosition(pos - corner + length);
 				Game.Renderer.WorldRgbaColorRenderer.FillRect(a, b, c, d, color);
 			}
-			else
+			else if (shape == BeamRenderableShape.Cylindrical)
 			{
 				var start = wr.ScreenPosition(pos);
 				var end = wr.ScreenPosition(pos + length);
 				var screenWidth = wr.ScreenVector(new WVec(width, WDist.Zero, WDist.Zero))[0];
 				Game.Renderer.WorldRgbaColorRenderer.DrawLine(start, end, screenWidth, color);
+			}
+			else if (shape == BeamRenderableShape.Sine)
+			{
+				var targetPos = pos + length;
+
+				//var cyclesPerWRange = 1;
+				var pointsPerWRange = 1;
+				//var numOfWRangeSteps = 2048;
+
+				var amplitudeScale = 1;//numOfWRangeSteps / 2048;
+				var phaseScale = 1;//cyclesPerWRange / pointsPerWRange;
+				var totalPoints = (targetPos - pos).Length * pointsPerWRange;
+
+				var scaleDivisor = 4;
+
+				var points = new List<WPos>();
+				for (var i = 0; i < totalPoints; i++)
+					points.Add(WPos.Lerp(pos, targetPos, i, totalPoints) + new WVec(0, 0, amplitudeScale * new WAngle(i * phaseScale).Sin() / scaleDivisor));
+
+				var screenPoints = points.Select(p => wr.ScreenPosition(p));
+				Game.Renderer.WorldRgbaColorRenderer.DrawLine(screenPoints, 2f, color, true);
 			}
 		}
 
