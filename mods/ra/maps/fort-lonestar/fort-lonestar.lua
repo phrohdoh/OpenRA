@@ -107,6 +107,12 @@ SendWave = function()
 	Wave = Wave + 1
 	local wave = Waves[Wave]
 
+	if Weather.IsAvailable then
+		Weather.UseSquares = not Weather.UseSquares
+		Weather.ParticleDensityFactor = Weather.ParticleDensityFactor + 0.01
+		Media.DisplayMessage("" .. Weather.ParticleDensityFactor)
+	end
+
 	Trigger.AfterDelay(wave.delay, function()
 		Utils.Do(wave.units, function(units)
 			local entry = Utils.Random(SovietEntryPoints).Location
