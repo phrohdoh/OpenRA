@@ -114,6 +114,29 @@ namespace OpenRA.Mods.Common.AI
 				: ai.Info.StructureProductionInactiveDelay + randomFactor;
 		}
 
+		public bool QueueProductionItem(ActorInfo actorInfo, CPos location)
+		{
+			foreach (var queue in ai.FindQueues(category))
+			{
+				if (queue.CanBuild(actorInfo))
+				{
+					ai.QueueOrder(Order.StartProduction(queue.Actor, actorInfo.Name, 1));
+
+					Game.RunAfterTick(() =>
+					{
+						//var prodItem = queue.AllQueued().Last(pi => pi.Item == actorInfo.Name);
+						queue.AllQueued().Do(pi => Console.WriteLine(pi.Item));
+						//desiredPlacementLocationTopLefts.Add(prodItem, location);
+					});
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		Dictionary<ProductionItem, CPos> desiredPlacementLocationTopLefts = new Dictionary<ProductionItem, CPos>();
 		bool TickQueue(ProductionQueue queue)
 		{
 			var currentBuilding = queue.CurrentItem();
@@ -139,18 +162,34 @@ namespace OpenRA.Mods.Common.AI
 				else if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<RefineryInfo>())
 					type = BuildingType.Refinery;
 
-				var location = ai.ChooseBuildLocation(currentBuilding.Item, true, type);
-				if (location == null)
+				if (!desiredPlacementLocationTopLefts.ContainsKey(currentBuilding))
 				{
-					HackyAI.BotDebug("AI: {0} has nowhere to place {1}".F(player, currentBuilding.Item));
-					ai.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
-					failCount += failCount;
-
-					// If we just reached the maximum fail count, cache the number of current structures
-					if (failCount == ai.Info.MaximumFailedPlacementAttempts)
+					var location = ai.ChooseBuildLocation(currentBuilding.Item, true, type);
+					if (location == null)
 					{
-						cachedBuildings = world.ActorsHavingTrait<Building>().Count(a => a.Owner == player);
-						cachedBases = world.ActorsHavingTrait<BaseProvider>().Count(a => a.Owner == player);
+						HackyAI.BotDebug("AI: {0} has nowhere to place {1}".F(player, currentBuilding.Item));
+						ai.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
+						failCount += failCount;
+
+						// If we just reached the maximum fail count, cache the number of current structures
+						if (failCount == ai.Info.MaximumFailedPlacementAttempts)
+						{
+							cachedBuildings = world.ActorsHavingTrait<Building>().Count(a => a.Owner == player);
+							cachedBases = world.ActorsHavingTrait<BaseProvider>().Count(a => a.Owner == player);
+						}
+					}
+					else
+					{
+						failCount = 0;
+						ai.QueueOrder(new Order("PlaceBuilding", player.PlayerActor, false)
+						{
+							TargetLocation = location.Value,
+							TargetString = currentBuilding.Item,
+							TargetActor = queue.Actor,
+							SuppressVisualFeedback = true
+						});
+
+						return true;
 					}
 				}
 				else
@@ -158,11 +197,13 @@ namespace OpenRA.Mods.Common.AI
 					failCount = 0;
 					ai.QueueOrder(new Order("PlaceBuilding", player.PlayerActor, false)
 					{
-						TargetLocation = location.Value,
+						TargetLocation = desiredPlacementLocationTopLefts[currentBuilding],
 						TargetString = currentBuilding.Item,
 						TargetActor = queue.Actor,
 						SuppressVisualFeedback = true
 					});
+
+					desiredPlacementLocationTopLefts.Remove(currentBuilding);
 
 					return true;
 				}

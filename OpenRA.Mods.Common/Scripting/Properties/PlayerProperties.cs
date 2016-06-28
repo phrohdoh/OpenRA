@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Eluant;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.AI;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Scripting;
 
@@ -22,7 +23,13 @@ namespace OpenRA.Mods.Common.Scripting
 	public class PlayerProperties : ScriptPlayerProperties
 	{
 		public PlayerProperties(ScriptContext context, Player player)
-			: base(context, player) { }
+			: base(context, player)
+		{
+			player.World.AddFrameEndTask(_ => ai = Player.PlayerActor.TraitsImplementing<HackyAI>()
+				.FirstOrDefault(h => h.IsEnabled));
+		}
+
+		HackyAI ai;
 
 		[Desc("The player's internal name.")]
 		public string InternalName { get { return Player.InternalName; } }
@@ -98,6 +105,27 @@ namespace OpenRA.Mods.Common.Scripting
 				throw new LuaException("Missing TechTree trait on player {0}!".F(Player));
 
 			return tt.HasPrerequisites(type);
+		}
+
+		public bool QueueProductionItem(string buildingType, CPos location)
+		{
+			if (!IsBot || ai == null || !ai.IsEnabled)
+				return false;
+
+			ActorInfo actorInfo;
+			if (Player.World.Map.Rules.Actors.TryGetValue(buildingType, out actorInfo))
+				if (ai.QueueProductionItem(actorInfo, location))
+					return true;
+
+			return false;
+		}
+
+		public CPos GetRandomBaseCenter()
+		{
+			if (!IsBot || ai == null || !ai.IsEnabled)
+				return CPos.Zero;
+
+			return ai.GetRandomBaseCenter();
 		}
 	}
 }

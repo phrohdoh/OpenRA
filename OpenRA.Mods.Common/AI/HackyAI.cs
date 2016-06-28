@@ -556,6 +556,15 @@ namespace OpenRA.Mods.Common.AI
 				World.IssueOrder(orders.Dequeue());
 		}
 
+		public bool QueueProductionItem(ActorInfo actorInfo, CPos location)
+		{
+			foreach (var b in builders)
+				if (b.QueueProductionItem(actorInfo, location))
+					return true;
+
+			return false;
+		}
+
 		internal Actor FindClosestEnemy(WPos pos)
 		{
 			return World.Actors.Where(isEnemyUnit).ClosestTo(pos);
