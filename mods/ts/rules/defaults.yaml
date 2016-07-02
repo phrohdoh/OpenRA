@@ -555,6 +555,7 @@
 	MustBeDestroyed:
 	RenderVoxels:
 	WithVoxelBody:
+	DistanceToTerrainDebugOverlay:
 
 ^Helicopter:
 	Inherits: ^Aircraft
