@@ -109,6 +109,11 @@ namespace OpenRA.FileSystem
 				if (name.StartsWith("$"))
 				{
 					name = name.Substring(1);
+
+					ModMetadata mod;
+					if (!ModMetadata.AllMods.TryGetValue(name, out mod))
+						throw new InvalidOperationException("Could not load mod '{0}'".F(name));
+
 					package = ModMetadata.AllMods[name].Package;
 					modPackages.Add(package);
 				}

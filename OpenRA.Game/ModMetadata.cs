@@ -36,8 +36,10 @@ namespace OpenRA
 		static Dictionary<string, ModMetadata> ValidateMods()
 		{
 			var ret = new Dictionary<string, ModMetadata>();
+			Console.WriteLine("=== ValidateMods ===");
 			foreach (var pair in GetCandidateMods())
 			{
+				Console.WriteLine("{0}: {1}", pair.First, pair.Second);
 				IReadOnlyPackage package = null;
 				try
 				{
@@ -94,6 +96,7 @@ namespace OpenRA
 				}
 			}
 
+			Console.WriteLine("=== end of ValidateMods ===");
 			return ret;
 		}
 
