@@ -768,6 +768,23 @@
     <Compile Include="Traits\Carryable.cs" />
     <Compile Include="Traits\Carryall.cs" />
     <Compile Include="Traits\Buildings\FreeActorWithDelivery.cs" />
+    <Compile Include="Traits\World\PaletteFromJasc.cs" />
+    <Compile Include="FileFormats\JascPalReader.cs" />
+    <Compile Include="FileFormats\GplPalReader.cs" />
+    <Compile Include="Traits\World\PaletteFromGpl.cs" />
+    <Compile Include="FileFormats\JascPalWriter.cs" />
+    <Compile Include="FileFormats\GplPalWriter.cs" />
+    <Compile Include="FileFormats\Rgb6PalReader.cs" />
+    <Compile Include="FileFormats\Rgb6PalWriter.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\GplPalToJascPalCommand.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\JascPalToGplPalCommand.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\JascPalToRgb6PalCommand.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\GplPalToRgb6PalCommand.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\Rgb6PalToJascPalCommand.cs" />
+    <Compile Include="UtilityCommands\PaletteConversions\Rgb6PalToGplPalCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UtilityCommands\PaletteConversions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
