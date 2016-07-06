@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
@@ -45,13 +46,14 @@ namespace OpenRA.Mods.D2.Traits
 					var x = index % cols;
 
 					var anim = new Animation(init.World, image);
-					var offset = new WVec(x * 1024 - 512, y * 1024 - 512, 0);
+					Func<WVec> offset = () => new WVec(x * 1024 - 512, y * 1024 - 512, 0);
+					Func<int> zOffset = () => 0;
 
 					var frameIndex = index;
 					anim.PlayFetchIndex(Sequence, () => frameIndex);
 					anim.IsDecoration = true;
 
-					yield return new SpriteActorPreview(anim, offset, 0, p, rs.Scale);
+					yield return new SpriteActorPreview(anim, offset, zOffset, p, rs.Scale);
 				}
 			}
 		}
