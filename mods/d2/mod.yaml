@@ -318,3 +318,20 @@ GameSpeeds:
 		OrderLatency: 6
 
 ColorValidator:
+
+ModContent:
+	InstallPromptMessage: Dune II requires artwork and audio from the original game.\n\nQuick Install will automatically download this content
+#	QuickDownload: basefiles
+	HeaderMessage: The original game content may be copied from an original game disc,\nor downloaded from an online mirror of the game files.
+	Packages:
+		base: Base Game Files
+			TestFiles: ^Content/d2/DUNE.PAK, ^Content/d2/VOC.PAK, ^Content/d2/ATRE.PAK, ^Content/d2/HARK.PAK, ^Content/d2/ORDOS.PAK, ^Content/d2/INTRO.PAK, ^Content/d2/FINALE.PAK, ^Content/d2/SOUND.RS
+#			Sources: d2, d2-linux
+			Required: true
+#			Download: basefiles
+#			Sources: d2, d2-linux
+#	Downloads:
+#		basefiles: Base Content
+#		MirrorList: http://www.openra.net/packages/d2k-103-mirrors.txt
+#			Extract:
+#				^Content/d2/SOUND.RS: SOUND.RS
