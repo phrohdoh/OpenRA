@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 using OpenRA.Widgets;
+using System.Linq;
 
 namespace OpenRA.Mods.Common.Widgets
 {
@@ -28,6 +29,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public int VisualHeight = 1;
 		public int LeftMargin = 5;
 		public int RightMargin = 5;
+		public char[] AllowedCharacters = { };
 
 		public bool Disabled = false;
 
@@ -327,6 +329,10 @@ namespace OpenRA.Mods.Common.Widgets
 				return false;
 
 			if (MaxLength > 0 && Text.Length >= MaxLength)
+				return true;
+
+			text = string.Concat(text.Where(AllowedCharacters.Contains));
+			if (text.Length == 0)
 				return true;
 
 			var pasteLength = text.Length;

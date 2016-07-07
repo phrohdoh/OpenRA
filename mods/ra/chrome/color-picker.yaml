@@ -4,6 +4,14 @@ Background@COLOR_CHOOSER:
 	Width: 326
 	Height: 140
 	Children:
+		TextField@HEX_VALUE:
+			X: 250
+			Y: 109 - 25 - 6
+			Width: 70
+			Height: 25
+			Font: Bold
+			MaxLength: 6
+			AllowedCharacters: a, b, c, d, e, f, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 		Button@RANDOM_BUTTON:
 			Key: tab
 			X: 250

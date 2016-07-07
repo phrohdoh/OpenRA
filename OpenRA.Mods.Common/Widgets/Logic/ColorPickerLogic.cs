@@ -40,6 +40,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var hueSlider = widget.Get<SliderWidget>("HUE");
 			var mixer = widget.Get<ColorMixerWidget>("MIXER");
 			var randomButton = widget.GetOrNull<ButtonWidget>("RANDOM_BUTTON");
+			var hexInput = widget.GetOrNull<TextFieldWidget>("HEX_VALUE");
 
 			hueSlider.OnChange += _ => mixer.Set(hueSlider.Value);
 			mixer.OnChange += () => onChange(mixer.Color);
@@ -55,6 +56,32 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					mixer.Set(new HSLColor(hue, sat, lum));
 					hueSlider.Value = hue / 255f;
 				};
+
+			if (hexInput != null)
+			{
+				hexInput.OnTextEdited = () =>
+				{
+					var text = hexInput.Text;
+					if (text.Length != 6)
+						return;
+
+					var color = System.Drawing.ColorTranslator.FromHtml("#" + text);
+					var hsl = new HSLColor(color);
+					hueSlider.Value = hsl.H / 255f;
+					mixer.Set(hsl);
+					hexInput.Text = mixer.Color.ToHexString();
+				};
+
+				hexInput.OnEscKey = hexInput.YieldKeyboardFocus;
+				hexInput.OnEnterKey = hexInput.YieldKeyboardFocus;
+				hexInput.OnEscKey = hexInput.YieldKeyboardFocus;
+
+				mixer.OnChange += () =>
+				{
+					hexInput.YieldKeyboardFocus();
+					hexInput.Text = mixer.Color.ToHexString();
+				};
+			}
 
 			// Set the initial state
 			var validator = modData.Manifest.Get<ColorValidator>();
