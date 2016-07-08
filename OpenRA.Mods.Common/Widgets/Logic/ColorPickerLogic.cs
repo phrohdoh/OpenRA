@@ -10,15 +10,26 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Widgets;
+using System.Linq;
+using System.Drawing;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
 	public class ColorPickerLogic : ChromeLogic
 	{
+		enum PanelType
+		{
+			Mixer,
+			Swatches,
+		}
+
+		PanelType panel = PanelType.Mixer;
+
 		[ObjectCreator.UseCtor]
 		public ColorPickerLogic(Widget widget, ModData modData, World world, HSLColor initialColor, Action<HSLColor> onChange, WorldRenderer worldRenderer)
 		{
@@ -39,11 +50,27 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			var hueSlider = widget.Get<SliderWidget>("HUE");
 			var mixer = widget.Get<ColorMixerWidget>("MIXER");
+
+			hueSlider.IsVisible = () => panel == PanelType.Mixer;
+			mixer.IsVisible = () => panel == PanelType.Mixer;
+
+			var mixerButton = widget.GetOrNull<ButtonWidget>("MIXER_TAB_BUTTON");
+			if (mixerButton != null)
+				mixerButton.OnClick = () => panel = PanelType.Mixer;
+
+			var swatchesButton = widget.GetOrNull<ButtonWidget>("SWATCHES_TAB_BUTTON");
+			if (swatchesButton != null)
+				swatchesButton.OnClick = () => panel = PanelType.Swatches;
+
 			var randomButton = widget.GetOrNull<ButtonWidget>("RANDOM_BUTTON");
-			var hexInput = widget.GetOrNull<TextFieldWidget>("HEX_VALUE");
+			if (randomButton != null)
+				randomButton.IsVisible = () => panel == PanelType.Mixer;
 
 			hueSlider.OnChange += _ => mixer.Set(hueSlider.Value);
 			mixer.OnChange += () => onChange(mixer.Color);
+
+			hueSlider.Parent.IsVisible = () => panel == PanelType.Mixer;
+			mixer.Parent.IsVisible = () => panel == PanelType.Mixer;
 
 			if (randomButton != null)
 				randomButton.OnClick = () =>
@@ -57,8 +84,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					hueSlider.Value = hue / 255f;
 				};
 
+			var hexInput = widget.GetOrNull<TextFieldWidget>("HEX_VALUE");
 			if (hexInput != null)
 			{
+				hexInput.IsVisible = () => panel == PanelType.Swatches;
 				hexInput.OnTextEdited = () =>
 				{
 					var text = hexInput.Text;
@@ -83,8 +112,49 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				};
 			}
 
-			// Set the initial state
 			var validator = modData.Manifest.Get<ColorValidator>();
+
+			var predeterminedColorSwatchContainer = widget.GetOrNull<ColorSwatchContainerWidget>("PREDETERMINED_COLORS");
+			if (predeterminedColorSwatchContainer != null)
+			{
+				predeterminedColorSwatchContainer.IsVisible = () => panel == PanelType.Swatches;
+
+				ColorSwatchWidget last = null;
+				foreach (var color in validator.PredeterminedPlayerColors)
+				{
+					var swatch = new ColorSwatchWidget(modData);
+					predeterminedColorSwatchContainer.Children.Add(swatch);
+
+					swatch.Color = color;
+					swatch.OnClick = () => mixer.Set(swatch.Color);
+
+					var offsetRect = predeterminedColorSwatchContainer.RenderBounds;
+					offsetRect.Offset(5, 5);
+
+					if (last == null)
+						swatch.Bounds = Rectangle.FromLTRB(predeterminedColorSwatchContainer.Bounds.X + 5,
+						                                   predeterminedColorSwatchContainer.Bounds.Y + 5,
+						                                   predeterminedColorSwatchContainer.Bounds.X + 25 + 5,
+						                                   predeterminedColorSwatchContainer.Bounds.Y + 25 + 5);
+
+					else if (last.Bounds != Rectangle.Empty)
+						swatch.Bounds = Rectangle.FromLTRB(last.Bounds.X + 5, 5, last.Bounds.X + 25 + 5, 25 + 5);
+
+					last = swatch;
+				}
+			}
+
+			//var swatches = widget.Children.Where(w => w is ColorSwatchWidget).Cast<ColorSwatchWidget>().ToArray();
+			//for (var i = 0; i < swatches.Length; i++)
+			//{
+			//	var swatch = swatches[i];
+			//	var savedColor = Game.Settings.Player.SavedColors[i];
+			//	swatch.Color = savedColor;
+			//	swatch.IsVisible = () => panel == PanelType.Swatches;
+			//	swatch.OnClick = () => mixer.Set(swatch.Color);
+			//}
+
+			// Set the initial state
 			mixer.SetPaletteRange(validator.HsvSaturationRange[0], validator.HsvSaturationRange[1], validator.HsvValueRange[0], validator.HsvValueRange[1]);
 			mixer.Set(initialColor);
 

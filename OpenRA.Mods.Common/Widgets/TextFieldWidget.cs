@@ -331,9 +331,12 @@ namespace OpenRA.Mods.Common.Widgets
 			if (MaxLength > 0 && Text.Length >= MaxLength)
 				return true;
 
-			text = string.Concat(text.Where(AllowedCharacters.Contains));
-			if (text.Length == 0)
-				return true;
+			if (AllowedCharacters.Length > 0)
+			{
+				text = string.Concat(text.Where(AllowedCharacters.Contains));
+				if (text.Length == 0)
+					return true;
+			}
 
 			var pasteLength = text.Length;
 

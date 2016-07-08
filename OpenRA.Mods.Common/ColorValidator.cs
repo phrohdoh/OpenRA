@@ -24,6 +24,7 @@ namespace OpenRA.Mods.Common
 		public readonly int Threshold = 0x50;
 		public readonly float[] HsvSaturationRange = new[] { 0.25f, 1f };
 		public readonly float[] HsvValueRange = new[] { 0.2f, 1.0f };
+		public readonly HSLColor[] PredeterminedPlayerColors = { };
 
 		double GetColorDelta(Color colorA, Color colorB)
 		{

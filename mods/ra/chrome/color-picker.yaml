@@ -2,11 +2,41 @@ Background@COLOR_CHOOSER:
 	Logic: ColorPickerLogic
 	Background: dialog2
 	Width: 326
-	Height: 140
+	Height: 140 + 6 + 25
 	Children:
+		ColorSwatchContainer@PREDETERMINED_COLORS:
+		#ColorSwatch@SWATCH_1:
+		#	Width: 25
+		#	Height: 25
+		#	X: 5
+		#	Y: 5
+		#ColorSwatch@SWATCH_2:
+		#	Width: 25
+		#	Height: 25
+		#	X: 5 + WIDTH + 2 
+		#	Y: 5
+		#ColorSwatch@SWATCH_3:
+		#	Width: 25
+		#	Height: 25
+		#	X: 5 + (WIDTH * 2) + 2
+		#	Y: 5
+		Button@MIXER_TAB_BUTTON:
+			X: 5
+			Y: 109 + 25 + 6
+			Width: 105
+			Height: 25
+			Font: Bold
+			Text: Mixer
+		Button@SWATCHES_TAB_BUTTON:
+			X: 5 + 105 + 5
+			Y: 109 + 25 + 6
+			Width: 105
+			Height: 25
+			Font: Bold
+			Text: Swatches
 		TextField@HEX_VALUE:
 			X: 250
-			Y: 109 - 25 - 6
+			Y: 109
 			Width: 70
 			Height: 25
 			Font: Bold

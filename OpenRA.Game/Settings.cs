@@ -154,6 +154,8 @@ namespace OpenRA
 		public string Name = "Newbie";
 		public HSLColor Color = new HSLColor(75, 255, 180);
 		public string LastServer = "localhost:1234";
+
+		public HSLColor[] SavedColors = { };
 	}
 
 	public class GameSettings
