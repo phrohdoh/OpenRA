@@ -243,15 +243,6 @@ LoadScreen: D2LoadScreen
 	Palette: IBM.PAL
 	Text: Loading DOS emulator..., Looking for CRT..., Rewinding floppy disks..., Recount the bytes..., Initialize Upper memory..., Combine bits into bytes..., Looking for additional 64Kbytes...
 
-ContentInstaller:
-	OutputFilenameCase: ForceUpper
-	TestFiles: ^Content/d2/DUNE.PAK
-	PackageMirrorList: http://www.openra.net/packages/d2k-103-mirrors.txt
-	DiskTestFiles: music/ambush.aud, setup/setup.z
-	PackageToExtractFromCD: setup/setup.z
-	OverwriteFiles: False
-	ShippedSoundtracks: 1
-
 ServerTraits:
 	LobbyCommands
 	PlayerPinger
@@ -325,7 +316,7 @@ ModContent:
 	HeaderMessage: The original game content may be copied from an original game disc,\nor downloaded from an online mirror of the game files.
 	Packages:
 		base: Base Game Files
-			TestFiles: ^Content/d2/DUNE.PAK, ^Content/d2/VOC.PAK, ^Content/d2/ATRE.PAK, ^Content/d2/HARK.PAK, ^Content/d2/ORDOS.PAK, ^Content/d2/INTRO.PAK, ^Content/d2/FINALE.PAK, ^Content/d2/SOUND.RS
+			TestFiles: ^Content/d2/DUNE.PAK, ^Content/d2/VOC.PAK, ^Content/d2/ATRE.PAK, ^Content/d2/HARK.PAK, ^Content/d2/ORDOS.PAK, ^Content/d2/INTRO.PAK, ^Content/d2/FINALE.PAK
 #			Sources: d2, d2-linux
 			Required: true
 #			Download: basefiles
