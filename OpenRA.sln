@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Game", "OpenRA.Game\OpenRA.Game.csproj", "{0DFB103F-2962-400F-8C6D-E2C28CCBA633}"
 EndProject
@@ -69,11 +69,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Red Alert Lua scripts", "Re
 		mods\ra\maps\allies-05a\allies05a-AI.lua = mods\ra\maps\allies-05a\allies05a-AI.lua
 		mods\ra\maps\allies-05a\allies05a.lua = mods\ra\maps\allies-05a\allies05a.lua
 		mods\ra\maps\desert-shellmap\desert-shellmap.lua = mods\ra\maps\desert-shellmap\desert-shellmap.lua
+		mods\ra\maps\evacuation\evacuation.lua = mods\ra\maps\evacuation\evacuation.lua
 		mods\ra\maps\fort-lonestar\fort-lonestar-AI.lua = mods\ra\maps\fort-lonestar\fort-lonestar-AI.lua
 		mods\ra\maps\fort-lonestar\fort-lonestar.lua = mods\ra\maps\fort-lonestar\fort-lonestar.lua
 		mods\ra\maps\intervention\intervention.lua = mods\ra\maps\intervention\intervention.lua
 		mods\ra\maps\monster-tank-madness\monster-tank-madness.lua = mods\ra\maps\monster-tank-madness\monster-tank-madness.lua
-		mods\ra\maps\evacuation\evacuation.lua = mods\ra\maps\evacuation\evacuation.lua
 		mods\ra\maps\soviet-01\soviet01.lua = mods\ra\maps\soviet-01\soviet01.lua
 		mods\ra\maps\soviet-02a\soviet02a.lua = mods\ra\maps\soviet-02a\soviet02a.lua
 		mods\ra\maps\soviet-02b\soviet02b.lua = mods\ra\maps\soviet-02b\soviet02b.lua
@@ -122,6 +122,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiberian Sun Lua scripts", "Tiberian Sun Lua scripts", "{85159569-F5BD-458E-B5C0-EB16690C432B}"
 	ProjectSection(SolutionItems) = preProject
 		mods\ts\maps\fields-of-green\fields-of-green.lua = mods\ts\maps\fields-of-green\fields-of-green.lua
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Mods.D2", "OpenRA.Mods.D2\OpenRA.Mods.D2.csproj", "{C0B0465C-6BE2-409C-8770-3A9BF64C4341}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0B0465C-6BE2-409C-8770-3A9BF64C4344} = {C0B0465C-6BE2-409C-8770-3A9BF64C4344}
 	EndProjectSection
 EndProject
 Global
@@ -174,6 +179,10 @@ Global
 		{6CB8E1B7-6B36-4D93-8633-7C573E194AC4}.Debug|x86.Build.0 = Debug|x86
 		{6CB8E1B7-6B36-4D93-8633-7C573E194AC4}.Release|x86.ActiveCfg = Release|x86
 		{6CB8E1B7-6B36-4D93-8633-7C573E194AC4}.Release|x86.Build.0 = Release|x86
+		{C0B0465C-6BE2-409C-8770-3A9BF64C4341}.Debug|x86.ActiveCfg = Debug|x86
+		{C0B0465C-6BE2-409C-8770-3A9BF64C4341}.Debug|x86.Build.0 = Debug|x86
+		{C0B0465C-6BE2-409C-8770-3A9BF64C4341}.Release|x86.ActiveCfg = Release|x86
+		{C0B0465C-6BE2-409C-8770-3A9BF64C4341}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
