@@ -44,7 +44,7 @@
 		Image: pips
 		Sequence: pickup-indicator
 		Offset: -12, -12
-	WithSmoke:
+	#WithSmoke:
 
 ^Tank:
 	Inherits: ^Vehicle
