@@ -174,7 +174,7 @@ PROGRAMS += mod_d2k
 mod_d2k: $(mod_d2k_TARGET)
 
 # Dune 2
-mod_d2_SRCS := $(shell find OpenRA.Mods.D2/ -iname '*.cs')
+mod_d2_SRCS := $(shell find mods/d2/OpenRA.Mods.D2/ -iname '*.cs')
 mod_d2_TARGET = mods/d2/OpenRA.Mods.D2.dll
 mod_d2_KIND = library
 mod_d2_DEPS = $(STD_MOD_DEPS) $(mod_common_TARGET)
@@ -221,7 +221,7 @@ check: utility mods
 	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.D2k
 	@echo
 	@echo "Checking for code style violations in OpenRA.Mods.D2..."
-	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.D2
+	@mono --debug OpenRA.Utility.exe ra --check-code-style mods/d2/OpenRA.Mods.D2
 	@echo
 	@echo "Checking for code style violations in OpenRA.Mods.TS..."
 	@mono --debug OpenRA.Utility.exe ra --check-code-style OpenRA.Mods.TS
