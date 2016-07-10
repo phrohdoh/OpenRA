@@ -12,6 +12,7 @@ Speech:
 		LowPower:
 		SilosNeeded:
 		PrimaryBuildingSelected:
+		InsufficientFunds:
 		NewOptions:
 		Win: WIN
 		Lose: LOSE
