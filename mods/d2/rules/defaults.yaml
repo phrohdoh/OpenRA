@@ -77,7 +77,7 @@
 	Targetable:
 		TargetTypes: Ground, Vehicle
 		RequiresForceFire: yes
-	#DisabledOverlay:
+	DisabledOverlay:
 	Explodes:
 		Weapon: UnitExplodeMed
 		EmptyWeapon: UnitExplodeMed
