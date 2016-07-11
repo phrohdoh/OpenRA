@@ -154,23 +154,22 @@ namespace OpenRA.Mods.D2.Traits
 			UpdateRenderedTileInner(p + new CVec(-1, 1));
 			UpdateRenderedTileInner(p + new CVec(0, 1));
 			UpdateRenderedTileInner(p + new CVec(1, 1));
-			//UpdateRenderedTileInner(p + new CVec(-2, -2));
+			UpdateRenderedTileInner(p + new CVec(-2, -2));
 			UpdateRenderedTileInner(p + new CVec(-1, -2));
 			UpdateRenderedTileInner(p + new CVec(0, -2));
 			UpdateRenderedTileInner(p + new CVec(1, -2));
-			//UpdateRenderedTileInner(p + new CVec(2, -2));
+			UpdateRenderedTileInner(p + new CVec(2, -2));
 			UpdateRenderedTileInner(p + new CVec(2, -1));
 			UpdateRenderedTileInner(p + new CVec(2, 0));
 			UpdateRenderedTileInner(p + new CVec(2, 1));
-			//UpdateRenderedTileInner(p + new CVec(2, 2));
+			UpdateRenderedTileInner(p + new CVec(2, 2));
 			UpdateRenderedTileInner(p + new CVec(1, 2));
 			UpdateRenderedTileInner(p + new CVec(0, 2));
 			UpdateRenderedTileInner(p + new CVec(-1, 2));
-			//UpdateRenderedTileInner(p + new CVec(-2, 2));
+			UpdateRenderedTileInner(p + new CVec(-2, 2));
 			UpdateRenderedTileInner(p + new CVec(-2, 1));
 			UpdateRenderedTileInner(p + new CVec(-2, 0));
 			UpdateRenderedTileInner(p + new CVec(-2, -1));
 		}
-
 	}
 }

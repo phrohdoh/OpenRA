@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
-using OpenRA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Traits.Render;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.D2.Traits
 {
@@ -39,7 +39,7 @@ namespace OpenRA.Mods.D2.Traits
 			var cols = bi.Dimensions.X;
 			var rows = bi.Dimensions.Y;
 
-			for (var index = 0; index < (cols*rows); index++)
+			for (var index = 0; index < (cols * rows); index++)
 			{
 				if (SkipFrames == null || !SkipFrames.Contains(index)) {
 					var y = index / cols;
@@ -69,7 +69,7 @@ namespace OpenRA.Mods.D2.Traits
 			var cols = bi.Dimensions.X;
 			var rows = bi.Dimensions.Y;
 
-			for (var index = 0; index < (cols*rows); index++)
+			for (var index = 0; index < (cols * rows); index++)
 			{
 				if (info.SkipFrames == null || !info.SkipFrames.Contains(index)) {
 					var y = index / cols;

@@ -41,12 +41,13 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 				Size = size;
 				var tempData = StreamExts.ReadBytes(s, (int)(s.Length - s.Position));
 				byte[] srcData = new byte[size.Width * size.Height];
+
 				// format80 decompression
 				LCWCompression.DecodeInto(tempData, srcData);
 
 				// and format40 decmporession
 				Data = new byte[size.Width * size.Height];
-				if ( prev == null )
+				if (prev == null)
 					Array.Clear(Data, 0, Data.Length);
 				else
 					Array.Copy(prev.Data, Data, Data.Length);
@@ -66,35 +67,20 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 			tileHeight = s.ReadUInt16();
 			Delta = s.ReadUInt32();
 
-
-			Console.WriteLine("numTiles={0}", numTiles);
-			Console.WriteLine("tileWidth={0}", tileWidth);
-			Console.WriteLine("tileHeight={0}", tileHeight);
-			Console.WriteLine("Delta={0}", Delta);
-
 			offsets = new uint[numTiles + 1];
 			for (var i = 0; i <= numTiles; i++)
-			{
-				offsets[i] = /*int2.Swap*/(s.ReadUInt32());
-				Console.WriteLine("offsets[{0}]={1}", i, offsets[i]);
-			}
-
-			Console.WriteLine("Length={0}", s.Length);
+				offsets[i] = s.ReadUInt32();
 
 			s.Position = start;
 
 			if (offsets[numTiles] < s.Length)
-			{
 				return false;
-			}
 
-			if ( offsets[0] == 0 )
+			if (offsets[0] == 0)
 			{
 				numTiles -= 1;
 				for (var i = 1; i <= numTiles; i++)
-				{
-					offsets[i-1] = offsets[i];
-				}
+					offsets[i - 1] = offsets[i];
 			}
 
 			return true;
@@ -108,7 +94,7 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 			for (var i = 0; i < numTiles; i++)
 			{
 				s.Position = offsets[i];
-				tiles[i] = new WsaD2Tile(s, new Size(tileWidth, tileHeight), (i == 0) ? null: tiles[i - 1]);
+				tiles[i] = new WsaD2Tile(s, new Size(tileWidth, tileHeight), (i == 0) ? null : tiles[i - 1]);
 			}
 
 			s.Position = start;

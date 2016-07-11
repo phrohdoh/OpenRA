@@ -24,7 +24,7 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 		public const int TileHeight = 200;
 
 		public const int TileSize = TileWidth * TileHeight;
-		const int numTiles = 1;
+		const int NumTiles = 1;
 		uint palSize;
 
 		class CpsD2Tile : ISpriteFrame
@@ -81,7 +81,7 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 			s.Position += 10;
 			s.Position += palSize;
 
-			var tiles = new CpsD2Tile[numTiles];
+			var tiles = new CpsD2Tile[NumTiles];
 			for (var i = 0; i < tiles.Length; i++)
 				tiles[i] = new CpsD2Tile(s);
 

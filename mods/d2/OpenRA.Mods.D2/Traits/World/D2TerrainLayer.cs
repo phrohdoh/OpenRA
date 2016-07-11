@@ -9,10 +9,10 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -106,14 +106,14 @@ namespace OpenRA.Mods.Common.Traits
 				{
 					var mpos = new MPos(u, v);
 					var tile = tilesLayer[mpos];
-					
+
 					if (tile.Type == 143)
 					{
 						ClearSides clear = ClearSides.None;
 
-						if (u>0)
+						if (u > 0)
 						{
-							var leftPos = new MPos(u-1, v);
+							var leftPos = new MPos(u - 1, v);
 							var leftTile = tilesLayer[leftPos];
 							if (!(leftTile.Type >= 126 && leftTile.Type <= 143) &&
 							    !(leftTile.Type >= 160 && leftTile.Type <= 175))
@@ -122,9 +122,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v>0)
+						if (v > 0)
 						{
-							var topPos = new MPos(u, v-1);
+							var topPos = new MPos(u, v - 1);
 							var topTile = tilesLayer[topPos];
 							if (!(topTile.Type >= 126 && topTile.Type <= 143) &&
 							    !(topTile.Type >= 160 && topTile.Type <= 175))
@@ -133,9 +133,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (u<tilesLayer.Size.Width-1)
+						if (u < tilesLayer.Size.Width - 1)
 						{
-							var rightPos = new MPos(u+1, v);
+							var rightPos = new MPos(u + 1, v);
 							var rightTile = tilesLayer[rightPos];
 							if (!(rightTile.Type >= 126 && rightTile.Type <= 143) &&
 							    !(rightTile.Type >= 160 && rightTile.Type <= 175))
@@ -144,9 +144,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v<tilesLayer.Size.Height-1)
+						if (v < tilesLayer.Size.Height - 1)
 						{
-							var bottomPos = new MPos(u, v+1);
+							var bottomPos = new MPos(u, v + 1);
 							var bottomTile = tilesLayer[bottomPos];
 							if (!(bottomTile.Type >= 126 && bottomTile.Type <= 143) &&
 							    !(bottomTile.Type >= 160 && bottomTile.Type <= 175))
@@ -155,7 +155,8 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if ( clear != ClearSides.None ) {
+						if (clear != ClearSides.None)
+						{
 							CPos cpos = mpos.ToCPos(w.Map);
 							Sprite sprite = sideSprites["rock"][SpriteMap[clear]];
 							render.Update(cpos, sprite);
@@ -166,9 +167,9 @@ namespace OpenRA.Mods.Common.Traits
 					{
 						ClearSides clear = ClearSides.None;
 
-						if (u>0)
+						if (u > 0)
 						{
-							var leftPos = new MPos(u-1, v);
+							var leftPos = new MPos(u - 1, v);
 							var leftTile = tilesLayer[leftPos];
 							if (!(leftTile.Type >= 160 && leftTile.Type <= 175))
 							{
@@ -176,9 +177,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v>0)
+						if (v > 0)
 						{
-							var topPos = new MPos(u, v-1);
+							var topPos = new MPos(u, v - 1);
 							var topTile = tilesLayer[topPos];
 							if (!(topTile.Type >= 160 && topTile.Type <= 175))
 							{
@@ -186,9 +187,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (u<tilesLayer.Size.Width-1)
+						if (u < tilesLayer.Size.Width - 1)
 						{
-							var rightPos = new MPos(u+1, v);
+							var rightPos = new MPos(u + 1, v);
 							var rightTile = tilesLayer[rightPos];
 							if (!(rightTile.Type >= 160 && rightTile.Type <= 175))
 							{
@@ -196,9 +197,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v<tilesLayer.Size.Height-1)
+						if (v < tilesLayer.Size.Height - 1)
 						{
-							var bottomPos = new MPos(u, v+1);
+							var bottomPos = new MPos(u, v + 1);
 							var bottomTile = tilesLayer[bottomPos];
 							if (!(bottomTile.Type >= 160 && bottomTile.Type <= 175))
 							{
@@ -206,7 +207,8 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if ( clear != ClearSides.None ) {
+						if (clear != ClearSides.None)
+						{
 							CPos cpos = mpos.ToCPos(w.Map);
 							Sprite sprite = sideSprites["rough"][SpriteMap[clear]];
 							render.Update(cpos, sprite);
@@ -217,9 +219,9 @@ namespace OpenRA.Mods.Common.Traits
 					{
 						ClearSides clear = ClearSides.None;
 
-						if (u>0)
+						if (u > 0)
 						{
-							var leftPos = new MPos(u-1, v);
+							var leftPos = new MPos(u - 1, v);
 							var leftTile = tilesLayer[leftPos];
 							if (!(leftTile.Type >= 144 && leftTile.Type <= 159))
 							{
@@ -227,9 +229,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v>0)
+						if (v > 0)
 						{
-							var topPos = new MPos(u, v-1);
+							var topPos = new MPos(u, v - 1);
 							var topTile = tilesLayer[topPos];
 							if (!(topTile.Type >= 144 && topTile.Type <= 159))
 							{
@@ -237,9 +239,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (u<tilesLayer.Size.Width-1)
+						if (u < tilesLayer.Size.Width - 1)
 						{
-							var rightPos = new MPos(u+1, v);
+							var rightPos = new MPos(u + 1, v);
 							var rightTile = tilesLayer[rightPos];
 							if (!(rightTile.Type >= 144 && rightTile.Type <= 159))
 							{
@@ -247,9 +249,9 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if (v<tilesLayer.Size.Height-1)
+						if (v < tilesLayer.Size.Height - 1)
 						{
-							var bottomPos = new MPos(u, v+1);
+							var bottomPos = new MPos(u, v + 1);
 							var bottomTile = tilesLayer[bottomPos];
 							if (!(bottomTile.Type >= 144 && bottomTile.Type <= 159))
 							{
@@ -257,13 +259,13 @@ namespace OpenRA.Mods.Common.Traits
 							}
 						}
 
-						if ( clear != ClearSides.None ) {
+						if (clear != ClearSides.None)
+						{
 							CPos cpos = mpos.ToCPos(w.Map);
 							Sprite sprite = sideSprites["dune"][SpriteMap[clear]];
 							render.Update(cpos, sprite);
 						}
 					}
-
 				}
 			}
 		}
