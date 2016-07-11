@@ -42,8 +42,6 @@ CSC         = mcs $(SDK)
 CSFLAGS     = -nologo -warn:4 -codepage:utf8 -unsafe -warnaserror
 DEFINE      = TRACE
 COMMON_LIBS = System.dll System.Core.dll System.Data.dll System.Data.DataSetExtensions.dll System.Drawing.dll System.Xml.dll dependencies/Eluant.dll
-NUNIT_LIBS_PATH :=
-NUNIT_LIBS  := $(NUNIT_LIBS_PATH)nunit.framework.dll
 
 DEBUG = true
 ifeq ($(DEBUG), $(filter $(DEBUG),false no n off 0))
@@ -92,7 +90,7 @@ else
 os-dependencies = linux-dependencies
 endif
 
-
+BASE_DIR = ../../..
 
 ######################## PROGRAM TARGET RULES ##########################
 #
@@ -143,25 +141,25 @@ check-scripts:
 	@echo
 	@echo "Checking for Lua syntax errors..."
 	@luac -p $(shell find ../maps/* -iname '*.lua')
-	@luac -p $(shell find ../../../lua/* -iname '*.lua')
+	@luac -p $(shell find $(BASE_DIR)/lua/* -iname '*.lua')
 
 check: mods
 	@echo
 	@echo "Checking for code style violations in OpenRA.Mods.D2..."
-	@mono --debug OpenRA.Utility.exe ra --check-code-style .
+	@mono --debug $(BASE_DIR)/OpenRA.Utility.exe ra --check-code-style .
 
 test: mods
 	@echo
 	@echo "Testing D2 mod MiniYAML..."
-	@mono --debug OpenRA.Utility.exe d2 --check-yaml
+	@mono --debug $(BASE_DIR)/OpenRA.Utility.exe d2 --check-yaml
 
 
 ##### Launchers / Utilities #####
 
 # Patches binary headers to work around a mono bug
-fixheader.exe: ../../../packaging/fixheader.cs
+fixheader.exe: $(BASE_DIR)/packaging/fixheader.cs
 	@echo CSC fixheader.exe
-	@$(CSC) ../../../packaging/fixheader.cs $(CSFLAGS) -out:fixheader.exe -t:exe $(COMMON_LIBS:%=-r:%)
+	@$(CSC) $(BASE_DIR)/packaging/fixheader.cs $(CSFLAGS) -out:fixheader.exe -t:exe $(COMMON_LIBS:%=-r:%)
 
 # Generate build rules for each target defined above in PROGRAMS
 define BUILD_ASSEMBLY
@@ -188,36 +186,38 @@ $(foreach prog,$(PROGRAMS),$(eval $(call BUILD_ASSEMBLY,$(prog))))
 default: mods
 
 mods: mod_d2
+	@-$(RM_F) fixheader.exe
+	@-$(RM_F) fixheader.exe.mdb
 
 all: dependencies mods
 
 clean:
-	@-$(RM_F) *.dylib *.dll.config ../*.dll ../*.mdb *.mdb *.dll *.resources
+	@-$(RM_F) *.exe *.dylib *.dll.config ../*.dll ../*.mdb *.mdb *.dll *.resources
 	@-$(RM_RF) ./*/bin ./*/obj
 
 distclean: clean
 
 cli-dependencies:
-	@./thirdparty/fetch-thirdparty-deps.sh
-	@ $(CP_R) thirdparty/download/*.dll .
-	@ $(CP_R) thirdparty/download/*.dll.config .
+#	@./thirdparty/fetch-thirdparty-deps.sh
+#	@ $(CP_R) thirdparty/download/*.dll .
+#	@ $(CP_R) thirdparty/download/*.dll.config .
 
 linux-dependencies: cli-dependencies linux-native-dependencies
 
 linux-native-dependencies:
-	@./thirdparty/configure-native-deps.sh
+#	@./thirdparty/configure-native-deps.sh
 
 windows-dependencies:
-	@./thirdparty/fetch-thirdparty-deps-windows.sh
+#	@./thirdparty/fetch-thirdparty-deps-windows.sh
 
 osx-dependencies: cli-dependencies
-	@./thirdparty/fetch-thirdparty-deps-osx.sh
-	@ $(CP_R) thirdparty/download/osx/*.dylib .
-	@ $(CP_R) thirdparty/download/osx/*.dll.config .
+#	@./thirdparty/fetch-thirdparty-deps-osx.sh
+#	@ $(CP_R) thirdparty/download/osx/*.dylib .
+#	@ $(CP_R) thirdparty/download/osx/*.dll.config .
 
 dependencies: $(os-dependencies)
-	@./thirdparty/fetch-geoip-db.sh
-	@ $(CP) thirdparty/download/GeoLite2-Country.mmdb.gz .
+#	@./thirdparty/fetch-geoip-db.sh
+#	@ $(CP) thirdparty/download/GeoLite2-Country.mmdb.gz .
 
 all-dependencies: cli-dependencies windows-dependencies osx-dependencies
 
@@ -230,25 +230,25 @@ version: ../mod.yaml
 	done
 
 docs: mods version
-	@mono --debug OpenRA.Utility.exe all --docs > DOCUMENTATION.md
-	@mono --debug OpenRA.Utility.exe all --lua-docs > Lua-API.md
+	@mono --debug $(BASE_DIR)/OpenRA.Utility.exe all --docs > DOCUMENTATION.md
+	@mono --debug $(BASE_DIR)/OpenRA.Utility.exe all --lua-docs > Lua-API.md
 
-install: install-core
-
-install-all: install-core install-tools
-
-install-linux-shortcuts: install-linux-scripts install-linux-icons install-linux-desktop
-
-install-core: default
-	@$(CP_R) .. "$(DATA_INSTALL_DIR)/mods/d2"
-	@$(INSTALL_PROGRAM) $(mod_d2_TARGET) "$(DATA_INSTALL_DIR)/mods/d2"
-
-ifneq ($(UNAME_S),Darwin)
-	@$(CP) *.sh "$(DATA_INSTALL_DIR)"
-endif
-
-uninstall:
-	@-$(RM_R) "$(DATA_INSTALL_DIR)/mods/d2"
+#install: install-core
+#
+#install-all: install-core install-tools
+#
+#install-linux-shortcuts: install-linux-scripts install-linux-icons install-linux-desktop
+#
+#install-core: default
+#	@$(CP_R) .. "$(DATA_INSTALL_DIR)/mods/d2"
+#	@$(INSTALL_PROGRAM) $(mod_d2_TARGET) "$(DATA_INSTALL_DIR)/mods/d2"
+#
+#ifneq ($(UNAME_S),Darwin)
+#	@$(CP) *.sh "$(DATA_INSTALL_DIR)"
+#endif
+#
+#uninstall:
+#	@-$(RM_R) "$(DATA_INSTALL_DIR)/mods/d2"
 
 help:
 	@echo 'to compile, run:'
