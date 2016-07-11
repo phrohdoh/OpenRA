@@ -225,6 +225,7 @@ Weapons:
 	d2|weapons/largeguns.yaml
 	d2|weapons/missiles.yaml
 	d2|weapons/other.yaml
+	d2|weapons/squads.yaml
 
 Voices:
 	d2|audio/voices.yaml

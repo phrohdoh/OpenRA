@@ -21,29 +21,6 @@ LMG:
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
 
-LMG_squad:
-	ReloadDelay: 10
-	Range: 2c512
-	Report: MGUN2.WAV
-	Projectile: Bullet
-		Speed: 1c256
-	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Falloff: 100, 50, 25, 0
-		Damage: 125
-		Versus:
-			wall: 10
-			building: 25
-			wood: 75
-			light: 40
-			heavy: 20
-			invulnerable: 0
-			cy: 20
-			harvester: 25
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-
 Fremen_S:
 	ReloadDelay: 40
 	Range: 2c512
