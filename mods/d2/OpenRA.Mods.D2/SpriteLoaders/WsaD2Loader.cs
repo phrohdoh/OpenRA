@@ -39,7 +39,9 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 			public WsaD2Tile(Stream s, Size size, ISpriteFrame prev)
 			{
 				Size = size;
-				var tempData = StreamExts.ReadBytes(s, (int)(s.Length - s.Position));
+				var dataLen = s.Length - s.Position;
+				Console.WriteLine("dataLen = {0}", dataLen);
+				var tempData = StreamExts.ReadBytes(s, (int)dataLen);
 				byte[] srcData = new byte[size.Width * size.Height];
 
 				// format80 decompression
@@ -73,8 +75,8 @@ namespace OpenRA.Mods.D2.SpriteLoaders
 
 			s.Position = start;
 
-			if (offsets[numTiles] < s.Length)
-				return false;
+			//if (offsets[numTiles] < s.Length)
+			//	return false;
 
 			if (offsets[0] == 0)
 			{

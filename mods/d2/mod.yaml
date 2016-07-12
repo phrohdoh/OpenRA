@@ -158,6 +158,7 @@ Sequences:
 	#d2|sequences/bombs.yaml
 	d2|sequences/atomic.yaml
 	d2|sequences/colorpicker.yaml
+	d2|sequences/trails.yaml
 
 TileSets:
 	d2|tilesets/dune2.yaml
