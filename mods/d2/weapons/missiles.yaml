@@ -81,7 +81,7 @@ TowerMissile:
 		CruiseAltitude: 1c0
 		MinimumLaunchAngle: 64
 		VerticalRateOfTurn: 10
-		Image: MISSILE2
+		Image: missile
 		TrailImage: large_trail
 		TrailInterval: 1
 		Speed: 320
@@ -123,7 +123,7 @@ mtank_pri:
 		MinimumLaunchAngle: 64
 		VerticalRateOfTurn: 10
 		Inaccuracy: 96
-		Image: MISSILE2
+		Image: missile
 		TrailImage: large_trail
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
