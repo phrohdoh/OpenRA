@@ -179,6 +179,7 @@ Assemblies:
 	d2|OpenRA.Mods.D2.dll
 
 ChromeLayout:
+	d2|chrome/assetbrowser.yaml
 	d2|chrome/ingame.yaml
 	ra|chrome/ingame-chat.yaml
 	ra|chrome/ingame-fmvplayer.yaml
@@ -214,7 +215,6 @@ ChromeLayout:
 	d2|chrome/dropdowns.yaml
 	ra|chrome/musicplayer.yaml
 	d2|chrome/tooltips.yaml
-	ra|chrome/assetbrowser.yaml
 	d2|chrome/missionbrowser.yaml
 	ra|chrome/confirmation-dialogs.yaml
 	ra|chrome/editor.yaml
