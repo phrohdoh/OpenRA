@@ -83,9 +83,7 @@
     <Compile Include="D2LoadScreen.cs" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(SolutionDir)mods/d2/"
-copy "$(TargetPath)" "$(SolutionDir)mods/d2/"
-cd "$(SolutionDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)/../"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup />
