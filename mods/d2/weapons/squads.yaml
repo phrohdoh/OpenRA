@@ -7,9 +7,9 @@ Bazooka_squad:
 		Inaccuracy: 256
 		Image: RPG
 		HorizontalRateOfTurn: 1
-		TrailImage: bazooka_trail
-		TrailPalette: effect75alpha
-		TrailInterval: 1
+		#TrailImage: bazooka_trail
+		#TrailPalette: effect75alpha
+		#TrailInterval: 1
 		RangeLimit: 3c614
 	Warhead@1Dam: SpreadDamage
 		Spread: 192

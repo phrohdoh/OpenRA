@@ -7,9 +7,9 @@ Bazooka:
 		Inaccuracy: 256
 		Image: RPG
 		HorizontalRateOfTurn: 1
-		TrailImage: bazooka_trail
-		TrailPalette: effect75alpha
-		TrailInterval: 1
+		#TrailImage: bazooka_trail
+		#TrailPalette: effect75alpha
+		#TrailInterval: 1
 		RangeLimit: 3c614
 	Warhead@1Dam: SpreadDamage
 		Spread: 192
@@ -39,9 +39,9 @@ Rocket:
 		Inaccuracy: 256
 		Image: RPG
 		HorizontalRateOfTurn: 0
-		TrailImage: bazooka_trail
-		TrailPalette: effect75alpha
-		TrailInterval: 1
+		#TrailImage: bazooka_trail
+		#TrailPalette: effect75alpha
+		#TrailInterval: 1
 		Speed: 343
 		RangeLimit: 4c204
 	Warhead@1Dam: SpreadDamage
@@ -82,8 +82,8 @@ TowerMissile:
 		MinimumLaunchAngle: 64
 		VerticalRateOfTurn: 10
 		Image: missile
-		TrailImage: large_trail
-		TrailInterval: 1
+		#TrailImage: large_trail
+		#TrailInterval: 1
 		Speed: 320
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
@@ -124,8 +124,8 @@ mtank_pri:
 		VerticalRateOfTurn: 10
 		Inaccuracy: 96
 		Image: missile
-		TrailImage: large_trail
-		TrailInterval: 1
+		#TrailImage: large_trail
+		#TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Falloff: 100, 50, 25, 0
@@ -162,10 +162,10 @@ DeviatorMissile:
 		MinimumLaunchAngle: 64
 		VerticalRateOfTurn: 10
 		Image: MISSILE
-		TrailImage: deviator_trail
-		TrailPalette: deviatorgas
-		TrailUsePlayerPalette: true
-		TrailInterval: 1
+		#TrailImage: deviator_trail
+		#TrailPalette: deviatorgas
+		#TrailUsePlayerPalette: true
+		#TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Falloff: 100, 50, 25, 0

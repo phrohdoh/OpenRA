@@ -32,6 +32,9 @@ explosion:
 	rocket_explosion: UNITS1.SHP
 		Start: 0
 		Length: 1
+	tiny_explosion: UNITS1.SHP
+		Start: 0
+		Length: 1
 	shockwave: DATA.R8
 		Start: 3687
 		Length: 6
