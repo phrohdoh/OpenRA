@@ -5,6 +5,7 @@ obj
 *.ncb
 *.vcproj*
 *.suo
+*.dll
 *.user
 *.sln.cache
 *.manifest
