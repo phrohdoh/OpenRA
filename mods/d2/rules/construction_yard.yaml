@@ -1,6 +1,6 @@
 construction_yard:
 	Inherits: ^Building
-	-DamagedWithoutFoundation:
+	-DamagedByTerrain:
 	Building:
 		Footprint: xx xx
 		Dimensions: 2,2

@@ -40,5 +40,9 @@
 		Range: 3c0
 	#WithCrumbleOverlay:
 	Demolishable:
-	DamagedWithoutFoundation:
+	DamagedByTerrain:
+		Weapon: weathering
+		Terrain: Rock
+		DamageThreshold: 50
+		StartOnThreshold: true
 	#WithMakeAnimation:
