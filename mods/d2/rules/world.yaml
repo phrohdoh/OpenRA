@@ -88,6 +88,7 @@ World:
 		SmokePercentage: 0
 	D2ResourceLayer:
 	ResourceClaimLayer:
+	CustomTerrainDebugOverlay:
 	MapCreeps:
 	SpawnMapActors:
 	MapBuildRadius:
