@@ -27,7 +27,7 @@ spicebloom:
 	AutoSelectionSize:
 	RenderSprites:
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	Tooltip:
 		Name: Spice Bloom
 	SpiceBloom:
@@ -46,7 +46,7 @@ spicebloom:
 		Radius: 512
 	Targetable:
 		TargetTypes: Ground
-		RequiresForceFire: yes
+		RequiresForceFire: true
 	Armor:
 		Type: none
 

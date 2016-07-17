@@ -27,7 +27,7 @@ sandworm:
 		Sequence: mouth
 	HiddenUnderFog:
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	AttackSwallow:
 		AttackRequiresEnteringCell: true
 		IgnoresVisibility: true
