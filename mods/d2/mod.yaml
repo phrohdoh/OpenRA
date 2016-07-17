@@ -9,13 +9,7 @@ RequiresMods:
 
 Packages:
 	~^Content/d2
-	~^Content/d2/GAMESFX
-	~^Content/d2/Movies
-	~^Content/d2/Music
 	~^Content/d2k
-	~^Content/d2k/GAMESFX
-	~^Content/d2k/Movies
-	~^Content/d2k/Music
 	.
 	$d2: d2
 	$d2k: d2k
