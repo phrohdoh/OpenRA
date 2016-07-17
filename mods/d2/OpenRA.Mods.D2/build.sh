@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../..
+cd ../../..
 make all
 cp Eluant.dll mods/d2/OpenRA.Mods.D2/dependencies
 cp OpenRA.exe mods/d2/OpenRA.Mods.D2/dependencies
@@ -11,5 +11,4 @@ cp mods/ra/*.dll mods/d2/OpenRA.Mods.D2/dependencies
 cp mods/d2k/*.dll mods/d2/OpenRA.Mods.D2/dependencies
 cd mods/d2/OpenRA.Mods.D2
 make all
-cd ..
 
