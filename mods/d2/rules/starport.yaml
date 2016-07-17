@@ -40,8 +40,8 @@ starport:
 		PlayerPalette: player
 	WithIdleOverlay@FLAG:
 		Sequence: idle-flag
-	WithDeliveryOverlay:
-		Palette: starportlights
+	#WithDeliveryOverlay:
+	#	Palette: starportlights
 	ProductionBar:
 	PrimaryBuilding:
 	RequiresPower:
