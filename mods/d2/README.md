@@ -15,9 +15,9 @@
 
 5. Copy all files from this repo to directory 'd2', including OpenRA.Mods.D2.dll. But exclude OpenRA.Mods.D2 directory from copying (this is sources of OpenRA.Mods.D2.dll)
 
-6. Launch your OpenRA. Choose mod 'd2' in modchooser and play game.
+6. Launch your OpenRA, Choose d2k mod (not d2, but dune2000) and load assets for it. This is because some sprites in d2 uses d2k assets
 
-[![Build Status](https://travis-ci.org/OpenRA/d2.svg?branch=master)](https://travis-ci.org/OpenRA/d2)
+7. Launch your OpenRA. Choose mod 'd2' in modchooser and play game.
 
 More information here: [wiki](https://github.com/OpenRA/d2/wiki)
 
