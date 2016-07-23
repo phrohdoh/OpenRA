@@ -26,25 +26,39 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
+	PlayerReference@Atreides:
+		Name: Atreides
+		LockFaction: True
+		Faction: atreides
+		LockColor: True
+		Color: 0000FF
+		Enemies: Harkonnen
+	PlayerReference@Harkonnen:
+		Name: Harkonnen
+		LockFaction: True
+		Faction: harkonnen
+		LockColor: True
+		Color: FF0000
+		Enemies: Atreides
 
 Actors:
 	Actor0: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 52,64
 	Actor1: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 59,57
 	Actor2: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 69,51
 	Actor3: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 75,66
 	Actor4: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 76,62
 	Actor5: refinery
-		Owner: Neutral
+		Owner: Atreides
 		Location: 73,56
 	Actor6: wormspawner
 		Owner: Neutral
@@ -88,3 +102,85 @@ Actors:
 	Actor19: wormspawner
 		Owner: Neutral
 		Location: 61,62
+	Actor20: waypoint
+		Owner: Harkonnen
+		Location: 122,65
+	Actor21: waypoint
+		Owner: Harkonnen
+		Location: 122,7
+	Actor22: waypoint
+		Owner: Harkonnen
+		Location: 7,7
+	Actor23: waypoint
+		Owner: Harkonnen
+		Location: 7,64
+	Actor24: waypoint
+		Owner: Atreides
+		Location: 64,62
+	Actor25: waypoint
+		Owner: Atreides
+		Location: 65,65
+	Actor26: waypoint
+		Owner: Atreides
+		Location: 63,64
+	Actor27: waypoint
+		Owner: Atreides
+		Location: 66,64
+	Actor28: waypoint
+		Owner: Harkonnen
+		Location: 70,58
+		ScriptTags: harkonnen_target
+	Actor29: waypoint
+		Owner: Harkonnen
+		Location: 65,62
+		ScriptTags: harkonnen_target
+	Actor30: waypoint
+		Owner: Harkonnen
+		Location: 58,64
+		ScriptTags: harkonnen_target
+	Actor31: waypoint
+		Owner: Harkonnen
+		Location: 76,68
+		ScriptTags: harkonnen_target
+	Actor32: gun_turret
+		Owner: Atreides
+		Location: 54,67
+		TurretFacing: 92
+	Actor33: gun_turret
+		Owner: Atreides
+		Location: 51,57
+		TurretFacing: 92
+	Actor34: gun_turret
+		Owner: Atreides
+		Location: 81,60
+		TurretFacing: 92
+	Actor35: gun_turret
+		Owner: Atreides
+		Location: 83,74
+		TurretFacing: 92
+	Actor37: gun_turret
+		Owner: Atreides
+		Location: 68,57
+		TurretFacing: 92
+	AtreidesBarracks: barracks
+		Owner: Atreides
+		Location: 64,63
+	base_tl: waypoint
+		Owner: Neutral
+		Location: 50,53
+	base_br: waypoint
+		Owner: Neutral
+		Location: 81,71
+
+Rules:
+	Player:
+		-ConquestVictoryConditions:
+	World:
+		LuaScript:
+			Scripts: utils.lua, map.lua
+	barracks:
+		Health:
+			HP: 30000
+	refinery:
+		StoresResources:
+			Capacity: 100000
