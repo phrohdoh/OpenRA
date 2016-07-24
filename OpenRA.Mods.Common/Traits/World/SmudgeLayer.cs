@@ -169,13 +169,13 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				var tile = dirty[loc];
 				tile.Depth = 0;
-				tile.Type = smudges.Keys.Random(world.SharedRandom)
+				tile.Type = smudges.Keys.Random(world.SharedRandom);
 				tile.Sprite = null;
 				dirty[loc] = tile;
 			}
 			else
 			{
-				var = smudges.Keys.Random(world.SharedRandom);
+				var st = smudges.Keys.Random(world.SharedRandom);
 				dirty[loc] = new Smudge { Type = st, Depth = 0, Sprite = null };
 			}
 		}
