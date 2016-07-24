@@ -169,12 +169,13 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				var tile = dirty[loc];
 				tile.Depth = 0;
+				tile.Type = smudges.Keys.Random(world.SharedRandom)
 				tile.Sprite = null;
 				dirty[loc] = tile;
 			}
 			else
 			{
-				var st = smudges.Keys.Random(world.SharedRandom);
+				var = smudges.Keys.Random(world.SharedRandom);
 				dirty[loc] = new Smudge { Type = st, Depth = 0, Sprite = null };
 			}
 		}
@@ -190,7 +191,7 @@ namespace OpenRA.Mods.Common.Traits
 						tiles.Remove(kv.Key);
 					else
 						tiles[kv.Key] = kv.Value;
-					//render.Update(kv.Key, kv.Value.Sprite);
+					render.Update(kv.Key, kv.Value.Sprite);
 
 					remove.Add(kv.Key);
 				}
