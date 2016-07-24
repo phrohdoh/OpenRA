@@ -10,8 +10,6 @@ refinery:
 		Value: 540
 	Valued:
 		Cost: 400
-	CustomBuildTimeValue:
-		Value: 540
 	Tooltip:
 		Name: Spice Refinery
 		Description: Harvesters unload Spice here for processing
