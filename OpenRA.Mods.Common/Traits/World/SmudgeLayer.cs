@@ -190,7 +190,7 @@ namespace OpenRA.Mods.Common.Traits
 						tiles.Remove(kv.Key);
 					else
 						tiles[kv.Key] = kv.Value;
-					render.Update(kv.Key, kv.Value.Sprite);
+					//render.Update(kv.Key, kv.Value.Sprite);
 
 					remove.Add(kv.Key);
 				}
