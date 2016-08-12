@@ -41,7 +41,7 @@ namespace OpenRA.Mods.Common.AI
 			public readonly HashSet<string> Silo = new HashSet<string>();
 		}
 
-		[Desc("Ingame name this bot uses.")]
+		[Desc("Ingame name this bot uses. This should be unique for each bot.")]
 		public readonly string Name = "Unnamed Bot";
 
 		[Desc("Minimum number of units AI must have before attacking.")]
