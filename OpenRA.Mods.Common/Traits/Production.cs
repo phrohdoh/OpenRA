@@ -111,6 +111,9 @@ namespace OpenRA.Mods.Common.Traits
 					foreach (var t in self.TraitsImplementing<INotifyProduction>())
 						t.UnitProduced(self, newUnit, exit);
 
+				foreach (var t in self.Owner.PlayerActor.TraitsImplementing<INotifyProductionPlayer>())
+					t.UnitProduced(newUnit, exit);
+
 				var notifyOthers = self.World.ActorsWithTrait<INotifyOtherProduction>();
 				foreach (var notify in notifyOthers)
 					notify.Trait.UnitProducedByOther(notify.Actor, self, newUnit);

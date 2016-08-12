@@ -304,6 +304,12 @@ namespace OpenRA
 				foreach (var t in TraitsImplementing<INotifyOwnerChanged>())
 					t.OnOwnerChanged(this, oldOwner, newOwner);
 
+				foreach (var t in oldOwner.PlayerActor.TraitsImplementing<INotifyOwnerChangedPlayer>())
+					t.OnOwnerChanged(this, oldOwner, newOwner);
+
+				foreach (var t in newOwner.PlayerActor.TraitsImplementing<INotifyOwnerChangedPlayer>())
+					t.OnOwnerChanged(this, oldOwner, newOwner);
+
 				if (wasInWorld)
 					w.Add(this);
 			});
