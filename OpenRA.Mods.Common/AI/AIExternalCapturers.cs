@@ -14,19 +14,19 @@ namespace OpenRA.Mods.Common.AI
 		}
 	}
 
-	class CaptureTarget<TInfoType> where TInfoType : class, ITraitInfoInterface
+	class ExternalCaptureTarget
 	{
 		internal readonly Actor Actor;
-		internal readonly TInfoType Info;
+		internal readonly ExternalCapturableInfo Info;
 
 		/// <summary>The order string given to the capturer so they can capture this actor.</summary>
 		/// <example>ExternalCaptureActor</example>
 		internal readonly string OrderString;
 
-		internal CaptureTarget(Actor actor, string orderString)
+		internal ExternalCaptureTarget(Actor actor, string orderString)
 		{
 			Actor = actor;
-			Info = actor.Info.TraitInfos<TInfoType>().FirstOrDefault(t => t.IsTraitEnabled());
+			Info = actor.TraitsImplementing<ExternalCapturable>().FirstOrDefault(er => er.IsTraitEnabled())?.Info;
 			OrderString = orderString;
 		}
 	}
@@ -60,9 +60,6 @@ namespace OpenRA.Mods.Common.AI
 	}
 
 	public class AIExternalCapturers : AITraitBase,
-		INotifyProductionPlayer,
-		INotifyKilled,
-		INotifyOwnerChangedPlayer,
 		ITick
 	{
 		readonly AIExternalCapturersInfo info;
@@ -70,6 +67,7 @@ namespace OpenRA.Mods.Common.AI
 		readonly World world;
 		readonly int maximumCaptureTargetOptions;
 		readonly HashSet<Actor> trackedCapturers = new HashSet<Actor>();
+		readonly Dictionary<Actor, ExternalCaptureTarget> reservations = new Dictionary<Actor, ExternalCaptureTarget>();
 
 		HackyAI ai;
 		int minCaptureDelayTicks;
@@ -84,12 +82,6 @@ namespace OpenRA.Mods.Common.AI
 			maximumCaptureTargetOptions = Math.Max(1, info.MaximumCaptureTargetOptions);
 		}
 
-		bool CanTrackActorType(ActorInfo toTrackInfo)
-		{
-			return info.CapturingActorTypes.Contains(toTrackInfo.Name)
-				&& toTrackInfo.TraitInfos<ExternalCapturesInfo>().Any();
-		}
-
 		internal override void PostActivate(Player p, HackyAI hackyAi)
 		{
 			ai = hackyAi;
@@ -99,6 +91,13 @@ namespace OpenRA.Mods.Common.AI
 			minCaptureDelayTicks = ai.Random.Next(0, info.MinimumCaptureDelay);
 
 			base.PostActivate(p, ai);
+		}
+
+		IEnumerable<Actor> GetExternalCapturers()
+		{
+			foreach (var actor in world.ActorsHavingTrait<ExternalCaptures>())
+				if (actor.Owner == player)
+					yield return actor;
 		}
 
 		IEnumerable<Actor> GetVisibleExternalCapturables(Player target)
@@ -115,22 +114,18 @@ namespace OpenRA.Mods.Common.AI
 
 		void QueueCaptureOrders()
 		{
-			HackyAI.BotDebug("{0} ({1}): QueueCaptureOrders()", ai.Info.Name, player.ClientIndex);
-			
-			if (player.WinState != WinState.Undefined
-				|| !info.CapturingActorTypes.Any()
-			    || !info.CapturableActorTypes.Any())
+			if (player.WinState != WinState.Undefined)
+				return;
+
+			if (!info.CapturingActorTypes.Any())
 			{
-				HackyAI.BotDebug("{0} ({1}): No capturing/capturable types. ABORT.", ai.Info.Name, player.ClientIndex);
+				isEnabled = false;
 				return;
 			}
 
-			var idleCapturers = trackedCapturers.Where(a => a.IsIdle && a.IsInWorld).ToArray();
+			var idleCapturers = GetExternalCapturers().Where(a => a.IsIdle && a.IsInWorld).ToArray();
 			if (idleCapturers.Length == 0)
-			{
-				HackyAI.BotDebug("{0} ({1}): No idle capturers. ABORT.", ai.Info.Name, player.ClientIndex);
 				return;
-			}
 
 			var randPlayer = world.Players.Where(p => !p.Spectating
 				&& info.CapturableStances.HasStance(player.Stances[p])).Random(ai.Random);
@@ -141,36 +136,35 @@ namespace OpenRA.Mods.Common.AI
 				.Where(a => info.CapturableActorTypes.Contains(a.Info.Name));
 
 			var externalCapturableTargetOptions = targetOptions
-				.Select(a => new CaptureTarget<ExternalCapturableInfo>(a, "ExternalCaptureActor"))
+				.Select(a => new ExternalCaptureTarget(a, "ExternalCaptureActor"))
 				.Where(target => target.Info != null
 				       && idleCapturers.Any(capturer => target.Info.CanBeTargetedBy(capturer, target.Actor.Owner)))
 				.OrderByDescending(target => target.Actor.GetSellValue())
 				.Take(maximumCaptureTargetOptions);
 
 			if (!externalCapturableTargetOptions.Any())
-			{
-				HackyAI.BotDebug("{0} ({1}): No external capturable targets. ABORT", ai.Info.Name, player.ClientIndex);
 				return;
-			}
 
 			foreach (var capturer in idleCapturers)
-				QueueCaptureOrderFor(capturer, GetCapturerTargetClosestToOrDefault(capturer, externalCapturableTargetOptions));
+			{
+				var target = GetCapturerTargetClosestToOrDefault(capturer, externalCapturableTargetOptions);
+				if (!QueueCaptureOrderFor(capturer, target))
+					HackyAI.BotDebug("{0} ({1}): {2} failed to capture {3}", ai.Info.Name, player.ClientIndex, capturer, target.Actor);
+			}
 		}
 
-		void QueueCaptureOrderFor<TTargetType>(Actor capturer, CaptureTarget<TTargetType> target) where TTargetType : class, ITraitInfoInterface
+		bool QueueCaptureOrderFor(Actor capturer, ExternalCaptureTarget target)
 		{
-			if (capturer == null
-			    || target == null
-			    || target.Actor == null)
-				return;
+			if (target.Actor.IsDead || !target.Actor.IsInWorld)
+				return false;
 
 			ai.QueueOrder(new Order(target.OrderString, capturer, true) { TargetActor = target.Actor });
 			HackyAI.BotDebug("{0} ({1}): Ordered {2} to capture {3}", ai.Info.Name, player.ClientIndex, capturer, target.Actor);
-			trackedCapturers.Remove(capturer);
+			//trackedCapturers.Remove(capturer);
+			return true;
 		}
 
-		CaptureTarget<TTargetType> GetCapturerTargetClosestToOrDefault<TTargetType>(Actor capturer, IEnumerable<CaptureTarget<TTargetType>> targets)
-			where TTargetType : class, ITraitInfoInterface
+		ExternalCaptureTarget GetCapturerTargetClosestToOrDefault(Actor capturer, IEnumerable<ExternalCaptureTarget> targets)
 		{
 			return targets.MinByOrDefault(target => (target.Actor.CenterPosition - capturer.CenterPosition).LengthSquared);
 		}
@@ -185,34 +179,6 @@ namespace OpenRA.Mods.Common.AI
 				minCaptureDelayTicks = info.MinimumCaptureDelay;
 				QueueCaptureOrders();
 			}
-		}
-
-		void INotifyProductionPlayer.UnitProduced(Actor newUnit, CPos exit)
-		{
-			if (!isEnabled)
-				return;
-
-			if (CanTrackActorType(newUnit.Info))
-				trackedCapturers.Add(newUnit);
-		}
-
-		void INotifyKilled.Killed(Actor self, AttackInfo e)
-		{
-			if (!isEnabled)
-				return;
-
-			trackedCapturers.Remove(self);
-		}
-
-		void INotifyOwnerChangedPlayer.OnOwnerChanged(Actor changed, Player oldOwner, Player newOwner)
-		{
-			if (!isEnabled)
-				return;
-
-			if (oldOwner == player)
-				trackedCapturers.Remove(changed);
-			else if (newOwner == player && CanTrackActorType(changed.Info))
-				trackedCapturers.Add(changed);
 		}
 	}
 }

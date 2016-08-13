@@ -779,6 +779,7 @@
     <Compile Include="UtilityCommands\ListInstallShieldCabContentsCommand.cs" />
     <Compile Include="FileFormats\InstallShieldCABCompression.cs" />
     <Compile Include="AI\AIExternalCapturers.cs" />
+    <Compile Include="AI\AIEngineerRepair.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

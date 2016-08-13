@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenRA.Mods.Common.Activities;
@@ -135,7 +136,18 @@ namespace OpenRA.Mods.Common.Traits
 	}
 
 	[Desc("Eligible for instant repair.")]
-	class EngineerRepairableInfo : TraitInfo<EngineerRepairable> { }
+	class EngineerRepairableInfo : ITraitInfo
+	{
+		object ITraitInfo.Create(ActorInitializer init) { return new EngineerRepairable(init.Self, this); }
+	}
 
-	class EngineerRepairable { }
+	class EngineerRepairable
+	{
+		public readonly EngineerRepairableInfo Info;
+
+		public EngineerRepairable(Actor self, EngineerRepairableInfo info)
+		{
+			Info = info;
+		}
+	}
 }

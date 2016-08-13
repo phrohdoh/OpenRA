@@ -1,4 +1,7 @@
 Player:
+	AIEngineerRepair@RushAI:
+		EnabledForBotNames: Rush AI
+		ReparingActorTypes: e6
 	AIExternalCapturers@RushAI:
 		EnabledForBotNames: Rush AI
 		CapturingActorTypes: e6
