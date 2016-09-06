@@ -1,3 +1,20 @@
+Param(
+    [Parameter(Mandatory=$true, Position=0)]
+    [string] $command,
+
+    [Parameter(Mandatory=$false)]
+    [string] $VersionPrefix,
+
+    [Parameter(Mandatory=$false)]
+    [string] $Version,
+
+    [Parameter(Mandatory=$false)]
+    [int] $PlaytestVersion = 0,
+
+    [Parameter(Mandatory=$false)]
+    [int] $HotfixVersion = 0
+)
+
 function FindMSBuild
 {
 	$msBuildVersions = @("4.0")
@@ -33,6 +50,7 @@ if ($args.Length -eq 0)
 	echo "                  version for the current Git branch."
 	echo "  clean           Removes all built and copied files. Use the 'all' and"
 	echo "                  'dependencies' commands to restore removed files."
+	echo "  nuget           Creates nuspecs and packs them into nupkgs"
 	echo "  test            Tests the default mods for errors."
 	echo "  check           Checks .cs files for StyleCop violations."
 	echo "  check-scripts   Checks .lua files for syntax errors."
@@ -42,7 +60,7 @@ if ($args.Length -eq 0)
 }
 else
 {
-	$command = $args
+	$command = $args[0]
 }
 
 if ($command -eq "all")
@@ -221,6 +239,30 @@ elseif ($command -eq "docs")
 	else
 	{
 		UtilityNotFound
+	}
+}
+elseif ($command -eq "nuget")
+{
+	if ($VersionPrefix -eq $null)
+	{
+		Write-Host "Must provide VersionPrefix when running 'make nuget'"
+		exit 1
+	}
+	elseif ($Version -eq $null)
+	{
+		Write-Host "Must provide Version when running 'make nuget'"
+		exit 2
+	}
+
+	if (-Not (& "./Generate-AllNuspecs.ps1" -VersionPrefix $VersionPrefix -Version $Version))
+	{
+		Write-Host "Failed to generate nuspecs!"
+		exit 1
+	}
+	elseif (-Not (& "./Pack-AllNuspecs.ps1"))
+	{
+		Write-Host "Failed to pack nuspecs!"
+		exit 2
 	}
 }
 else
