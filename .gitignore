@@ -79,5 +79,6 @@ StyleCopViolations.xml
 # Support directory
 /Support
 
-# Generated nuspec files
+# Generated nuspec/nupkg files
 */*.nuspec
+*/*.nupkg
