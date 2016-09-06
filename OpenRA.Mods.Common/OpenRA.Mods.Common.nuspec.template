@@ -2,15 +2,15 @@
 <package>
   <metadata>
     <id>{ID}</id>
-    <version>{VERSION}.0.0</version>
-    <title>{ID} {HUMAN_FRIENDLY_VERSION}</title>
+    <version>{VERSION}.{PLAYTEST_VERSION}.{HOTFIX_VERSION}</version>
+    <title>{ID} {VERSION_PREFIX}-{VERSION}</title>
     <authors>The OpenRA Developers</authors>
     <owners>Phrohdoh</owners>
     <licenseUrl>https://www.gnu.org/licenses/gpl-3.0.txt</licenseUrl>
     <projectUrl>https://github.com/OpenRA/OpenRA/</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Library containing common traits for OpenRA {HUMAN_FRIENDLY_VERSION}</description>
-    <releaseNotes>changelog.openra.net/{HUMAN_FRIENDLY_VERSION}</releaseNotes>
+    <description>Library containing common traits for OpenRA {VERSION_PREFIX}-{VERSION}</description>
+    <releaseNotes>changelog.openra.net/{VERSION_PREFIX}-{VERSION}</releaseNotes>
     <copyright>Copyright the OpenRA developers {YEAR}</copyright>
     <tags>OpenRA</tags>
   </metadata>
