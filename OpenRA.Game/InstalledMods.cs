@@ -89,23 +89,25 @@ namespace OpenRA
 						using (var fileStream = File.OpenRead(path))
 							package = new ZipFile(fileStream, path);
 					}
-					catch
+					catch (Exception ex)
 					{
-						throw new InvalidDataException(path + " is not a valid mod package");
+						throw new InvalidDataException(path + " is not a valid mod package", ex);
 					}
 				}
 
 				if (!package.Contains("mod.yaml"))
-					throw new InvalidDataException(path + " is not a valid mod package");
+					throw new InvalidDataException(path + " is not a valid mod package (no mod.yaml)");
 
 				// Mods in the support directory and oramod packages (which are listed later
 				// in the CandidateMods list) override mods in the main install.
 				return new Manifest(package);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				if (package != null)
 					package.Dispose();
+
+				Log.Write("debug", "Failed to load mod {0}: {1}".F(path, ex.Message);
 
 				return null;
 			}
