@@ -370,7 +370,11 @@ namespace OpenRA
 
 			Sound.StopVideo();
 
-			ModData = new ModData(Mods[mod], Mods, true);
+			Manifest manifest;
+			if (!Mods.TryGetValue(mod, out manifest))
+				throw new InvalidDataException($"Unable to init {mod} becuase Game.Mods does not contain such a key.\r\n{Mods.Keys.JoinWith("\r\n")}");
+
+			ModData = new ModData(manifest, Mods, true);
 
 			using (new PerfTimer("LoadMaps"))
 				ModData.MapCache.LoadMaps();

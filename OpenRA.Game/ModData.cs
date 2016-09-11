@@ -52,7 +52,7 @@ namespace OpenRA
 			ModFiles = new FS(mods);
 
 			// Take a local copy of the manifest
-			Manifest = new Manifest(mod.Id, mod.Package);
+			Manifest = new Manifest(mod.Package);
 			ModFiles.LoadFromManifest(Manifest);
 
 			ObjectCreator = new ObjectCreator(Manifest, ModFiles);

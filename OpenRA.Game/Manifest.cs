@@ -38,6 +38,9 @@ namespace OpenRA
 		public string Version;
 		public string Author;
 		public bool Hidden;
+
+		[FieldLoader.Require]
+		public string Id;
 	}
 
 	/// <summary> Describes what is to be loaded in order to run a mod. </summary>
@@ -73,13 +76,13 @@ namespace OpenRA
 
 		bool customDataLoaded;
 
-		public Manifest(string modId, IReadOnlyPackage package)
+		public Manifest(IReadOnlyPackage package)
 		{
-			Id = modId;
 			Package = package;
 			yaml = new MiniYaml(null, MiniYaml.FromStream(package.GetStream("mod.yaml"), "mod.yaml")).ToDictionary();
 
 			Metadata = FieldLoader.Load<ModMetadata>(yaml["Metadata"]);
+			Id = Metadata.Id;
 
 			// TODO: Use fieldloader
 			MapFolders = YamlDictionary(yaml, "MapFolders");

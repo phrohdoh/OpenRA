@@ -17,9 +17,12 @@ using System.Linq;
 using OpenRA.FileSystem;
 using OpenRA.Primitives;
 
+using ModId = System.String;
+using ModPath = System.String;
+
 namespace OpenRA
 {
-	public class InstalledMods : IReadOnlyDictionary<string, Manifest>
+	public class InstalledMods : IReadOnlyDictionary<ModId, Manifest>
 	{
 		readonly Dictionary<string, Manifest> mods;
 
@@ -28,13 +31,32 @@ namespace OpenRA
 			mods = GetInstalledMods(customModPath);
 		}
 
-		static IEnumerable<Pair<string, string>> GetCandidateMods()
+		static IEnumerable<Pair<ModId, ModPath>> GetCandidateMods()
 		{
 			// Get mods that are in the game folder.
 			var basePath = Platform.ResolvePath(Path.Combine(".", "mods"));
-			var mods = Directory.GetDirectories(basePath)
-				.Select(x => Pair.New(x.Substring(basePath.Length + 1), x))
-				.ToList();
+			var commonModPath = Path.Combine(basePath, "common");
+
+			var mods = new List<Pair<ModId, ModPath>>();
+
+			foreach (var modDirPath in Directory.GetDirectories(basePath))
+			{
+				if (modDirPath == commonModPath)
+					continue;
+
+				try
+				{
+					var manifest = new Manifest(new Folder(modDirPath));
+					mods.Add(Pair.New(manifest.Id, modDirPath));
+				}
+				catch (Exception ex)
+				{
+					var message = "Error loading {0}: {1}".F(modDirPath, ex.Message);
+					Log.Write("debug", message);
+					Console.WriteLine(message);
+					continue;
+				}
+			}
 
 			foreach (var m in Directory.GetFiles(basePath, "*.oramod"))
 				mods.Add(Pair.New(Path.GetFileNameWithoutExtension(m), m));
@@ -78,7 +100,7 @@ namespace OpenRA
 
 				// Mods in the support directory and oramod packages (which are listed later
 				// in the CandidateMods list) override mods in the main install.
-				return new Manifest(id, package);
+				return new Manifest(package);
 			}
 			catch (Exception)
 			{
@@ -98,7 +120,9 @@ namespace OpenRA
 
 			foreach (var pair in candidates)
 			{
-				var mod = LoadMod(pair.First, pair.Second);
+				var id = pair.First;
+				var path = pair.Second;
+				var mod = LoadMod(id, path);
 
 				// Mods in the support directory and oramod packages (which are listed later
 				// in the CandidateMods list) override mods in the main install.

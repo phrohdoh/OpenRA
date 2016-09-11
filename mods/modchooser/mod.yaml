@@ -1,5 +1,6 @@
 Metadata:
 	Title: Mod Chooser
+	Id: modchooser
 	Version: {DEV_VERSION}
 	Author: The OpenRA Developers
 	Hidden: true
