@@ -91,7 +91,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				Game.RunAfterTick(() =>
 				{
 					Game.Settings.Game.PreviousMod = modData.Manifest.Id;
-					Game.InitializeMod("modchooser", null);
+					Game.InitializeMod("modchooser", "{DEV_VERSION}", null);
 				});
 			};
 
@@ -283,7 +283,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					{
 						// Send the mod and engine version to support version-filtered news (update prompts)
 						var newsURL = Game.Settings.Game.NewsUrl + "?version={0}&mod={1}&modversion={2}".F(
-							Uri.EscapeUriString(Game.Mods["modchooser"].Metadata.Version),
+							Uri.EscapeUriString(Game.Mods["modchooser@{DEV_VERSION}"].Metadata.Version),
 							Uri.EscapeUriString(Game.ModData.Manifest.Id),
 							Uri.EscapeUriString(Game.ModData.Manifest.Metadata.Version));
 

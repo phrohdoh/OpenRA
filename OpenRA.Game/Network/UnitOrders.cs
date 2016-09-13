@@ -146,7 +146,7 @@ namespace OpenRA.Network
 								"Launch.Connect=" + orderManager.Host + ":" + orderManager.Port;
 
 							Game.ModData.LoadScreen.Display();
-							Game.InitializeMod(request.Mod, new Arguments(launchCommand));
+							Game.InitializeMod(request.Mod, request.Version, new Arguments(launchCommand));
 
 							break;
 						}

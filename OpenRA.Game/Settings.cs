@@ -157,7 +157,10 @@ namespace OpenRA
 	{
 		[Desc("Load a specific mod on startup. Shipped ones include: ra, cnc and d2k")]
 		public string Mod = "modchooser";
+		public string ModVersion = "*";
+
 		public string PreviousMod = "ra";
+		public string PreviousModVersion = "";
 
 		public string Platform = "Default";
 

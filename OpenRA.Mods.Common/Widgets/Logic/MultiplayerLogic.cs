@@ -316,7 +316,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			};
 
 			var queryURL = Game.Settings.Server.MasterServer + "games?version={0}&mod={1}&modversion={2}".F(
-				Uri.EscapeUriString(Game.Mods["modchooser"].Metadata.Version),
+				Uri.EscapeUriString(Game.Mods["modchooser@{DEV_VERSION}"].Metadata.Version),
 				Uri.EscapeUriString(Game.ModData.Manifest.Id),
 				Uri.EscapeUriString(Game.ModData.Manifest.Metadata.Version));
 

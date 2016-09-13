@@ -180,7 +180,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		void LoadMod(Manifest mod)
 		{
 			var modId = mod.Id;
-			if (!Game.IsModInstalled(modId))
+			var modVersion = mod.Metadata.Version;
+
+			if (!Game.IsModInstalled(modId, modVersion))
 			{
 				var widgetArgs = new WidgetArgs
 				{
@@ -197,7 +199,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				var widgetArgs = new WidgetArgs
 				{
 					{ "continueLoading", () =>
-						Game.RunAfterTick(() => Game.InitializeMod(modId, new Arguments())) },
+						Game.RunAfterTick(() => Game.InitializeMod(modId, modVersion, new Arguments())) },
 					{ "mod", selectedMod },
 					{ "content", content[selectedMod] },
 				};
@@ -211,7 +213,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			{
 				Ui.CloseWindow();
 				sheetBuilder.Dispose();
-				Game.InitializeMod(modId, null);
+				Game.InitializeMod(modId, modVersion, null);
 			});
 		}
 

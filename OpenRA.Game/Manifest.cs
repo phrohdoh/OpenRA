@@ -46,7 +46,7 @@ namespace OpenRA
 	/// <summary> Describes what is to be loaded in order to run a mod. </summary>
 	public class Manifest
 	{
-		public readonly string Id;
+		public string Id => Metadata.Id;
 		public readonly IReadOnlyPackage Package;
 		public readonly ModMetadata Metadata;
 		public readonly string[]
@@ -82,7 +82,6 @@ namespace OpenRA
 			yaml = new MiniYaml(null, MiniYaml.FromStream(package.GetStream("mod.yaml"), "mod.yaml")).ToDictionary();
 
 			Metadata = FieldLoader.Load<ModMetadata>(yaml["Metadata"]);
-			Id = Metadata.Id;
 
 			// TODO: Use fieldloader
 			MapFolders = YamlDictionary(yaml, "MapFolders");

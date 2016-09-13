@@ -317,24 +317,23 @@ namespace OpenRA
 			Mods = new InstalledMods(customModPath);
 			Console.WriteLine("Available mods:");
 			foreach (var mod in Mods)
-				Console.WriteLine("\t{0}: {1} ({2})", mod.Key, mod.Value.Metadata.Title, mod.Value.Metadata.Version);
+				Console.WriteLine("\t{0}: {1} ({2})", mod.Value.Metadata.Id, mod.Value.Metadata.Title, mod.Value.Metadata.Version);
 
-			InitializeMod(Settings.Game.Mod, args);
+			InitializeMod(Settings.Game.Mod, Settings.Game.ModVersion, args);
 		}
 
-		public static bool IsModInstalled(string modId)
+		public static bool IsModInstalled(string modId, string modVersion)
 		{
-			return Mods.ContainsKey(modId) && Mods[modId].RequiresMods.All(IsModInstalled);
+			return Mods.ContainsVersionedMod(modId, modVersion) && Mods[modId + "@" + modVersion].RequiresMods.All(IsModInstalled);
 		}
 
 		public static bool IsModInstalled(KeyValuePair<string, string> mod)
 		{
-			return Mods.ContainsKey(mod.Key)
-				&& Mods[mod.Key].Metadata.Version == mod.Value
-				&& IsModInstalled(mod.Key);
+			return Mods.ContainsVersionedMod(mod.Key, mod.Value)
+				&& IsModInstalled(mod.Key, mod.Value);
 		}
 
-		public static void InitializeMod(string mod, Arguments args)
+		public static void InitializeMod(string modId, string modVersion, Arguments args)
 		{
 			// Clear static state if we have switched mods
 			LobbyInfoChanged = () => { };
@@ -362,17 +361,22 @@ namespace OpenRA
 			ModData = null;
 
 			// Fall back to default if the mod doesn't exist or has missing prerequisites.
-			if (!IsModInstalled(mod))
-				mod = new GameSettings().Mod;
+			if (!IsModInstalled(modId, modVersion))
+			{
+				var gs = new GameSettings();
+				modId = gs.Mod;
+				modVersion = gs.ModVersion;
+			}
 
-			Console.WriteLine("Loading mod: {0}", mod);
-			Settings.Game.Mod = mod;
+			Console.WriteLine("Loading mod: {0}@{1}", modId, modVersion);
+			Settings.Game.Mod = modId;
+			Settings.Game.ModVersion = modVersion;
 
 			Sound.StopVideo();
 
 			Manifest manifest;
-			if (!Mods.TryGetValue(mod, out manifest))
-				throw new InvalidDataException($"Unable to init {mod} becuase Game.Mods does not contain such a key.\r\n{Mods.Keys.JoinWith("\r\n")}");
+			if (!Mods.TryGetVersionedMod(modId, modVersion, out manifest))
+				throw new InvalidDataException($"Unable to init {modId}@{modVersion} because Game.Mods does not contain such a key.\r\n{Mods.Keys.JoinWith("\r\n")}");
 
 			ModData = new ModData(manifest, Mods, true);
 
@@ -382,7 +386,7 @@ namespace OpenRA
 			// Mod assets are missing!
 			if (!ModData.LoadScreen.RequiredContentIsInstalled())
 			{
-				InitializeMod("modchooser", new Arguments());
+				InitializeMod("modchooser", "{DEV_VERSION}", new Arguments());
 				return;
 			}
 

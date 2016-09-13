@@ -19,63 +19,115 @@ using OpenRA.Primitives;
 
 using ModId = System.String;
 using ModPath = System.String;
+using ModIdAtVersion = System.String;
+using MaxMind.GeoIP2.Model;
 
 namespace OpenRA
 {
 	public class InstalledMods : IReadOnlyDictionary<ModId, Manifest>
 	{
-		readonly Dictionary<string, Manifest> mods;
+		readonly Dictionary<ModIdAtVersion, Manifest> mods;
 
 		public InstalledMods(string customModPath)
 		{
 			mods = GetInstalledMods(customModPath);
 		}
 
-		static IEnumerable<Pair<ModId, ModPath>> GetCandidateMods()
+		static ModIdAtVersion GetIdAtVersion(string fileOrDirectoryPath)
+		{
+			Manifest manifest;
+
+			if (File.Exists(fileOrDirectoryPath))
+			{
+				using (var fileStream = File.OpenRead(fileOrDirectoryPath))
+				{
+					var package = new ZipFile(fileStream, fileOrDirectoryPath);
+
+					try
+					{
+						manifest = new Manifest(package);
+					}
+					catch (FieldLoader.MissingFieldsException ex)
+					{
+						Log.Write("debug", $"{fileOrDirectoryPath}/mod.yaml is missing fields:{Environment.NewLine}\t{ex.Missing.JoinWith(Environment.NewLine + "\t")}");
+						return null;
+					}
+				}
+			}
+			else if (Directory.Exists(fileOrDirectoryPath))
+			{
+				try
+				{
+					manifest = new Manifest(new Folder(fileOrDirectoryPath));
+				}
+				catch (FieldLoader.MissingFieldsException ex)
+				{
+					Log.Write("debug", $"{fileOrDirectoryPath}/mod.yaml is missing fields:{Environment.NewLine}\t{ex.Missing.JoinWith(Environment.NewLine + "\t")}");
+					return null;
+				}
+			}
+			else
+				return null;
+
+			return manifest.Id + "@" + manifest.Metadata.Version;
+		}
+
+		static IEnumerable<Pair<ModIdAtVersion, ModPath>> GetCandidateMods()
 		{
 			// Get mods that are in the game folder.
 			var basePath = Platform.ResolvePath(Path.Combine(".", "mods"));
 			var commonModPath = Path.Combine(basePath, "common");
 
-			var mods = new List<Pair<ModId, ModPath>>();
+			var mods = new List<Pair<ModIdAtVersion, ModPath>>();
 
 			foreach (var modDirPath in Directory.GetDirectories(basePath))
 			{
 				if (modDirPath == commonModPath)
 					continue;
 
-				try
-				{
-					var manifest = new Manifest(new Folder(modDirPath));
-					mods.Add(Pair.New(manifest.Id, modDirPath));
-				}
-				catch (Exception ex)
-				{
-					var message = "Error loading {0}: {1}".F(modDirPath, ex.Message);
-					Log.Write("debug", message);
-					Console.WriteLine(message);
+				var modIdAtVersion = GetIdAtVersion(modDirPath);
+				if (modIdAtVersion == null)
 					continue;
-				}
+
+				mods.Add(Pair.New(modIdAtVersion, modDirPath));
 			}
 
 			foreach (var m in Directory.GetFiles(basePath, "*.oramod"))
-				mods.Add(Pair.New(Path.GetFileNameWithoutExtension(m), m));
+			{
+				var modIdAtVersion = GetIdAtVersion(m);
+				if (modIdAtVersion == null)
+					continue;
+
+				mods.Add(Pair.New(modIdAtVersion, m));
+			}
 
 			// Get mods that are in the support folder.
 			var supportPath = Platform.ResolvePath(Path.Combine("^", "mods"));
 			if (!Directory.Exists(supportPath))
 				return mods;
 
-			foreach (var pair in Directory.GetDirectories(supportPath).ToDictionary(x => x.Substring(supportPath.Length + 1)))
-				mods.Add(Pair.New(pair.Key, pair.Value));
+			foreach (var pair in Directory.GetDirectories(supportPath).ToDictionary(x => x))
+			{
+				var modIdAtVersion = GetIdAtVersion(pair.Key);
+				if (modIdAtVersion == null)
+					continue;
+
+				mods.Add(Pair.New(modIdAtVersion, pair.Value));
+			}
 
 			foreach (var m in Directory.GetFiles(supportPath, "*.oramod"))
-				mods.Add(Pair.New(Path.GetFileNameWithoutExtension(m), m));
+			{
+				var modIdAtVersion = GetIdAtVersion(m);
+				if (modIdAtVersion == null)
+					continue;
+
+				mods.Add(Pair.New(modIdAtVersion, m));
+			}
 
 			return mods;
 		}
 
-		static Manifest LoadMod(string id, string path)
+		static Manifest LoadMod(string idAtVersion, string path)
 		{
 			IReadOnlyPackage package = null;
 			try
@@ -100,14 +152,19 @@ namespace OpenRA
 
 				// Mods in the support directory and oramod packages (which are listed later
 				// in the CandidateMods list) override mods in the main install.
-				return new Manifest(package);
+				var version = idAtVersion.Split(new[] { '@' }, 2)?[1] ?? "*";
+				var manifest = new Manifest(package);
+				if (manifest.Metadata.Version == version || version == "*")
+					return manifest;
+
+				return null;
 			}
 			catch (Exception ex)
 			{
 				if (package != null)
 					package.Dispose();
 
-				Log.Write("debug", "Failed to load mod {0}: {1}".F(path, ex.Message);
+				Log.Write("debug", "Failed to load mod {0}: {1}".F(path, ex.Message));
 
 				return null;
 			}
@@ -118,18 +175,18 @@ namespace OpenRA
 			var ret = new Dictionary<string, Manifest>();
 			var candidates = GetCandidateMods();
 			if (customModPath != null)
-				candidates = candidates.Append(Pair.New(Path.GetFileNameWithoutExtension(customModPath), customModPath));
+				candidates = candidates.Append(Pair.New(GetIdAtVersion(customModPath), customModPath));
 
 			foreach (var pair in candidates)
 			{
-				var id = pair.First;
+				var idAtVersion = pair.First;
 				var path = pair.Second;
-				var mod = LoadMod(id, path);
+				var mod = LoadMod(idAtVersion, path);
 
 				// Mods in the support directory and oramod packages (which are listed later
 				// in the CandidateMods list) override mods in the main install.
 				if (mod != null)
-					ret[pair.First] = mod;
+					ret[idAtVersion] = mod;
 			}
 
 			return ret;
@@ -139,9 +196,39 @@ namespace OpenRA
 		public int Count { get { return mods.Count; } }
 		public ICollection<string> Keys { get { return mods.Keys; } }
 		public ICollection<Manifest> Values { get { return mods.Values; } }
-		public bool ContainsKey(string key) { return mods.ContainsKey(key); }
+		public bool ContainsKey(string key) => mods.ContainsKey(key);
 		public IEnumerator<KeyValuePair<string, Manifest>> GetEnumerator() { return mods.GetEnumerator(); }
-		public bool TryGetValue(string key, out Manifest value) { return mods.TryGetValue(key, out value); }
+		public bool TryGetValue(string key, out Manifest value) => mods.TryGetValue(key, out value);
 		IEnumerator IEnumerable.GetEnumerator() { return mods.GetEnumerator(); }
+
+		public bool ContainsVersionedMod(string modId, string modVersion)
+		{
+			foreach (var k in mods.Keys)
+			{
+				var split = k.Split(new[] { '@' });
+				if (split[0] == modId && (split[1] == "*" || split[1] == modVersion))
+					return true;
+			}
+
+			return false;
+		}
+
+		public bool TryGetVersionedMod(string modId, string modVersion, out Manifest value)
+		{
+			value = null;
+
+			foreach (var k in mods.Keys)
+			{
+				var split = k.Split(new[] { '@' });
+				Console.WriteLine(split.JoinWith(","));
+				if (split[0] == modId && (split[1] == "*" || split[1] == modVersion))
+				{
+					value = mods[k];
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }
