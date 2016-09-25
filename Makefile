@@ -46,7 +46,7 @@ SDK         ?=
 CSC         = mcs $(SDK)
 CSFLAGS     = -nologo -warn:4 -codepage:utf8 -unsafe -warnaserror
 DEFINE      = TRACE
-COMMON_LIBS = System.dll System.Core.dll System.Data.dll System.Data.DataSetExtensions.dll System.Drawing.dll System.Xml.dll thirdparty/download/ICSharpCode.SharpZipLib.dll thirdparty/download/FuzzyLogicLibrary.dll thirdparty/download/MaxMind.Db.dll thirdparty/download/MaxMind.GeoIP2.dll thirdparty/download/Eluant.dll thirdparty/download/SmarIrc4net.dll
+COMMON_LIBS = System.dll System.Core.dll System.Data.dll System.Data.DataSetExtensions.dll System.Drawing.dll System.Xml.dll thirdparty/download/ICSharpCode.SharpZipLib.dll thirdparty/download/FuzzyLogicLibrary.dll thirdparty/download/MaxMind.Db.dll thirdparty/download/MaxMind.GeoIP2.dll thirdparty/download/Eluant.dll thirdparty/download/SmarIrc4net.dll thirdparty/download/Newtonsoft.Json.dll
 NUNIT_LIBS_PATH :=
 NUNIT_LIBS  := $(NUNIT_LIBS_PATH)nunit.framework.dll
 

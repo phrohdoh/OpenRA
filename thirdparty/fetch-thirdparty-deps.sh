@@ -49,7 +49,7 @@ fi
 
 if [ ! -f MaxMind.GeoIP2.dll ]; then
 	echo "Fetching MaxMind.GeoIP2 from NuGet"
-	get Newtonsoft.Json 8.0.3
+	get Newtonsoft.Json 9.0.1
 	get MaxMind.Db 2.0.0
 	get MaxMind.GeoIP2 2.6.0
 	cp ./MaxMind.Db/lib/net45/MaxMind.Db.* .
@@ -119,4 +119,11 @@ if [ ! -f SmarIrc4net.dll ]; then
 	get SmartIrc4net 0.4.5.1
 	cp ./SmartIrc4net/lib/net40/SmarIrc4net* .
 	rm -rf SmartIrc4net
+fi
+
+if [ ! -f Newtonsoft.Json.dll ]; then
+	echo "Fetching Newtonsoft.Json from NuGet."
+	get Newtonsoft.Json 9.0.1
+	cp ./Newtonsoft.Json/lib/net45/Newtonsoft.Json.dll .
+	rm -rf Newtonsoft.Json
 fi
