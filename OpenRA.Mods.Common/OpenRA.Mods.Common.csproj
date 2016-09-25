@@ -788,6 +788,13 @@
     <Compile Include="ModContent.cs" />
     <Compile Include="Traits\AutoCarryable.cs" />
     <Compile Include="Traits\AutoCarryall.cs" />
+    <Compile Include="UtilityCommands\ResourceCenterMapApi\InstallMapCommand.cs" />
+    <Compile Include="UtilityCommands\ResourceCenterMapApi\MapObject.cs" />
+    <Compile Include="UtilityCommands\ResourceCenterMapApi\MapApiUtils.cs" />
+    <Compile Include="UtilityCommands\ResourceCenterMapApi\Options.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UtilityCommands\ResourceCenterMapApi\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
