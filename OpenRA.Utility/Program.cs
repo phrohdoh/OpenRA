@@ -141,7 +141,10 @@ namespace OpenRA
 					.SelectMany(d => d.Lines).ToArray();
 
 			if (descParts.Length == 0)
+			{
+				Console.WriteLine("  {0}{1}  (no description provided){1}".F(key, Environment.NewLine));
 				return;
+			}
 
 			var args = descParts.Take(descParts.Length - 1).JoinWith(" ");
 			var desc = descParts[descParts.Length - 1];
