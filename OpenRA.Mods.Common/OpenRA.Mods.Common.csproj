@@ -785,6 +785,7 @@
     <Compile Include="ModContent.cs" />
     <Compile Include="Traits\AutoCarryable.cs" />
     <Compile Include="Traits\AutoCarryall.cs" />
+    <Compile Include="UtilityCommands\ExtractContentFilesCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
