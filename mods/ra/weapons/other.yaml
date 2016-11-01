@@ -206,6 +206,7 @@ Heal:
 		Spread: 213
 		Damage: -50
 		ValidTargets: Infantry
+		ValidStances: Ally
 		DebugOverlayColor: 00FF00
 
 Repair:
@@ -219,6 +220,7 @@ Repair:
 		Spread: 213
 		Damage: -20
 		ValidTargets: Repair
+		ValidStances: Ally
 		DebugOverlayColor: 00FF00
 
 Crush:
