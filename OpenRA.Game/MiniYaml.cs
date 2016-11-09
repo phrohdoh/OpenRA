@@ -48,8 +48,23 @@ namespace OpenRA
 	{
 		public struct SourceLocation
 		{
-			public string Filename; public int Line;
+			public string Filename;
+
+			/// <summary>1-based line number.</summary>
+			public int Line;
+
 			public override string ToString() { return "{0}:{1}".F(Filename, Line); }
+
+			public static bool operator ==(SourceLocation a, SourceLocation b) =>
+				a.Filename == b.Filename && a.Line == b.Line;
+
+			public static bool operator !=(SourceLocation a, SourceLocation b) =>
+				a.Filename != b.Filename || a.Line != b.Line;
+
+			public bool Equals(SourceLocation other) => other == this;
+			public override bool Equals(object obj) => obj is SourceLocation && Equals((SourceLocation)obj);
+
+			public override int GetHashCode() => Filename.Length ^ Line;
 		}
 
 		public SourceLocation Location;
@@ -257,7 +272,7 @@ namespace OpenRA
 			return FromLines(text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None), fileName);
 		}
 
-		public static List<MiniYamlNode> Merge(IEnumerable<List<MiniYamlNode>> sources)
+		public static List<MiniYamlNode> Merge(IEnumerable<List<MiniYamlNode>> sources, IReadOnlyFileSystem roFs = null)
 		{
 			if (!sources.Any())
 				return new List<MiniYamlNode>();
@@ -271,7 +286,45 @@ namespace OpenRA
 				var inherited = new Dictionary<string, MiniYamlNode.SourceLocation>();
 				inherited.Add(kv.Key, new MiniYamlNode.SourceLocation());
 
-				var children = ResolveInherits(kv.Key, kv.Value, tree, inherited);
+				List<MiniYamlNode> children = null;
+				try { children = ResolveInherits(kv.Key, kv.Value, tree, inherited); }
+				catch (YamlException yex)
+				{
+					if (yex.Location == default(MiniYamlNode.SourceLocation) || roFs == null)
+						throw;
+
+					Stream s;
+					if (!roFs.TryOpen(yex.Location.Filename, out s))
+						throw;
+					
+					var lines = new List<string>();
+					using (StreamReader sr = new StreamReader(s))
+						while (!sr.EndOfStream)
+							lines.Add(sr.ReadLine());
+
+					var startIndex = Math.Max(0, yex.Location.Line - 2);
+					var endIndex = Math.Min(lines.Count, startIndex + 2);
+
+					Console.WriteLine();
+					Console.WriteLine(yex.Message);
+
+					var relativeLineCount = 5;
+					var lineNum = startIndex;
+					foreach (var line in lines.Skip(startIndex - (relativeLineCount - 1)).Take(endIndex - startIndex + (relativeLineCount - 2)))
+					{
+						var lineNumLit = lineNum.ToString("D3");
+						var lineNumStr = lineNumLit.TrimStart('0').PadLeft(lineNumLit.Length, ' ') + " | ";
+						Console.WriteLine(lineNumStr + line);
+
+						if (lineNum == (endIndex / 2) + 2)
+							Console.WriteLine(new string(' ', lineNumStr.Length + 2) + "^");
+
+						++lineNum;
+					}
+
+					Environment.Exit(1);
+				}
+
 				resolved.Add(kv.Key, new MiniYaml(kv.Value.Value, children));
 			}
 
@@ -307,11 +360,11 @@ namespace OpenRA
 					MiniYaml parent;
 					if (!tree.TryGetValue(n.Value.Value, out parent))
 						throw new YamlException(
-							"{0}: Parent type `{1}` not found".F(n.Location, n.Value.Value));
+							"{0}: Parent type `{1}` not found".F(n.Location, n.Value.Value), n.Location);
 
 					if (inherited.ContainsKey(n.Value.Value))
 						throw new YamlException("{0}: Parent type `{1}` was already inherited by this yaml tree at {2} (note: may be from a derived tree)"
-							.F(n.Location, n.Value.Value, inherited[n.Value.Value]));
+							.F(n.Location, n.Value.Value, inherited[n.Value.Value]), n.Location);
 
 					inherited.Add(n.Value.Value, n.Location);
 					foreach (var r in ResolveInherits(n.Key, parent, tree, inherited))
@@ -321,7 +374,7 @@ namespace OpenRA
 				{
 					var removed = n.Key.Substring(1);
 					if (resolved.RemoveAll(r => r.Key == removed) == 0)
-						throw new YamlException("{0}: There are no elements with key `{1}` to remove".F(n.Location, removed));
+						throw new YamlException("{0}: There are no elements with key `{1}` to remove".F(n.Location, removed), n.Location);
 				}
 				else
 					MergeIntoResolved(n, resolved, tree, inherited);
@@ -391,13 +444,18 @@ namespace OpenRA
 			if (mapRules != null && mapRules.Nodes.Any())
 				yaml = yaml.Append(mapRules.Nodes);
 
-			return MiniYaml.Merge(yaml);
+			return MiniYaml.Merge(yaml, fileSystem);
 		}
 	}
 
 	[Serializable]
 	public class YamlException : Exception
 	{
-		public YamlException(string s) : base(s) { }
+		public MiniYamlNode.SourceLocation Location;
+		public YamlException(string s, MiniYamlNode.SourceLocation loc = default(MiniYamlNode.SourceLocation))
+			: base(s)
+		{
+			Location = loc;
+		}
 	}
 }
