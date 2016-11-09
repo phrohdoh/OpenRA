@@ -1,5 +1,6 @@
 DOG:
 	Inherits: ^Soldier
+	-BogusRemoval:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Dog
