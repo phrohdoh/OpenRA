@@ -157,6 +157,7 @@
     <Compile Include="Effects\FloatingText.cs" />
     <Compile Include="Effects\GravityBomb.cs" />
     <Compile Include="Effects\LaserZap.cs" />
+    <Compile Include="Effects\AreaBeam.cs" />
     <Compile Include="Effects\Missile.cs" />
     <Compile Include="Effects\NukeLaunch.cs" />
     <Compile Include="Effects\PowerdownIndicator.cs" />
@@ -403,6 +404,7 @@
     <Compile Include="Traits\Render\RenderSpritesEditorOnly.cs" />
     <Compile Include="Traits\Render\WithTurretedSpriteBody.cs" />
     <Compile Include="Traits\Render\RenderUtils.cs" />
+    <Compile Include="Traits\Render\RenderDebugState.cs" />
     <Compile Include="Traits\Render\RenderNameTag.cs" />
     <Compile Include="Traits\Render\RenderSprites.cs" />
     <Compile Include="Traits\Render\WithWallSpriteBody.cs" />
@@ -483,7 +485,6 @@
     <Compile Include="Traits\ProducibleWithLevel.cs" />
     <Compile Include="Traits\Upgrades\DeployToUpgrade.cs" />
     <Compile Include="Traits\Upgrades\DisableOnUpgrade.cs" />
-    <Compile Include="Traits\Upgrades\DisableMovementOnUpgrade.cs" />
     <Compile Include="Traits\Upgrades\UpgradableTrait.cs" />
     <Compile Include="Traits\Upgrades\UpgradeActorsNear.cs" />
     <Compile Include="Traits\Upgrades\UpgradeManager.cs" />
@@ -534,6 +535,7 @@
     <Compile Include="UtilityCommands\ExtractLanguageStringsCommand.cs" />
     <Compile Include="UtilityCommands\ExtractLuaDocsCommand.cs" />
     <Compile Include="UtilityCommands\ExtractTraitDocsCommand.cs" />
+    <Compile Include="WorldExtensions.cs" />
     <Compile Include="UtilityCommands\GenerateMinimapCommand.cs" />
     <Compile Include="UtilityCommands\GetMapHashCommand.cs" />
     <Compile Include="UtilityCommands\Glob.cs" />

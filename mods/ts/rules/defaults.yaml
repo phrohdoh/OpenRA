@@ -6,6 +6,7 @@
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
+	RenderDebugState:
 
 ^SpriteActor:
 	BodyOrientation:
@@ -72,6 +73,12 @@
 	PowerMultiplier@EMPDISABLE:
 		UpgradeTypes: empdisable
 		Modifier: 0
+
+^EmpDisableMobile:
+	Inherits: ^EmpDisable
+	Mobile:
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
 
 ^BasicBuilding:
 	Inherits@1: ^ExistsInWorld
@@ -334,7 +341,7 @@
 
 ^Cyborg:
 	Inherits@1: ^Infantry
-	Inherits@2: ^EmpDisable
+	Inherits@2: ^EmpDisableMobile
 	RevealsShroud:
 		Range: 4c0
 	MustBeDestroyed:
@@ -361,7 +368,7 @@
 ^Vehicle:
 	Inherits@1: ^GainsExperience
 	Inherits@2: ^ExistsInWorld
-	Inherits@3: ^EmpDisable
+	Inherits@3: ^EmpDisableMobile
 	DrawLineToTarget:
 	Mobile:
 		Crushes: crate
@@ -656,7 +663,7 @@
 	ActorLostNotification:
 
 ^Train:
-	Inherits@1: ^EmpDisable
+	Inherits@1: ^EmpDisableMobile
 	Inherits@2: ^ExistsInWorld
 	RenderVoxels:
 	WithVoxelBody:
@@ -667,6 +674,10 @@
 		ROT: 5
 		Voice: Move
 		Speed: 113
+	Cargo:
+		Types: Infantry
+		UnloadVoice: Unload
+		LoadingUpgrades: notmobile
 	Health:
 		HP: 100
 	Armor:
