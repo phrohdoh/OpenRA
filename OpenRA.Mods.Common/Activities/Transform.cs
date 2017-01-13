@@ -48,7 +48,6 @@ namespace OpenRA.Mods.Common.Activities
 				var selected = w.Selection.Contains(self);
 				var controlgroup = w.Selection.GetControlGroupForActor(self);
 
-				self.Dispose();
 				foreach (var s in Sounds)
 					Game.Sound.PlayToPlayer(self.Owner, s, self.CenterPosition);
 
@@ -74,13 +73,16 @@ namespace OpenRA.Mods.Common.Activities
 					init.Add(new HealthInit(newHP));
 				}
 
+				var a = w.CreateActor(ToActor, init);
+
 				var cargo = self.TraitOrDefault<Cargo>();
 				if (cargo != null)
-					init.Add(new RuntimeCargoInit(cargo.Passengers.ToArray()));
+					cargo.TransferPassenger(a);
 
-				var a = w.CreateActor(ToActor, init);
 				foreach (var nt in self.TraitsImplementing<INotifyTransform>())
 					nt.AfterTransform(a);
+
+				self.Dispose();
 
 				if (selected)
 					w.Selection.Add(w, a);

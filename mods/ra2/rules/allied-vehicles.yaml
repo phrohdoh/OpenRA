@@ -168,17 +168,13 @@ tnkd:
 	ProducibleWithLevel:
 		Prerequisites: warfactory.infiltrated
 
-fv:
+fvbase:
 	Inherits: ^Vehicle
 	Valued:
 		Cost: 600
 	Tooltip:
 		Name: Infantry Fighting Vehicle
 		Description: Multi-Purpose Vehicle.\nWithout crago:\n  Strong vs Infantry, Aircraft\n  Weak vs Vehicles, Ships\nSpecial Ability: Armament depends on passenger.
-	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 30
-		Prerequisites: ~gaweap
 	Mobile:
 		Speed: 128
 		ROT: 5
@@ -190,17 +186,6 @@ fv:
 		Range: 8c0
 	Turreted:
 		ROT: 5
-	Armament@primary:
-		Weapon: HoverMissile
-		LocalOffset: 640, 0, 384
-		UpgradeTypes: eliteweapon
-		UpgradeMaxEnabledLevel: 0
-		UpgradeMaxAcceptedLevel: 1
-	Armament@elite:
-		Weapon: HoverMissileE
-		LocalOffset: 640, 0, 384
-		UpgradeTypes: eliteweapon
-		UpgradeMinEnabledLevel: 1
 	AttackTurreted:
 		Voice: Attack
 	AutoTarget:
@@ -217,8 +202,132 @@ fv:
 	WithVoxelTurret:
 	Voiced:
 		VoiceSet: AlliedVehicleVoice
+
+fv:
+	Inherits: fvbase
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 30
+		Prerequisites: ~gaweap
+	Armament@primary:
+		Weapon: HoverMissile
+		LocalOffset: 640, 0, 384
+		UpgradeTypes: eliteweapon
+		UpgradeMaxEnabledLevel: 0
+		UpgradeMaxAcceptedLevel: 1
+	Armament@elite:
+		Weapon: HoverMissileE
+		LocalOffset: 640, 0, 384
+		UpgradeTypes: eliteweapon
+		UpgradeMinEnabledLevel: 1
+	TransformOnPassenger@1:
+		PassengerTypes: engineer
+		OnEnter: fvrepair
+	TransformOnPassenger@2:
+		PassengerTypes: e1, e2, spy
+		OnEnter: fvm60
+	TransformOnPassenger@3:
+		PassengerTypes: flakt
+		OnEnter: fvflakguy
+	TransformOnPassenger@4:
+		PassengerTypes: tany
+		OnEnter: fvmp5
+	TransformOnPassenger@5:
+		PassengerTypes: snipe
+		OnEnter: fvawp
+	TransformOnPassenger@6:
+		PassengerTypes: shk
+		OnEnter: fvelectricbolt
+#	TransformOnPassenger@7:
+#		PassengerTypes: ivan
+#		OnEnter: fvnuke
+	TransformOnPassenger@8:
+		PassengerTypes: deso
+		OnEnter: fvradbeam
+#	TransformOnPassenger@9:
+#		PassengerTypes: terror
+#		OnEnter: fvterror
+	AttackTurreted:
+		Voice: Attack
 	ProducibleWithLevel:
 		Prerequisites: warfactory.infiltrated
+
+fvrepair:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: RepairBullet
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetStances: Ally
+		ForceTargetStances: None
+		LocalOffset: 640, 0, 384
+	TransformOnPassenger:
+		PassengerTypes: engineer
+		OnExit: fv
+
+fvm60:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: CRM60
+	TransformOnPassenger:
+		PassengerTypes: e1, e2, spy
+		OnExit: fv
+
+fvflakguy:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: CRFlakGuyGun
+	TransformOnPassenger:
+		PassengerTypes: flakt
+		OnExit: fv
+
+fvmp5:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: CRMP5
+	TransformOnPassenger:
+		PassengerTypes: tany
+		OnExit: fv
+
+fvawp:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: AWPE
+	TransformOnPassenger:
+		PassengerTypes: snipe
+		OnExit: fv
+
+fvelectricbolt:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: CRElectricBolt
+	TransformOnPassenger:
+		PassengerTypes: shk
+		OnExit: fv
+
+#fvnuke: TODO target bomb
+#	Inherits: fvbase
+#	Armament@primary:
+#		Weapon:
+#	TransformOnPassenger:
+#		PassengerTypes: ivan
+#		OnExit: fv
+
+fvradbeam:
+	Inherits: fvbase
+	Armament@primary:
+		Weapon: CRRadBeamWeapon
+	TransformOnPassenger:
+		PassengerTypes: deso
+		OnExit: fv
+
+#fvterror:
+#	Inherits: fvbase
+#	Armament@primary:
+#		Weapon: CRTerrorBomb
+#	TransformOnPassenger:
+#		PassengerTypes: terror
+#		OnExit: fv
 
 sref:
 	Inherits: ^Vehicle

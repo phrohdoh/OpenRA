@@ -23,6 +23,9 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly bool SkipMakeAnims = false;
 		public readonly bool BecomeNeutral = false;
 
+		[Desc("Sounds to play when transforming.")]
+		public readonly string[] TransformSounds = { };
+
 		public object Create(ActorInitializer init) { return new TransformOnPassenger(this); }
 	}
 
@@ -40,11 +43,14 @@ namespace OpenRA.Mods.Common.Traits
 				{
 					var facing = self.TraitOrDefault<IFacing>();
 					var transform = new Transform(self, transformTo) { SkipMakeAnims = info.SkipMakeAnims };
-					if (facing != null) transform.Facing = facing.Facing;
+					transform.Sounds = info.TransformSounds;
+					if (facing != null)
+						transform.Facing = facing.Facing;
 
 					self.CancelActivity();
 					self.QueueActivity(transform);
-					if (info.BecomeNeutral) self.ChangeOwner(self.World.WorldActor.Owner);
+					if (info.BecomeNeutral)
+						self.ChangeOwner(self.World.WorldActor.Owner);
 				});
 			}
 		}

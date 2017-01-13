@@ -314,6 +314,15 @@ namespace OpenRA.Mods.Common.Traits
 			cargo.Clear();
 		}
 
+		public void TransferPassenger(Actor targetActor)
+		{
+			var targetCargo = targetActor.Trait<Cargo>();
+			cargo.ToList().ForEach(targetCargo.cargo.Push);
+            cargo.Clear();
+			targetCargo.totalWeight = totalWeight;
+			totalWeight = 0;
+        }
+
 		public void Selling(Actor self) { }
 		public void Sold(Actor self)
 		{
