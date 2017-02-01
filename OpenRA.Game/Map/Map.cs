@@ -164,17 +164,17 @@ namespace OpenRA
 			new MapField("Visibility"),
 			new MapField("Categories"),
 			new MapField("LockPreview", required: false, ignoreIfValue: "False"),
-			new MapField("Players", "PlayerDefinitions"),
-			new MapField("Actors", "ActorDefinitions"),
-			new MapField("Rules", "RuleDefinitions", required: false),
-			new MapField("GamemodeRules", "GamemodeRuleDefinitions", required: false),
-			new MapField("Sequences", "SequenceDefinitions", required: false),
-			new MapField("VoxelSequences", "VoxelSequenceDefinitions", required: false),
-			new MapField("Weapons", "WeaponDefinitions", required: false),
-			new MapField("Voices", "VoiceDefinitions", required: false),
-			new MapField("Music", "MusicDefinitions", required: false),
-			new MapField("Notifications", "NotificationDefinitions", required: false),
-			new MapField("Translations", "TranslationDefinitions", required: false)
+			new MapField("Players", nameof(PlayerDefinitions)),
+			new MapField("Actors", nameof(ActorDefinitions)),
+			new MapField("Rules", nameof(RuleDefinitions), required: false),
+			new MapField("GamemodeRules", nameof(GamemodeRuleDefinitions), required: false),
+			new MapField("Sequences", nameof(SequenceDefinitions), required: false),
+			new MapField("VoxelSequences", nameof(VoxelSequenceDefinitions), required: false),
+			new MapField("Weapons", nameof(WeaponDefinitions), required: false),
+			new MapField("Voices", nameof(VoiceDefinitions), required: false),
+			new MapField("Music", nameof(MusicDefinitions), required: false),
+			new MapField("Notifications", nameof(NotificationDefinitions), required: false),
+			new MapField("Translations", nameof(TranslationDefinitions), required: false)
 		};
 
 		// Format versions
