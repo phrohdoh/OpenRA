@@ -387,6 +387,8 @@ namespace OpenRA
 		{
 			try
 			{
+				// TODO: Swap out RuleDefinitions for the MiniYaml of whichever gamemode was chosen
+				//   - Can't get Lobby info from this method, so this is dead :-(
 				Rules = Ruleset.Load(modData, this, Tileset, RuleDefinitions, WeaponDefinitions,
 					VoiceDefinitions, NotificationDefinitions, MusicDefinitions, SequenceDefinitions);
 			}
