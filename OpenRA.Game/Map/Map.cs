@@ -167,6 +167,7 @@ namespace OpenRA
 			new MapField("Players", "PlayerDefinitions"),
 			new MapField("Actors", "ActorDefinitions"),
 			new MapField("Rules", "RuleDefinitions", required: false),
+			new MapField("GamemodeRules", "GamemodeRuleDefinitions", required: false),
 			new MapField("Sequences", "SequenceDefinitions", required: false),
 			new MapField("VoxelSequences", "VoxelSequenceDefinitions", required: false),
 			new MapField("Weapons", "WeaponDefinitions", required: false),
@@ -198,6 +199,7 @@ namespace OpenRA
 
 		// Custom map yaml. Public for access by the map importers and lint checks
 		public readonly MiniYaml RuleDefinitions;
+		public readonly MiniYaml GamemodeRuleDefinitions;
 		public readonly MiniYaml SequenceDefinitions;
 		public readonly MiniYaml VoxelSequenceDefinitions;
 		public readonly MiniYaml WeaponDefinitions;
