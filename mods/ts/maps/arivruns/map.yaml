@@ -1618,3 +1618,6 @@ Rules:
 			Footprint: ooo ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ooo
 			Height: 2
 			TerrainType: Clear
+
+GamemodeRules:
+	UnholyAlliance: rules-unholy-alliance.yaml

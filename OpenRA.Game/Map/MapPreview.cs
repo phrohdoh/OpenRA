@@ -302,6 +302,7 @@ namespace OpenRA
 			newData.SetRulesetGenerator(modData, () =>
 			{
 				var ruleDefinitions = LoadRuleSection(yaml, "Rules");
+				var gamemodeRuleDefinitions = LoadRuleSection(yaml, "GamemodeRules");
 				var weaponDefinitions = LoadRuleSection(yaml, "Weapons");
 				var voiceDefinitions = LoadRuleSection(yaml, "Voices");
 				var musicDefinitions = LoadRuleSection(yaml, "Music");
@@ -385,6 +386,7 @@ namespace OpenRA
 						var rulesString = Encoding.UTF8.GetString(Convert.FromBase64String(r.rules));
 						var rulesYaml = new MiniYaml("", MiniYaml.FromString(rulesString)).ToDictionary();
 						var ruleDefinitions = LoadRuleSection(rulesYaml, "Rules");
+						var gamemodeRuleDefinitions = LoadRuleSection(rulesYaml, "GamemodeRules");
 						var weaponDefinitions = LoadRuleSection(rulesYaml, "Weapons");
 						var voiceDefinitions = LoadRuleSection(rulesYaml, "Voices");
 						var musicDefinitions = LoadRuleSection(rulesYaml, "Music");

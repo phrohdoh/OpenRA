@@ -47,7 +47,7 @@ namespace OpenRA
 		public readonly IReadOnlyPackage Package;
 		public readonly ModMetadata Metadata;
 		public readonly string[]
-			Rules, ServerTraits,
+			Rules, GamemodeRules, ServerTraits,
 			Sequences, VoxelSequences, Cursors, Chrome, Assemblies, ChromeLayout,
 			Weapons, Voices, Notifications, Music, Translations, TileSets,
 			ChromeMetrics, MapCompatibility, Missions;
