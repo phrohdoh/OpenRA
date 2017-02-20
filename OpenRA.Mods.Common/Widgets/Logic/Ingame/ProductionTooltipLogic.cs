@@ -56,7 +56,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				if (actor == null || actor == lastActor)
 					return;
 
-				var tooltip = actor.TraitInfos<TooltipInfo>().FirstOrDefault(Exts.IsTraitEnabled);
+				TooltipInfoBase inWorldTooltip = actor.TraitInfos<TooltipInfo>().FirstOrDefault(Exts.IsTraitEnabled);
+				TooltipInfoBase buildPaletteTooltip = actor.TraitInfos<BuildPaletteTooltipInfo>().FirstOrDefault(Exts.IsTraitEnabled);
+				var tooltip = (buildPaletteTooltip ?? inWorldTooltip);
+
 				var name = tooltip != null ? tooltip.Name : actor.Name;
 				var buildable = actor.TraitInfo<BuildableInfo>();
 				var cost = actor.TraitInfo<ValuedInfo>().Cost;

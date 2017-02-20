@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -25,6 +26,34 @@ namespace OpenRA.Mods.Common.Traits
 	}
 
 	[Desc("Shown in the build palette widget.")]
+	public class BuildPaletteTooltipInfo : TooltipInfoBase, ITooltipInfo
+	{
+		public override object Create(ActorInitializer init) { return new BuildPaletteTooltip(init.Self, this); }
+
+		public string TooltipForPlayerStance(Stance stance) { return string.Empty; }
+
+		public bool IsOwnerRowVisible { get { return false; } }
+	}
+
+	public class BuildPaletteTooltip : ConditionalTrait<BuildPaletteTooltipInfo>, ITooltip
+	{
+		readonly Actor self;
+		readonly BuildPaletteTooltipInfo info;
+
+		Player ITooltip.Owner { get { return self.Owner; } }
+		ITooltipInfo ITooltip.TooltipInfo { get { return info; } }
+
+		public BuildPaletteTooltip(Actor self, BuildPaletteTooltipInfo info)
+			: base(info)
+		{
+			this.self = self;
+			this.info = info;
+		}
+	}
+
+	[Desc("Shown in the game world, or the build palette if this actor"
+		+ " doesn't have the `BuildPaletteTooltip` trait, when the"
+		+ " cursor is hovered over this actor.")]
 	public class TooltipInfo : TooltipInfoBase, ITooltipInfo
 	{
 		[Desc("An optional generic name (i.e. \"Soldier\" or \"Structure\")" +
