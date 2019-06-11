@@ -94,3 +94,10 @@ if [ ! -f rix0rrr.BeaconLib.dll ]; then
 	cp ./rix0rrr.BeaconLib/lib/net40/rix0rrr.BeaconLib.dll .
 	rm -rf rix0rrr.BeaconLib
 fi
+
+if [ ! -f Newtonsoft.Json.dll ]; then
+	echo "Fetching Newtonsoft.Json from NuGet."
+	../noget.sh Newtonsoft.Json 12.0.1
+	cp ./Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll .
+	rm -rf Newtonsoft.Json
+fi
