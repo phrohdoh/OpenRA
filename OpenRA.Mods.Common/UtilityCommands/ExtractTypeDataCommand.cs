@@ -18,13 +18,9 @@ namespace OpenRA.Mods.Common.UtilityCommands
 	[JsonConverter(typeof(StringEnumConverter))]
 	enum TraitPropertyKind
 	{
-		[EnumMember(Value = "single")]
 		Single,
-		[EnumMember(Value = "multi")]
 		Multi,
-		[EnumMember(Value = "choice")]
 		Choice,
-		[EnumMember(Value = "map")]
 		Map, // TODO: if this kind is a map how do we express the generic types in JSON?
 	}
 
