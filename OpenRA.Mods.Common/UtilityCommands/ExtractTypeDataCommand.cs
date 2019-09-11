@@ -31,7 +31,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 		public string HumanFriendlyTypeName { get; set; }
 		public string Name { get; set; }
 
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty]
 		public string[] DocLines { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -43,7 +43,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 
 	class TraitDetail : NamespacedType
 	{
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty]
 		public string[] DocLines { get; set; }
 
 		public string DefiningAssemblyName { get; set; }
