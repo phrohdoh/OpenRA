@@ -1,0 +1,46 @@
+{
+  "title": "TODO lua-scripting-engine-stuff",
+  "steps": [
+    {
+      "file": "OpenRA.Mods.Common/Scripting/LuaScript.cs",
+      "line": 29,
+      "description": "A trait of the (non-map editor) World actor, which means this is created (and\nthus this entire process started) when the `World` actor is created, so after a\nmap finishes loading (when a game begins).\n\nEssentially this exists to create a Lua execution environment, comprised of the\nscript files in the MiniYaml (per-map scripts), which can make calls into engine\ncode and handle engine types (e.g. CPos)."
+    },
+    {
+      "file": "mods/ts/maps/fields-of-green/rules.yaml",
+      "line": 9,
+      "description": "Notice how this trait is on the World actor and references the `fields-of-green.lua` script file in this map's directory."
+    },
+    {
+      "file": "OpenRA.Mods.Common/Scripting/LuaScript.cs",
+      "line": 42,
+      "description": "Continuing to use the _Tiberian Sun_ map _Fields of Green_, the shellmap,\n`scripts` here would be something like `[ \"fields-of-green.lua\" ]`."
+    },
+    {
+      "file": "OpenRA.Mods.Common/Scripting/LuaScript.cs",
+      "line": 43,
+      "description": "Here the Lua execution environment (\"context\") is created.\nThis includes, but is not limited to:\n- binding of global variables (e.g. pre-placed actor IDs)\n- script execution"
+    },
+    {
+      "file": "OpenRA.Game/Scripting/ScriptContext.cs",
+      "line": 180,
+      "description": "binding globals (take some time to look at the different subtypes of `ScriptGlobal` and their constructor implementations)"
+    },
+    {
+      "file": "OpenRA.Game/Scripting/ScriptContext.cs",
+      "line": 201,
+      "description": "executing the scripts in declared order, in the same environment (essentially as if they were all a single file)"
+    },
+    {
+      "file": "OpenRA.Mods.Common/Scripting/LuaScript.cs",
+      "line": 44,
+      "description": "Immediately after the context is created, let the Lua know that the world is ready."
+    },
+    {
+      "file": "mods/ts/maps/fields-of-green/fields-of-green.lua",
+      "line": 117,
+      "description": "The Lua script can now:\n- reference global tables (e.g. `Player`) that are bound to CLR objects\n- perform setup (in this case: factories & invulnerability)\n- start creating/sending enemy forces\n- whatever really...\n\nThe `WorldLoaded` function in Lua is essentially the `Main` function as far as\nmap scripting is concerned."
+    }
+  ],
+  "ref": "1c8c49dc8e804d120b1c9709e34ee32a09894c1f"
+}
