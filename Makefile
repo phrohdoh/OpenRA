@@ -39,7 +39,7 @@
 WHITELISTED_OPENRA_ASSEMBLIES = OpenRA.Game.exe OpenRA.Utility.exe OpenRA.Platforms.Default.dll OpenRA.Mods.Common.dll OpenRA.Mods.Cnc.dll OpenRA.Mods.D2k.dll OpenRA.Game.dll
 
 # These are explicitly shipped alongside our core files by the packaging script
-WHITELISTED_THIRDPARTY_ASSEMBLIES = ICSharpCode.SharpZipLib.dll FuzzyLogicLibrary.dll Eluant.dll BeaconLib.dll Open.Nat.dll SDL2-CS.dll OpenAL-CS.Core.dll
+WHITELISTED_THIRDPARTY_ASSEMBLIES = ICSharpCode.SharpZipLib.dll FuzzyLogicLibrary.dll Eluant.dll BeaconLib.dll Open.Nat.dll SDL2-CS.dll OpenAL-CS.Core.dll WasmerSharp.dll
 
 # These are shipped in our custom minimal mono runtime and also available in the full system-installed .NET/mono stack
 # This list *must* be kept in sync with the files packaged by the AppImageSupport and OpenRALauncherOSX repositories
@@ -139,6 +139,9 @@ all: core
 core:
 	@command -v $(firstword $(MSBUILD)) >/dev/null || (echo "OpenRA requires the '$(MSBUILD)' tool provided by Mono >= 5.18."; exit 1)
 	@$(MSBUILD) -t:Build -restore -p:Configuration=Release -p:TargetPlatform=$(TARGETPLATFORM)
+# using 'fd' because it is easier than trying to build the necessary 'find ... | xargs ...'
+	@command -v fd >/dev/null || (echo "OpenRA w/ WASM requires the 'fd' tool: https://github.com/sharkdp/fd"; exit 1)
+	@fd -t=f -e=wat -x wat2wasm {} -o {.}.wasm
 ifeq ($(TARGETPLATFORM), unix-generic)
 	@./configure-system-libraries.sh
 endif
@@ -169,6 +172,7 @@ ifeq ($(TARGETPLATFORM), $(filter $(TARGETPLATFORM),win-x86 win-x64))
 	@$(INSTALL_PROGRAM) SDL2.dll "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) freetype6.dll "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) lua51.dll "$(DATA_INSTALL_DIR)"
+	@$(INSTALL_PROGRAM) wasmer_runtime_c_api.dll "$(DATA_INSTALL_DIR)"
 endif
 ifeq ($(TARGETPLATFORM), linux-x64)
 	@-echo "Installing OpenRA dependencies to $(DATA_INSTALL_DIR)"
@@ -176,6 +180,7 @@ ifeq ($(TARGETPLATFORM), linux-x64)
 	@$(INSTALL_PROGRAM) SDL2.so "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) freetype6.so "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) lua51.so "$(DATA_INSTALL_DIR)"
+	@$(INSTALL_PROGRAM) libwasmer_runtime_c_api.so "$(DATA_INSTALL_DIR)"
 endif
 ifeq ($(TARGETPLATFORM), osx-x64)
 	@-echo "Installing OpenRA dependencies to $(DATA_INSTALL_DIR)"
@@ -183,6 +188,7 @@ ifeq ($(TARGETPLATFORM), osx-x64)
 	@$(INSTALL_PROGRAM) SDL2.dylib "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) freetype6.dylib "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) lua51.dylib "$(DATA_INSTALL_DIR)"
+	@$(INSTALL_PROGRAM) libwasmer_runtime_c_api.dylib "$(DATA_INSTALL_DIR)"
 endif
 
 install-engine:
@@ -206,6 +212,7 @@ endif
 	@$(CP) SDL2-CS* "$(DATA_INSTALL_DIR)"
 	@$(CP) OpenAL-CS* "$(DATA_INSTALL_DIR)"
 	@$(CP) Eluant* "$(DATA_INSTALL_DIR)"
+	@$(CP) WasmerSharp* "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) ICSharpCode.SharpZipLib.dll "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) FuzzyLogicLibrary.dll "$(DATA_INSTALL_DIR)"
 	@$(INSTALL_PROGRAM) Open.Nat.dll "$(DATA_INSTALL_DIR)"

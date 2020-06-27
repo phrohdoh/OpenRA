@@ -1,6 +1,9 @@
 #!/bin/sh
 MODLAUNCHER=$(python -c "import os; print(os.path.realpath('$0'))")
 
+# [temp] always compile to reduce necessary steps in dev cycles
+( cd "$(dirname ${MODLAUNCHER})" ; make ) || exit 1
+
 # Prompt for a mod to launch if one is not already specified
 MODARG=''
 if [ z"${*#*Game.Mod}" = z"$*" ]

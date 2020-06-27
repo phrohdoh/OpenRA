@@ -1,0 +1,4 @@
+namespace OpenRA.WasmScripting
+{
+	// TODO
+}

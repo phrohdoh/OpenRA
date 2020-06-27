@@ -57,6 +57,7 @@
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="WasmerSharp" Version="0.7.0" />
     <AdditionalFiles Include="../stylecop.json" />
     <AdditionalFiles Include="Properties/launchSettings.json" />
   </ItemGroup>
