@@ -8,6 +8,13 @@ namespace OpenRA.Widgets
 		SpriteFont hotkeyFont;
 		protected (Hotkey hotkey, float2 offset)[] hotkeyOverlays;
 
+		public HotkeyInteractableWidget() {}
+		public HotkeyInteractableWidget(HotkeyInteractableWidget other) : base(other)
+		{
+			hotkeyFont = other.hotkeyFont;
+			hotkeyOverlays = other.hotkeyOverlays;
+		}
+
         public override void Initialize(WidgetArgs args)
         {
             base.Initialize(args);
