@@ -96,9 +96,13 @@ namespace OpenRA.Mods.Common.Widgets
 		public override void Initialize(WidgetArgs args)
 		{
 			base.Initialize(args);
-			this.hotkeyOverlays = new (Hotkey hotkey, float2 offset)[]
+			this.hotkeyOverlays = new[]
 			{
-				(this.Key.GetValue(), new float2(3,3))
+				(
+					hotkey: this.Key.GetValue(),
+					isActivatableNowFn: this.IsDisabled,
+					absPosRelViewportTopLeft: this.RenderOrigin + new float2(3,3)
+				)
 			};
 		}
 
