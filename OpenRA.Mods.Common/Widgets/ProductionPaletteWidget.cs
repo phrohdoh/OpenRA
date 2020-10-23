@@ -403,6 +403,9 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var batchModifiers = e.Modifiers.HasModifier(Modifiers.Shift) ? Modifiers.Shift : Modifiers.None;
 
+			// HACK: remove mod used to render overlaid production icon hotkeys
+			e.Modifiers &= ~Modifiers.Meta;
+
 			// HACK: enable production if the shift key is pressed
 			e.Modifiers &= ~Modifiers.Shift;
 			var toBuild = icons.Values.FirstOrDefault(i => i.Hotkey != null && i.Hotkey.IsActivatedBy(e));
@@ -565,6 +568,15 @@ namespace OpenRA.Mods.Common.Widgets
 							icon.Pos + queuedOffset,
 							Color.White, Color.Black, 1);
 				}
+
+				if (Game.GetModifierKeys().HasModifier(Modifiers.Meta))
+					overlayFont.DrawTextWithContrast(
+						icon.Hotkey.GetValue().DisplayString(),
+						icon.Pos + infiniteOffset,
+						World.RenderPlayer.Color,
+						Color.Black,
+						1
+					);
 			}
 		}
 
