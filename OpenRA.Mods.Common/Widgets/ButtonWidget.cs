@@ -17,7 +17,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets
 {
-	public class ButtonWidget : Widget
+	public class ButtonWidget : HotkeyInteractableWidget
 	{
 		public readonly string TooltipContainer;
 		public readonly string TooltipTemplate = "BUTTON_TOOLTIP";
@@ -91,6 +91,15 @@ namespace OpenRA.Mods.Common.Widgets
 			GetTooltipDesc = () => TooltipDesc;
 			tooltipContainer = Exts.Lazy(() =>
 				Ui.Root.Get<TooltipContainerWidget>(TooltipContainer));
+		}
+
+		public override void Initialize(WidgetArgs args)
+		{
+			base.Initialize(args);
+			this.hotkeyOverlays = new (Hotkey hotkey, float2 offset)[]
+			{
+				(this.Key.GetValue(), new float2(3,3))
+			};
 		}
 
 		protected ButtonWidget(ButtonWidget other)
