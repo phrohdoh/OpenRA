@@ -13,6 +13,8 @@ namespace OpenRA.Widgets
 			float2 absPosRelViewportTopLeft
 		)[] hotkeyOverlays;
 
+		public readonly string HotkeyOverlayFont = "TinyBold";
+
 		public HotkeyInteractableWidget() {}
 		public HotkeyInteractableWidget(HotkeyInteractableWidget other) : base(other)
 		{
@@ -24,7 +26,7 @@ namespace OpenRA.Widgets
         {
             base.Initialize(args);
 			hotkeyOverlays = new (Hotkey hotkey, Func<Color> fgColorFn, float2 absPosRelViewportTopLeft)[]{};
-			hotkeyFont = Game.Renderer.Fonts["hotkey"];
+			hotkeyFont = Game.Renderer.Fonts[HotkeyOverlayFont];
         }
 
         public override void DrawOuter()
