@@ -37,7 +37,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public ProductionQueue ProductionQueue;
 	}
 
-	public class ProductionPaletteWidget : Widget
+	public class ProductionPaletteWidget : HotkeyInteractableWidget
 	{
 		public enum ReadyTextStyleOptions { Solid, AlternatingColor, Blinking }
 		public readonly ReadyTextStyleOptions ReadyTextStyle = ReadyTextStyleOptions.AlternatingColor;
@@ -492,6 +492,12 @@ namespace OpenRA.Mods.Common.Widgets
 				DisplayedIconCount++;
 			}
 
+			// refresh hotkey overlays
+			this.hotkeyOverlays = icons.Select(icon => (
+				icon.Value.Hotkey.GetValue(),
+				icon.Value.Pos + new float2(5, 5)
+			)).ToArray();
+
 			eventBounds = icons.Keys.Union();
 
 			if (oldIconCount != DisplayedIconCount)
@@ -568,15 +574,6 @@ namespace OpenRA.Mods.Common.Widgets
 							icon.Pos + queuedOffset,
 							Color.White, Color.Black, 1);
 				}
-
-				if (Game.GetModifierKeys().HasModifier(Modifiers.Meta))
-					overlayFont.DrawTextWithContrast(
-						icon.Hotkey.GetValue().DisplayString(),
-						icon.Pos + infiniteOffset,
-						World.RenderPlayer.Color,
-						Color.Black,
-						1
-					);
 			}
 		}
 

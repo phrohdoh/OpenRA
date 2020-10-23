@@ -243,6 +243,10 @@ Fonts:
 		Font: common|FreeSansBold.ttf
 		Size: 32
 		Ascender: 24
+	hotkey:
+		Font: common|FreeSansBold.ttf
+		Size: 10
+		Ascender: 8
 
 SupportsMapsFrom: ts
 
