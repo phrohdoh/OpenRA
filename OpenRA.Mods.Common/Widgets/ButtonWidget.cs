@@ -96,11 +96,11 @@ namespace OpenRA.Mods.Common.Widgets
 		public override void Initialize(WidgetArgs args)
 		{
 			base.Initialize(args);
-			this.hotkeyOverlays = new[]
+			this.hotkeyOverlays = new (Hotkey hotkey, Func<Color> fgColorFn, float2 absPosRelViewportTopLeft)[]
 			{
 				(
 					hotkey: this.Key.GetValue(),
-					isActivatableNowFn: this.IsDisabled,
+					fgColorFn: () => this.Disabled ? Color.Gray : Color.White,
 					absPosRelViewportTopLeft: this.RenderOrigin + new float2(3,3)
 				)
 			};

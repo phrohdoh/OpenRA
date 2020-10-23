@@ -9,7 +9,7 @@ namespace OpenRA.Widgets
 		SpriteFont hotkeyFont;
 		protected (
 			Hotkey hotkey,
-			Func<bool> isActivatableNowFn,
+			Func<Color> fgColorFn,
 			float2 absPosRelViewportTopLeft
 		)[] hotkeyOverlays;
 
@@ -23,7 +23,7 @@ namespace OpenRA.Widgets
         public override void Initialize(WidgetArgs args)
         {
             base.Initialize(args);
-			hotkeyOverlays = new (Hotkey hotkey, Func<bool> isActivatableNowFn, float2 absPosRelViewportTopLeft)[]{};
+			hotkeyOverlays = new (Hotkey hotkey, Func<Color> fgColorFn, float2 absPosRelViewportTopLeft)[]{};
 			hotkeyFont = Game.Renderer.Fonts["hotkey"];
         }
 
@@ -32,12 +32,12 @@ namespace OpenRA.Widgets
 			base.DrawOuter();
 
 			if (IsVisible() && Game.Settings.Game.DisplayHotkeyOverlays)
-				foreach ((var hotkey, var isActivatableNowFn, var absPosRelViewportTopLeft) in hotkeyOverlays)
+				foreach ((var hotkey, var fgColorFn, var absPosRelViewportTopLeft) in hotkeyOverlays)
 					if (hotkey.IsValid())
 						hotkeyFont.DrawTextWithContrast(
 							text: hotkey.DisplayString(),
 							location: absPosRelViewportTopLeft,
-							fg: isActivatableNowFn() ? Color.Gold : Color.Gray,
+							fg: fgColorFn(),
 							bg: Color.Black,
 							offset: 2
 						);

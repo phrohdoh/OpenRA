@@ -495,12 +495,16 @@ namespace OpenRA.Mods.Common.Widgets
 			// refresh hotkey overlays
 			this.hotkeyOverlays = icons.Select<
 				KeyValuePair<Rectangle,ProductionIcon>,
-				(Hotkey,Func<bool>,float2)
+				(Hotkey,Func<Color>,float2)
 			>(icon => (
 				icon.Value.Hotkey.GetValue(),
 				() => {
+					var isFirstQueuedDone = icon.Value.Queued.FirstOrDefault()?.Done ?? false;
+					if (isFirstQueuedDone)
+						return Color.Gold;
+
 					var buildableItems = CurrentQueue.BuildableItems();
-					return buildableItems.Any(a => a.Name == icon.Value.Name);
+					return buildableItems.Any(a => a.Name == icon.Value.Name) ? Color.White : Color.Gray;
 				},
 				icon.Value.Pos + new float2(5, 5)
 			)).ToArray();
