@@ -28,13 +28,14 @@ namespace OpenRA.Widgets
 
 			if (IsVisible() && Game.GetModifierKeys().HasModifier(Modifiers.Meta))
 				foreach ((var hotkey, var offset) in hotkeyOverlays)
-					hotkeyFont.DrawTextWithContrast(
-						text: hotkey.DisplayString(),
-						location: offset,
-						fg: Color.Gold,
-						bg: Color.Black,
-						offset: 2
-					);
+					if (hotkey.IsValid())
+						hotkeyFont.DrawTextWithContrast(
+							text: hotkey.DisplayString(),
+							location: this.RenderOrigin + offset,
+							fg: Color.Gold,
+							bg: Color.Black,
+							offset: 2
+						);
         }
 	}
 }
