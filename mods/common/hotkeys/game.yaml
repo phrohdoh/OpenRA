@@ -54,6 +54,10 @@ TogglePlayerStanceColor: COMMA Ctrl
 	Description: Toggle player stance colors
 	Types: World, Player, Spectator
 
+ToggleHotkeyOverlays: H Ctrl
+	Description: Toggle hotkey overlays
+	Types: World, Menu, Player, Spectator
+
 TakeScreenshot: P Ctrl
 	Description: Take screenshot
 	Types: World, Menu, Player, Spectator

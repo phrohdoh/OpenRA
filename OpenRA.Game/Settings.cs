@@ -256,6 +256,8 @@ namespace OpenRA
 		public int IntroductionPromptVersion = 0;
 
 		public MPGameFilters MPGameFilters = MPGameFilters.Waiting | MPGameFilters.Empty | MPGameFilters.Protected | MPGameFilters.Started;
+
+		public bool DisplayHotkeyOverlays = true;
 	}
 
 	public class Settings

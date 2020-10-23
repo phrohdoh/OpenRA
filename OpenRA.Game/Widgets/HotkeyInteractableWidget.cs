@@ -31,7 +31,7 @@ namespace OpenRA.Widgets
         {
 			base.DrawOuter();
 
-			if (IsVisible() && Game.GetModifierKeys().HasModifier(Modifiers.Meta))
+			if (IsVisible() && Game.Settings.Game.DisplayHotkeyOverlays)
 				foreach ((var hotkey, var isActivatableNowFn, var absPosRelViewportTopLeft) in hotkeyOverlays)
 					if (hotkey.IsValid())
 						hotkeyFont.DrawTextWithContrast(
