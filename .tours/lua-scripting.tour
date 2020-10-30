@@ -42,5 +42,5 @@
       "description": "The Lua script can now:\n- reference global tables (e.g. `Player`) that are bound to CLR objects\n- perform setup (in this case: factories & invulnerability)\n- start creating/sending enemy forces\n- whatever really...\n\nThe `WorldLoaded` function in Lua is essentially the `Main` function as far as\nmap scripting is concerned."
     }
   ],
-  "ref": "1c8c49dc8e804d120b1c9709e34ee32a09894c1f"
+  "ref": "release-20200503"
 }
