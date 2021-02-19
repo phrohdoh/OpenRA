@@ -4,22 +4,19 @@ namespace OpenRA.Exceptions
 	public class MissingTraitException : Exception
 	{
 		Type traitType;
-		InvalidOperationException original;
 
 		public MissingTraitException(
 			string actorTypeName,
-			Type traitType,
-			InvalidOperationException original
+			Type traitType
 		) : base(
-				"Actor `{0}` is missing trait `{1}`: {2}".F(
+				"Actor `{0}` is missing trait `{1}` (`{2}`)".F(
 					actorTypeName,
 					traitType.Name.Substring(0, traitType.Name.Length - 4),
-					original.Message
+					traitType.FullName
 				)
 			)
 		{
 			this.traitType = traitType;
-			this.original = original;
 		}
 	}
 }

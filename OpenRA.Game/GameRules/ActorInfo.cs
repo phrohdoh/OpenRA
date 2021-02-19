@@ -164,13 +164,11 @@ namespace OpenRA
 		}
 
 		public bool HasTraitInfo<T>() where T : ITraitInfoInterface { return traits.Contains<T>(); }
-		public T TraitInfo<T>() where T : ITraitInfoInterface {
-			T t;
-			try {
-				t = traits.Get<T>();
-			} catch (InvalidOperationException e) {
-				throw new MissingTraitException(Name, typeof(T), e);
-			}
+		public T TraitInfo<T>() where T : ITraitInfoInterface
+		{
+			var t = this.TraitInfoOrDefault<T>();
+			if (EqualityComparer<T>.Default.Equals(t, default(T)))
+				throw new MissingTraitException(Name, typeof(T));
 			return t;
 		}
 		public T TraitInfoOrDefault<T>() where T : ITraitInfoInterface { return traits.GetOrDefault<T>(); }
