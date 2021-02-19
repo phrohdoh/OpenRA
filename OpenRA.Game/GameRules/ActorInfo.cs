@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Primitives;
 using OpenRA.Traits;
+using OpenRA.Exceptions;
 
 namespace OpenRA
 {
@@ -163,7 +164,15 @@ namespace OpenRA
 		}
 
 		public bool HasTraitInfo<T>() where T : ITraitInfoInterface { return traits.Contains<T>(); }
-		public T TraitInfo<T>() where T : ITraitInfoInterface { return traits.Get<T>(); }
+		public T TraitInfo<T>() where T : ITraitInfoInterface {
+			T t;
+			try {
+				t = traits.Get<T>();
+			} catch (InvalidOperationException e) {
+				throw new MissingTraitException(Name, typeof(T), e);
+			}
+			return t;
+		}
 		public T TraitInfoOrDefault<T>() where T : ITraitInfoInterface { return traits.GetOrDefault<T>(); }
 		public IEnumerable<T> TraitInfos<T>() where T : ITraitInfoInterface { return traits.WithInterface<T>(); }
 

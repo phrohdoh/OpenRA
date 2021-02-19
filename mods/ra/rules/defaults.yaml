@@ -359,9 +359,9 @@
 			ElectricityDeath: 6
 		CrushedSequence: die-crushed
 	AttackMove:
-	Passenger:
-		CargoType: Infantry
-		CargoCondition: disable-experience
+	#Passenger:
+	#	CargoType: Infantry
+	#	CargoCondition: disable-experience
 	GainsExperienceMultiplier:
 		Modifier: 0
 		RequiresCondition: disable-experience
