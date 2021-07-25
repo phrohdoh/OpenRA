@@ -10,8 +10,10 @@ World:
 	-StartGameNotification:
 	-SpawnStartingUnits:
 	-MapStartingLocations:
-	LuaScript:
-		Scripts: fields-of-green.lua
+	ClojureScript:
+		ScriptFileName: map.clj
+	#LuaScript:
+	#	Scripts: fields-of-green.lua
 	MusicPlaylist:
 		BackgroundMusic: intro
 		DisableWorldSounds: true

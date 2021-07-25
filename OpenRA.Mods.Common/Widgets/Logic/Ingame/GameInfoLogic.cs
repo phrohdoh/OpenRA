@@ -30,6 +30,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			widget.IsVisible = () => activePanel != IngameInfoPanel.AutoSelect;
 
 			// Objectives/Stats tab
+			var cljCtx = world.WorldActor.TraitOrDefault<ClojureScript>();
 			var scriptContext = world.WorldActor.TraitOrDefault<LuaScript>();
 			var hasError = scriptContext != null && scriptContext.FatalErrorOccurred;
 			var iop = world.WorldActor.TraitsImplementing<IObjectivesPanel>().FirstOrDefault();
